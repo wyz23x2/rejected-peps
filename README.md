@@ -55,7 +55,7 @@ True
 >>> rp.info(416)
 pepinfo(number=416, title='Add a frozendict builtin type', status='Rejected', creation='2012-02-29', url='https://www.python.org/dev/peps/pep-0416/')
 >>> rp.SUPPORTED
-frozenset({416, 326, 265, 303, 559, 212, 276, 351})
+frozenset({416, 3140, 326, 265, 303, 336, 559, 211, 212, 276, 349, 351})
 >>> 
 ```
 
