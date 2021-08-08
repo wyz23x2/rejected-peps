@@ -32,12 +32,12 @@ PEPs with a * are slightly changed.
 - [PEP 351](https://www.python.org/dev/peps/pep-0351/) — The `freeze` protocol
 - [PEP 416](https://www.python.org/dev/peps/pep-0416/) — Add a `frozendict` builtin type
 - [PEP 559](https://www.python.org/dev/peps/pep-0559/) — Built-in `noop()`
+- [PEP 3140](https://www.python.org/dev/peps/pep-3140/) – `str(container)` should call `str(item)`, not `repr(item)`
 
 #### Developing
 
 - [PEP 313](https://www.python.org/dev/peps/pep-0313/)* – Adding Roman Numeral ~~Literals~~ Functions to Python
 - [PEP 335](https://www.python.org/dev/peps/pep-0335/)* – Overloadable Boolean ~~Operators~~ Operator Functions
-- [PEP 3140](https://www.python.org/dev/peps/pep-3140/) – `str(container)` should call `str(item)`, not `repr(item)`
 
 ### How do I use it?
 Wiki is coming soon!
@@ -55,7 +55,7 @@ True
 >>> rp.info(416)
 pepinfo(number=416, title='Add a frozendict builtin type', status='Rejected', creation='2012-02-29', url='https://www.python.org/dev/peps/pep-0416/')
 >>> rp.SUPPORTED
-frozenset({416, 326, 265, 303, 559, 212, 276, 351})
+frozenset({416, 3140, 326, 265, 303, 336, 559, 211, 212, 276, 349, 351})
 >>> 
 ```
 
