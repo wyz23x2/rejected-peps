@@ -1,6 +1,5 @@
 import rejected_peps
 import setuptools
-import rejected_peps
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
