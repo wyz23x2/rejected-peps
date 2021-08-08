@@ -1,4 +1,4 @@
-__version__ = '0.3.0'
+__version__ = '0.3.1'
 import importlib as _imp
 from collections import namedtuple as _nt
 
@@ -25,10 +25,11 @@ def info(n: int):
                    url=f'https://www.python.org/dev/peps/pep-{n:0>4}/')
 
 SUPPORTED = frozenset((204, 211, 212, 259,
-                       265, 276, 281, 303,
-                       326, 336, 349, 351,
-                       416, 559, 3140))
-# No auto because it's too slow
+                       265, 276, 281, 294,
+                       303, 326, 336, 349,
+                       351, 416, 559, 754,
+                       3140))
+# Not automatic because it's too slow
 
 def __getattr__(name):
     if name.startswith('pep'):

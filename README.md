@@ -19,15 +19,16 @@ Parts of bytecode, C API etc. are not implemented.
 
 PEPs with a \* are slightly changed.
 
-#### Finished
+#### Finished (17)
 
 - [PEP 204](https://www.python.org/dev/peps/pep-0204/) — Range Literals
 - [PEP 211](https://www.python.org/dev/peps/pep-0211/) — Adding A New Outer Product Operator
 - [PEP 212](https://www.python.org/dev/peps/pep-0212/) — Loop Counter Iteration
-- [PEP 259](https://www.python.org/dev/peps/pep-0259) — Omit printing newline after newline
+- [PEP 259](https://www.python.org/dev/peps/pep-0259/) — Omit printing newline after newline
 - [PEP 265](https://www.python.org/dev/peps/pep-0265/) — Sorting Dictionaries by Value
 - [PEP 276](https://www.python.org/dev/peps/pep-0276/) — Simple Iterator for `int`s
 - [PEP 281](https://www.python.org/dev/peps/pep-0281/)\* – Loop Counter Iteration with `range` ~~and `xrange`~~
+- [PEP 294](https://www.python.org/dev/peps/pep-0294/) — Type Names in the types Module
 - [PEP 303](https://www.python.org/dev/peps/pep-0303/) — Extend `divmod()` for Multiple Divisors
 - [PEP 326](https://www.python.org/dev/peps/pep-0326/) — A Case for Top and Bottom Values
 - [PEP 336](https://www.python.org/dev/peps/pep-0336/) — Make `None` callable
@@ -35,11 +36,11 @@ PEPs with a \* are slightly changed.
 - [PEP 351](https://www.python.org/dev/peps/pep-0351/) — The `freeze` protocol
 - [PEP 416](https://www.python.org/dev/peps/pep-0416/) — Add a `frozendict` builtin type
 - [PEP 559](https://www.python.org/dev/peps/pep-0559/) — Built-in `noop()`
+- [PEP 754](https://python.org/dev/peps/pep-0754/) — IEEE 754 Floating Point Special Values
 - [PEP 3140](https://www.python.org/dev/peps/pep-3140/) – `str(container)` should call `str(item)`, not `repr(item)`
 
-#### Developing
+#### Developing (2)
 
-- [PEP 294](https://www.python.org/dev/peps/pep-0294/) — Type Names in the types Module
 - [PEP 313](https://www.python.org/dev/peps/pep-0313/)\* – Adding Roman Numeral ~~Literals~~ Functions to Python
 - [PEP 335](https://www.python.org/dev/peps/pep-0335/)\* – Overloadable Boolean ~~Operators~~ Operator Functions
 
