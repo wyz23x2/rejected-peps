@@ -16,7 +16,7 @@ PEP 3140: <https://www.python.org/dev/peps/pep-3140/>
 """
 PEP = 3140
 import builtins as _b
-from collections.abc import Container as _C
+from collections.abc import Container as _C, Mapping as _M
 
 def str(x, *args, **kwargs):
     if args or kwargs:
@@ -28,13 +28,18 @@ def str(x, *args, **kwargs):
             if value is not NotImplemented:
                 return value
         return x.__repr__()
-    if isinstance(x, dict):
+    if isinstance(x, (dict, _M)):
+        if isinstance(x, dict):
+            prefix = suffix = ''
+        else:
+            prefix, suffix = f'{type(x).__name__}(', ')'
         if not x:
-            return '{}'
-        parts = ['{']
+            return '%s{}%s' % (prefix, suffix)
+        parts = [prefix, '{']
         for key, value in x.items():
             parts.extend((f'{key!s}: {value!s}', ', '))
-        return ''.join((*parts[:-1], '}'))
+        parts = [*parts[:-1], '}', suffix]
+        return ''.join(parts)
     else:
         cls = type(x)
         prefix, suffix = {list: ('[', ']'),

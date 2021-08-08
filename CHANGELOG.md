@@ -1,5 +1,17 @@
 # Rejected-PEPs Changelog
 
+### <u>0.2.3</u>  _Final_
+
+_Release Date: 2021-08-08_
+
+#### New
+
+- Add support of [PEP 204](https://www.python.org/dev/peps/pep-0204/) — Range Literals
+
+#### Improved
+
+- `pep3140.str()` now correctly formats mappings, not just `dict`.
+
 ### <u>0.2.2</u>  _Final_
 
 _Release Date: 2021-08-08_
