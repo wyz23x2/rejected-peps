@@ -16,7 +16,7 @@ PEP 276: <https://www.python.org/dev/peps/pep-0276/>
 PEP = 276
 import builtins as _b
 
-class IntType(int):
+class IntType(_b.int):
     def __iter__(self):
         if self < 0:
             return iter(())
