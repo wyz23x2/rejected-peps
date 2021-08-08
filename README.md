@@ -1,4 +1,4 @@
-# Rejected-PEPs 0.1.0
+# Rejected-PEPs 0.1.2
 
 ### What is this?
 
