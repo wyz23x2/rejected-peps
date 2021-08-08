@@ -32,8 +32,7 @@ PEPs included need to match these points:
 - [PEP 3140](https://www.python.org/dev/peps/pep-3140/) – `str(container)` should call `str(item)`, not `repr(item)`
 
 ### How do I use it?
-
-See the wiki on [GitHub](https://github.com/wyz23x2/rejected-peps/wikis) or [Gitee](https://gitee.com/wyz23x2/rejected-peps/wikis) for more information.
+Wiki is coming soon!
 
 Quick example:
 

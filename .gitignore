@@ -2,6 +2,6 @@
 **/__pycache__/
 **/.*
 !**/.gitignore
-rejected-peps/docs/
+rejected[-_]peps/docs/
 dist/
 **/*.egg*
