@@ -1,5 +1,13 @@
 # Rejected-PEPs Changelog
 
+### <u>0.2.2</u>  _Final_
+
+_Release Date: 2021-08-08_
+
+#### New
+
+- Add support of [PEP 3140](https://www.python.org/dev/peps/pep-3140/) – `str(container)` should call `str(item)`, not `repr(item)`.
+
 ### <u>0.2.1</u>  _Final_
 
 _Release Date: 2021-08-08_
