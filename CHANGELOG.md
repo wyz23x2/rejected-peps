@@ -1,10 +1,19 @@
 # Rejected-PEPs Changelog
 
-### <u>0.2.0</u>  _Final_
+### <u>0.2.1</u>  _Final_
 
 _Release Date: 2021-08-08_
 
 **This is the first version guaranteed having no install or import problems in regular environments.**
+
+#### Fixes
+
+- Fix `dir(rejected_peps)`.
+- Fix module raising `ValueError` when directly run.
+
+### <u>0.2.0</u>  _Final_
+
+_Release Date: 2021-08-08_
 
 #### New
 
