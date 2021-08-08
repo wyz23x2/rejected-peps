@@ -19,7 +19,7 @@ Parts of bytecode, C API etc. are not implemented.
 
 PEPs with a \* are slightly changed.
 
-#### Finished
+#### Finished (17)
 
 - [PEP 204](https://www.python.org/dev/peps/pep-0204/) — Range Literals
 - [PEP 211](https://www.python.org/dev/peps/pep-0211/) — Adding A New Outer Product Operator
@@ -39,7 +39,7 @@ PEPs with a \* are slightly changed.
 - [PEP 754](https://python.org/dev/peps/pep-0754/) — IEEE 754 Floating Point Special Values
 - [PEP 3140](https://www.python.org/dev/peps/pep-3140/) – `str(container)` should call `str(item)`, not `repr(item)`
 
-#### Developing
+#### Developing (2)
 
 - [PEP 313](https://www.python.org/dev/peps/pep-0313/)\* – Adding Roman Numeral ~~Literals~~ Functions to Python
 - [PEP 335](https://www.python.org/dev/peps/pep-0335/)\* – Overloadable Boolean ~~Operators~~ Operator Functions
