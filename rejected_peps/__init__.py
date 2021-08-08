@@ -1,4 +1,4 @@
-__version__ = '0.2.0b3'
+__version__ = '0.2.0'
 import importlib as _imp
 from collections import namedtuple as _nt
 def pep(n: int):
@@ -32,3 +32,5 @@ def __getattr__(name):
         else:
             return p
     raise AttributeError(f'module {__name__!r} has no attribute {name!r}')
+def __dir__():
+    return sorted(set(globals().keys()) & {f'pep{n}' for n in SUPPORTED})
