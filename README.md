@@ -17,10 +17,11 @@ Parts of bytecode, C API etc. are not implemented.
 
 ### What PEPs are included now?
 
-PEPs with a * are slightly changed.
+PEPs with a \* are slightly changed.
 
 #### Finished
 
+- [PEP 204](https://www.python.org/dev/peps/pep-0204/) — Range Literals
 - [PEP 211](https://www.python.org/dev/peps/pep-0211/) — Adding A New Outer Product Operator
 - [PEP 212](https://www.python.org/dev/peps/pep-0212/) — Loop Counter Iteration
 - [PEP 265](https://www.python.org/dev/peps/pep-0265/) — Sorting Dictionaries by Value
@@ -28,7 +29,7 @@ PEPs with a * are slightly changed.
 - [PEP 303](https://www.python.org/dev/peps/pep-0303/) — Extend `divmod()` for Multiple Divisors
 - [PEP 326](https://www.python.org/dev/peps/pep-0326/) — A Case for Top and Bottom Values
 - [PEP 336](https://www.python.org/dev/peps/pep-0336/) — Make `None` callable
-- [PEP 349](https://www.python.org/dev/peps/pep-0349/)* – Allow `str()` to return ~~unicode strings~~ bytes
+- [PEP 349](https://www.python.org/dev/peps/pep-0349/)\* – Allow `str()` to return ~~unicode strings~~ bytes
 - [PEP 351](https://www.python.org/dev/peps/pep-0351/) — The `freeze` protocol
 - [PEP 416](https://www.python.org/dev/peps/pep-0416/) — Add a `frozendict` builtin type
 - [PEP 559](https://www.python.org/dev/peps/pep-0559/) — Built-in `noop()`
@@ -36,8 +37,8 @@ PEPs with a * are slightly changed.
 
 #### Developing
 
-- [PEP 313](https://www.python.org/dev/peps/pep-0313/)* – Adding Roman Numeral ~~Literals~~ Functions to Python
-- [PEP 335](https://www.python.org/dev/peps/pep-0335/)* – Overloadable Boolean ~~Operators~~ Operator Functions
+- [PEP 313](https://www.python.org/dev/peps/pep-0313/)\* – Adding Roman Numeral ~~Literals~~ Functions to Python
+- [PEP 335](https://www.python.org/dev/peps/pep-0335/)\* – Overloadable Boolean ~~Operators~~ Operator Functions
 
 ### How do I use it?
 Wiki is coming soon!

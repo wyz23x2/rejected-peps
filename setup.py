@@ -13,9 +13,9 @@ setuptools.setup(
     description="A python package that implements some rejected or withdrawn PEPs.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://gitee.com/wyz23x2/rejected/",
+    url="https://github.com/wyz23x2/rejected-peps/",
     project_urls={
-        "Bug Tracker": "https://gitee.com/wyz23x2/rejected-peps/issues",
+        "Bug Tracker": "https://github.com/wyz23x2/rejected-peps/issues",
     },
     classifiers=[
         "Programming Language :: Python :: 3.6",

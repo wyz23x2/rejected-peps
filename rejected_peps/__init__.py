@@ -1,4 +1,4 @@
-__version__ = '0.2.2'
+__version__ = '0.2.3'
 import importlib as _imp
 from collections import namedtuple as _nt
 
@@ -24,7 +24,7 @@ def info(n: int):
                    creation=doc[4].lstrip('Created: '),
                    url=f'https://www.python.org/dev/peps/pep-{n:0>4}/')
 
-SUPPORTED = frozenset((211, 212, 265, 276, 303, 326,
+SUPPORTED = frozenset((204, 211, 212, 265, 276, 303, 326,
                        336, 349, 351, 416, 559, 3140))
 # No auto because it's too slow
 
