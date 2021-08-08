@@ -1,4 +1,4 @@
-__version__ = '0.2.5'
+__version__ = '0.3.0'
 import importlib as _imp
 from collections import namedtuple as _nt
 

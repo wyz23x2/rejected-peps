@@ -14,6 +14,7 @@ REFERENCES
 PEP 281: <https://www.python.org/dev/peps/pep-0281/>
 """
 PEP = 281
+import builtins as _b
 
 def range(*args):
     a = []
@@ -27,4 +28,4 @@ def range(*args):
                 raise TypeError(f'TypeError: {type(arg).__name__!r} object '
                                 'cannot be interpreted '
                                 'as an integer') from None
-    return range(*a)
+    return _b.range(*a)

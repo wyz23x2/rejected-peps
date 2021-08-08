@@ -1,6 +1,6 @@
 # Rejected-PEPs Changelog
 
-### <u>0.2.5</u>  _Final_
+### <u>0.3.0</u>  _Final_
 
 _Release Date: 2021-08-08_
 
