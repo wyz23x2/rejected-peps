@@ -4,8 +4,8 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="rejected_peps",
-    version="0.1.0",
+    name="rejected-peps",
+    version="0.2.0a2",
     author="wyz23x2",
     author_email="wyz23x2@163.com",
     description="A python package that implements some rejected or withdrawn PEPs.",
