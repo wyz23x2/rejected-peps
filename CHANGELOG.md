@@ -1,5 +1,16 @@
 # Rejected-PEPs Changelog
 
+### <u>0.2.5</u>  _Final_
+
+_Release Date: 2021-08-08_
+
+#### New
+
+- Add support of [PEP 281](https://www.python.org/dev/peps/pep-0281/) — Loop Counter Iteration with `range` ~~and `xrange`~~
+
+#### Fixed
+- Add 259 into `SUPPORTED`
+
 ### <u>0.2.4</u>  _Final_
 
 _Release Date: 2021-08-08_
