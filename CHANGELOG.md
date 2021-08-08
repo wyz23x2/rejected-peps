@@ -6,7 +6,9 @@ _Release Date: 2021-08-09_
 
 #### New
 
-- Add support of [PEP 754](https://python.org/dev/peps/pep-0754/) — IEEE 754 Floating Point Special Values
+- Add support of:
+	- [PEP 294](https://python.org/dev/peps/pep-0294/) — Type Names in the types Module
+	- [PEP 754](https://python.org/dev/peps/pep-0754/) — IEEE 754 Floating Point Special Values
 
 ### <u>0.3.0</u>  _Final_
 
