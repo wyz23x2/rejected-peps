@@ -1,4 +1,4 @@
-__version__ = '0.2.0b2'
+__version__ = '0.2.0b3'
 import importlib as _imp
 from collections import namedtuple as _nt
 def pep(n: int):
@@ -22,3 +22,13 @@ def info(n: int):
 SUPPORTED = frozenset((211, 212, 265, 276, 303, 326,
                        336, 349, 351, 416, 559))
 # No auto because it's too slow
+
+def __getattr__(name):
+    if name.startswith('pep'):
+        try:
+            p = pep(int(name[3:]))
+        except (TypeError, ValueError):
+            pass
+        else:
+            return p
+    raise AttributeError(f'module {__name__!r} has no attribute {name!r}')

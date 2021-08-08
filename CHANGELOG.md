@@ -1,5 +1,13 @@
 # Rejected-PEPs Changelog
 
+## 0.2.0b3
+
+_Release Date: 2021-08-08_
+
+### Fixes
+
+- Fix submodule not being found.
+
 ## 0.2.0b2
 
 _Release Date: 2021-08-08_
@@ -19,7 +27,10 @@ _Release Date: 2021-08-08_
 
 _Release Date: 2021-08-08_
 
-Fix all installing and importing problems of 0.1.0.
+### Fixes
+
+- Fix all installing and importing problems of 0.1.0.
+
 ### 0.1.0
 
 _Release Date: 2021-08-08_
