@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="rejected-peps",
-    version="0.2.0a3",
+    version="0.2.0b1",
     author="wyz23x2",
     author_email="wyz23x2@163.com",
     description="A python package that implements some rejected or withdrawn PEPs.",
@@ -14,7 +14,6 @@ setuptools.setup(
     url="https://gitee.com/wyz23x2/rejected/",
     project_urls={
         "Bug Tracker": "https://gitee.com/wyz23x2/rejected-peps/issues",
-        "Wiki": "https://gitee.com/wyz23x2/rejected-peps/wikis"
     },
     classifiers=[
         "Programming Language :: Python :: 3.6",
@@ -22,10 +21,9 @@ setuptools.setup(
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 4 - Beta",
         "License :: OSI Approved :: MIT License",
     ],
-    package_dir={"": "rejected_peps"},
-    packages=[],
+    packages=setuptools.find_packages(),
     python_requires=">=3.6",
 )

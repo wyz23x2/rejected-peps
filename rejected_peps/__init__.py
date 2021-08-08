@@ -1,11 +1,11 @@
-__version__ = '0.2.0a3'
+__version__ = '0.2.0b1'
 import importlib as _imp
 from collections import namedtuple as _nt
 def pep(n: int):
     if (not isinstance(n, int)) or n < 0 or n > 9999:
         raise ValueError(f'Invalid PEP number {n!r}')
     try:
-        return _imp.import_module(f'pep{n}')
+        return _imp.import_module(f'..pep{n}', 'rejected_peps.subpkg')
     except ImportError:
         raise ValueError(f'PEP {n!r} not supported') from None
 pepinfo = _nt('pepinfo', ('number', 'title', 'status', 'creation', 'url'))
