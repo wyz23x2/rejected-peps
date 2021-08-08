@@ -14,10 +14,11 @@ REFERENCES
 PEP 276: <https://www.python.org/dev/peps/pep-0276/>
 """
 PEP = 276
+import builtins as _b
 
 class IntType(int):
     def __iter__(self):
         if self < 0:
             return iter(())
-        return iter(range(__builtins__.int(self)))
+        return iter(range(_b.int(self)))
 int = IntType

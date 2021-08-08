@@ -24,16 +24,17 @@ Related:""" +
 f'sorted: <https://docs.python.org/'
 f'{".".join(map(str, _vi[:2]))}/library/functions.html#sorted>')
 PEP = 265
+import builtins as _b
 
 sorted = sorted  # Recommended
 def _sortby(items, index, *, key=None, reverse=False):
     if key is None:
-        return __builtins__.sorted(items,  # Prevent sorted() overwrite
-                                   key=(lambda x, i=index: x[i]),
-                                   reverse=reverse)
-    return __builtins__.sorted(items,
-                               key=(lambda x, i=index: key(x[i])),
-                               reverse=reverse)
+        return _b.sorted(items,  # Prevent sorted() overwrite
+                         key=(lambda x, i=index: x[i]),
+                         reverse=reverse)
+    return _b.sorted(items,
+                     key=(lambda x, i=index: key(x[i])),
+                     reverse=reverse)
 ORIGINAL, KEYS, VALUES = -1, 0, 1
 # Since dicts are now ordered, an option to not sort is needed
 def itemlist(dic, sortby=ORIGINAL, *, key=None, reverse=False):
