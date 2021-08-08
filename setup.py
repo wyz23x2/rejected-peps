@@ -24,7 +24,7 @@ setuptools.setup(
         "Programming Language :: Python :: 3.10",
         "Development Status :: 3 - Alpha",
     ],
-    package_dir={"": "rejected-peps"},
+    package_dir={"": "rejected_peps"},
     packages=setuptools.find_packages(where="src"),
     python_requires=">=3.6",
 )
