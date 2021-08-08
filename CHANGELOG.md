@@ -1,5 +1,18 @@
 # Rejected-PEPs Changelog
 
+### <u>0.2.4</u>  _Final_
+
+_Release Date: 2021-08-08_
+
+#### New
+
+- Add support of [PEP 259](https://www.python.org/dev/peps/pep-0259) — Omit printing newline after newline
+
+#### Fixed
+
+- Add the missing `PEP` constant in `pep204`.
+
+
 ### <u>0.2.3</u>  _Final_
 
 _Release Date: 2021-08-08_
