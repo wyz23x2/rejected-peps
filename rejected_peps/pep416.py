@@ -27,7 +27,7 @@ class frozendict(dict):
         # > A frozendict is hashable if and only if all values are hashable.
         hashes = [], []
         # Needs two to avoid mixing keys and values, e.g.
-        # hash(frozendict({1: 2, 3: 4})) == hash(frozendict({1: 3, 2: 4}))
+        # hash(frozendict({1: 2, 3: 4})) and hash(frozendict({1: 3, 2: 4}))
         for k, v in self.items():
             hashes[0].append(hash(k))
             hashes[1].append(hash(v))

@@ -27,7 +27,7 @@ def info(n: int):
 SUPPORTED = frozenset((204, 211, 212, 259,
                        265, 276, 281, 303,
                        326, 336, 349, 351,
-                       416, 559, 3140))
+                       416, 559, 754, 3140))
 # No auto because it's too slow
 
 def __getattr__(name):
