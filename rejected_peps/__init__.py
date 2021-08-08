@@ -1,4 +1,4 @@
-__version__ = '0.2.0a2'
+__version__ = '0.2.0a3'
 import importlib as _imp
 from collections import namedtuple as _nt
 def pep(n: int):
