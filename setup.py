@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="rejected-peps",
-    version="0.1.0",
+    version="0.1.1",
     author="wyz23x2",
     author_email="wyz23x2@163.com",
     description="A python package that implements some rejected or withdrawn PEPs.",
@@ -23,8 +23,9 @@ setuptools.setup(
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Development Status :: 3 - Alpha",
+        "License :: OSI Approved :: MIT License",
     ],
     package_dir={"": "rejected_peps"},
-    packages=setuptools.find_packages(where="src"),
+    packages=[],
     python_requires=">=3.6",
 )
