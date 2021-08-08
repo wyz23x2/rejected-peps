@@ -1,11 +1,13 @@
+import rejected_peps
 import setuptools
+import rejected_peps
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
     name="rejected-peps",
-    version="0.2.0b2",
+    version=rejected_peps.__version__,
     author="wyz23x2",
     author_email="wyz23x2@163.com",
     description="A python package that implements some rejected or withdrawn PEPs.",
