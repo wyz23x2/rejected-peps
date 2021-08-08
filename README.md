@@ -36,7 +36,7 @@ Quick example:
 
 ```python
 >>> import rejected_peps as rp
->>> rp.pep559.noop()
+>>> rp.pep(559).noop()
 >>> Min = rp.pep(326).Min
 >>> Min < 3.14
 True
