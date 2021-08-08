@@ -12,8 +12,11 @@ PEPs included need to match these points:
 
 ### What PEPs are included now?
 
+PEPs with a * are slightly changed because of Python's changes or other reasons.
+
 #### Finished
 
+- [PEP 211](https://www.python.org/dev/peps/pep-0211/) — Adding A New Outer Product Operator
 - [PEP 212](https://www.python.org/dev/peps/pep-0212/) — Loop Counter Iteration
 - [PEP 265](https://www.python.org/dev/peps/pep-0265/) — Sorting Dictionaries by Value
 - [PEP 276](https://www.python.org/dev/peps/pep-0276/) — Simple Iterator for `int`s
@@ -25,8 +28,9 @@ PEPs included need to match these points:
 
 #### Developing
 
-- [PEP 211](https://www.python.org/dev/peps/pep-0211/) — Adding A New Outer Product Operator
 - [PEP 336](https://www.python.org/dev/peps/pep-0336/) — Make `None` callable
+- [PEP 349](https://www.python.org/dev/peps/pep-0349/)* – Allow `str()` to return ~~unicode strings~~ bytes
+- [PEP 313](https://www.python.org/dev/peps/pep-0313/)* – Adding Roman Numeral ~~Literals~~ Functions to Python
 - [PEP 3140](https://www.python.org/dev/peps/pep-3140/) – `str(container)` should call `str(item)`, not `repr(item)`
 
 ### How do I use it?
@@ -36,8 +40,8 @@ Quick example:
 
 ```python
 >>> import rejected_peps as rp
->>> rp.pep(559).noop()
->>> Min = rp.pep(326).Min
+>>> rp.pep(559).noop()   # Function call
+>>> Min = rp.pep326.Min  # Module
 >>> Min < 3.14
 True
 >>> Min == -10, Min == Min
