@@ -1,5 +1,3 @@
-# Rejected-PEPs 0.1.2
-
 ### What is this?
 
 [PEPs](https://www.python.org/dev/peps/) (Python Enhancement Proposals) are a big feature of the Python programming language. Some are accepted, and some were not. This package implements some PEPs that were rejected or withdrawn.
@@ -38,7 +36,7 @@ Quick example:
 
 ```python
 >>> import rejected_peps as rp
->>> rp.pep559.noop()
+>>> rp.pep(559).noop()
 >>> Min = rp.pep(326).Min
 >>> Min < 3.14
 True
