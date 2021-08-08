@@ -7,8 +7,13 @@
 PEPs included need to match these points:
 
 - It's not a syntax or major API change.
+
 - It's about code, not governance etc.
+
 - It can be implemented in pure Python code.
+
+
+Parts of bytecode, C API etc. are not implemented.
 
 ### What PEPs are included now?
 
@@ -31,6 +36,7 @@ PEPs with a * are slightly changed.
 #### Developing
 
 - [PEP 313](https://www.python.org/dev/peps/pep-0313/)* – Adding Roman Numeral ~~Literals~~ Functions to Python
+- [PEP 335](https://www.python.org/dev/peps/pep-0335/)* – Overloadable Boolean ~~Operators~~ Operator Functions
 - [PEP 3140](https://www.python.org/dev/peps/pep-3140/) – `str(container)` should call `str(item)`, not `repr(item)`
 
 ### How do I use it?

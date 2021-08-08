@@ -19,6 +19,6 @@ def info(n: int):
                    creation=doc[4].lstrip('Created: '),
                    url=f'https://www.python.org/dev/peps/pep-{n:0>4}/')
 
-SUPPORTED = frozenset((211, 212, 265, 276, 303,
-                       326, 349, 351, 416, 559))
+SUPPORTED = frozenset((211, 212, 265, 276, 303, 326,
+                       336, 349, 351, 416, 559))
 # No auto because it's too slow
