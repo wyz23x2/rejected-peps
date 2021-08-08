@@ -24,6 +24,7 @@ PEPs with a \* are slightly changed.
 - [PEP 204](https://www.python.org/dev/peps/pep-0204/) — Range Literals
 - [PEP 211](https://www.python.org/dev/peps/pep-0211/) — Adding A New Outer Product Operator
 - [PEP 212](https://www.python.org/dev/peps/pep-0212/) — Loop Counter Iteration
+- [PEP 259](https://www.python.org/dev/peps/pep-0259) — Omit printing newline after newline
 - [PEP 265](https://www.python.org/dev/peps/pep-0265/) — Sorting Dictionaries by Value
 - [PEP 276](https://www.python.org/dev/peps/pep-0276/) — Simple Iterator for `int`s
 - [PEP 303](https://www.python.org/dev/peps/pep-0303/) — Extend `divmod()` for Multiple Divisors

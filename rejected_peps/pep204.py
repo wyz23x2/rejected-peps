@@ -23,6 +23,7 @@ REFERENCES
 
 PEP 204: <https://www.python.org/dev/peps/pep-204/>
 """
+    PEP = 204
     def __getitem__(self, x):
         if isinstance(x, slice):
             start, stop, step = x.start, x.stop, x.step
