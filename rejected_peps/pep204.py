@@ -1,5 +1,4 @@
 import sys
-import textwrap
 class pep204:
     """\
 PEP INFO

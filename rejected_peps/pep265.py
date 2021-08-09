@@ -27,7 +27,7 @@ PEP = 265
 import builtins as _b
 
 sorted = sorted  # Recommended
-def _sortby(items, index, *, key=None, reverse=False):
+def _sort(items, index, *, key=None, reverse=False):
     if key is None:
         return _b.sorted(items,  # Prevent sorted() overwrite
                          key=(lambda x, i=index: x[i]),
@@ -41,6 +41,6 @@ def itemlist(dic, sortby=ORIGINAL, *, key=None, reverse=False):
     i = list(dic.items())
     if sortby <= ORIGINAL:
         return (i[::-1] if reverse else i)
-    return _sortby(i, (not not sortby),
-                   key=key, reverse=reverse)
+    return _sort(i, (not not sortby),
+                 key=key, reverse=reverse)
 items = itemlist
