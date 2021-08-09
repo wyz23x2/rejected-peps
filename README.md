@@ -19,7 +19,7 @@ Parts of bytecode, C API etc. are not implemented.
 
 PEPs with a \* are slightly changed.
 
-#### Finished (17)
+#### Finished (18)
 
 - [PEP 204](https://www.python.org/dev/peps/pep-0204/) — Range Literals
 - [PEP 211](https://www.python.org/dev/peps/pep-0211/) — Adding A New Outer Product Operator
@@ -30,6 +30,7 @@ PEPs with a \* are slightly changed.
 - [PEP 281](https://www.python.org/dev/peps/pep-0281/)\* – Loop Counter Iteration with `range` ~~and `xrange`~~
 - [PEP 294](https://www.python.org/dev/peps/pep-0294/) — Type Names in the types Module
 - [PEP 303](https://www.python.org/dev/peps/pep-0303/) — Extend `divmod()` for Multiple Divisors
+- [PEP 313](https://www.python.org/dev/peps/pep-0313/)\* – Adding Roman Numeral ~~Literals~~ Functions to Python
 - [PEP 326](https://www.python.org/dev/peps/pep-0326/) — A Case for Top and Bottom Values
 - [PEP 336](https://www.python.org/dev/peps/pep-0336/) — Make `None` callable
 - [PEP 349](https://www.python.org/dev/peps/pep-0349/)\* – Allow `str()` to return ~~unicode strings~~ bytes
@@ -39,9 +40,8 @@ PEPs with a \* are slightly changed.
 - [PEP 754](https://python.org/dev/peps/pep-0754/) — IEEE 754 Floating Point Special Values
 - [PEP 3140](https://www.python.org/dev/peps/pep-3140/) – `str(container)` should call `str(item)`, not `repr(item)`
 
-#### Developing (2)
+#### Developing (1)
 
-- [PEP 313](https://www.python.org/dev/peps/pep-0313/)\* – Adding Roman Numeral ~~Literals~~ Functions to Python
 - [PEP 335](https://www.python.org/dev/peps/pep-0335/)\* – Overloadable Boolean ~~Operators~~ Operator Functions
 
 ### How do I use it?
@@ -60,7 +60,7 @@ True
 >>> rp.info(416)
 pepinfo(number=416, title='Add a frozendict builtin type', status='Rejected', creation='2012-02-29', url='https://www.python.org/dev/peps/pep-0416/')
 >>> rp.SUPPORTED
-frozenset({416, 3140, 326, 265, 303, 336, 559, 211, 212, 276, 349, 351})
+frozenset({416, 259, ..., 349, 351})
 >>> 
 ```
 

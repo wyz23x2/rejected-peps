@@ -5,3 +5,4 @@
 rejected[-_]peps/docs/
 dist/
 **/*.egg*
+**/linecounter.md
