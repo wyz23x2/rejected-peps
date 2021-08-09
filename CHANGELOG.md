@@ -7,7 +7,7 @@ _Release Date: 2021-08-09_
 #### New
 
 - Add support of [PEP 313](https://python.org/dev/peps/pep-0313/) — Adding Roman Numeral Literals to Python
-- Add functions `search(*s, strict=False)` and `search_one(*s, strict=True)`.
+- Add functions `search(*s, strict=False)`, `search_one(*s, strict=True)` and `get(*s)`.
 
 
 ### <u>0.3.1</u> Final

@@ -25,7 +25,7 @@ def search(*s, strict=False):
     func = ((lambda n: n) if strict else str.lower)
     for pep in sorted(SUPPORTED):
         t = info(pep).title
-        if any((func(x) in func(t)) for x in s):
+        if all((func(x) in func(t)) for x in s):
             yield pep
 def search_one(*s, strict=True):
     global SUPPORTED
@@ -35,21 +35,22 @@ def search_one(*s, strict=True):
     xs = []
     for pep in sorted(SUPPORTED):
         t = info(pep).title
+        j = 0
         for x in s:
             try:
-                if (func(x) in t.lower() or
-                    func(x) in func(t) or
-                    func(x) in t.upper()):
-                    if strict:
-                        xs.append(pep)
-                    else:
-                        return pep
+                j += (func(x) in t.lower() or
+                      func(x) in func(t) or
+                      func(x) in t.upper())
             except TypeError:
                 message = ["args must be type 'str', "
                            f"not {type(x).__name__!r}"]
                 if isinstance(x, bool):
                     message.append(f'. Did you mean strict={x!r}?')
                 raise TypeError(''.join(message)) from None
+        if j == len(s):
+            if not strict:
+                return pep
+            xs.append(pep)
     if not strict:
         return None
     if xs[1:]:
