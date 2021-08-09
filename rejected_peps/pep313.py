@@ -7,16 +7,16 @@ Created: 2003-04-01
 
 MODULE INFO
 
-This module implements the roman() function to convert numbers 
-to roman numbers, and the to_int() function to convert roman 
-numbers to ints. There are 3 modes:
+This module implements the to_roman() function to convert numbers or fractions 
+to roman numbers, and the from_roman() function to convert roman 
+numbers to numbers or fractions. There are 3 modes:
 - CLASSIC: Plain I, V, X etc.
 - MODERN: Allow IV (4), CM (900) etc. in addition to CLASSIC
 - LARGE: Allow up to 2 leading underscores before letter to mean ×1000,
          for example _M -> 1000*1000 = 1000000 in addition to MODERN
 The zero parameters control handling of zero. If None, 0 raises an error; 
-else it returns the value in roman(), and returns 0 if s is equal to it 
-in to_int(). You can control the global default (first set to None) with 
+else it returns the value in to_roman(), and returns 0 if s is equal to it 
+in from_roman(). You can control the global default (first set to None) with 
 the zero attribute.
 
 REFERENCES
@@ -24,6 +24,7 @@ REFERENCES
 PEP 313: <https://www.python.org/dev/peps/pep-0313/>
 """
 from numbers import Rational as _R, Integral as _I
+from fractions import Fraction as _F
 MODERN, CLASSIC, LARGE = 'modern', 'classic', 'large'
 classic_dict = {1000: 'M',
                 500: 'D',
@@ -57,12 +58,12 @@ large_dict = {1_000_000_000: '__M',
               10_000: '_X'}
 large_dict.update(modern_dict)
 DIGITS = set(classic_dict.values())
-zero = None
-def roman(x, mode=MODERN, *, zero=zero):
+default_zero = None
+def to_roman(x, mode=MODERN, *, zero=default_zero):
     if mode not in (MODERN, CLASSIC, LARGE):
         raise ValueError(f'Invalid mode {mode!r}')
     if isinstance(x, _R) and not isinstance(x, (_I, float)):
-        return f'{roman(x.numerator)}/{roman(x.denominator)}'
+        return f'{to_roman(x.numerator)}/{to_roman(x.denominator)}'
     try:
         x = int(x)
     except Exception as e:
@@ -75,7 +76,7 @@ def roman(x, mode=MODERN, *, zero=zero):
             raise ValueError('x cannot be 0')
         return zero
     if x < 0:
-        return f'-{roman(abs(x))}'
+        return f'-{to_roman(abs(x))}'
     r = {CLASSIC: classic_dict,
          MODERN: modern_dict,
          LARGE: large_dict}[mode]
@@ -86,7 +87,13 @@ def roman(x, mode=MODERN, *, zero=zero):
         if x <= 0:
             break
     return ''.join(lis)
-def to_int(s, *, zero=zero):
+def roman(*args, **kwargs):
+    import warnings as _w
+    _w.warn('roman() was renamed to to_roman() in v0.4.1 '
+            'and will be removed in v0.5.0. Use to_roman() instead.',
+            DeprecationWarning, stacklevel=2)
+    return to_roman(*args, **kwargs)
+def from_roman(s, *, zero=default_zero):
     if zero is not None and s == zero:
         return 0
     if not isinstance(s, str):
@@ -94,9 +101,12 @@ def to_int(s, *, zero=zero):
     if not s:
         raise ValueError('Roman string cannot be blank')
     if s[0] == '-':
-        return -to_int(s[1:])
+        return -from_roman(s[1:])
     if s[0] == '+':
-        return +to_int(s[1:])
+        return +from_roman(s[1:])
+    if s.count('/') == 1:
+        return _F(from_roman(s.split('/')[0]),
+                  from_roman(s.split('/')[1]))
     s = s.upper()
     if (set(s) - DIGITS - {'_'}) or not (set(s)-{'_'}):
         raise ValueError(f'Invalid roman numeral: {s!r}')
@@ -109,3 +119,9 @@ def to_int(s, *, zero=zero):
     if result == 0:
         raise ValueError(f'Invalid roman numeral: {s!r}')
     return result
+def to_int(*args, **kwargs):
+    import warnings as _w
+    _w.warn('to_int() was renamed to from_roman() in v0.4.1 '
+            'and will be removed in v0.5.0. Use from_roman() instead.',
+            DeprecationWarning, stacklevel=2)
+    return from_roman(*args, **kwargs)
