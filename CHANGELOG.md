@@ -7,9 +7,10 @@ _Release Date: 2021-08-09_
 #### Improved
 
 - The support of [PEP 313](https://python.org/dev/peps/pep-0313/) has underwent some major changes.
-	- **BREAKING**  `roman()` has been renamed to `to_roman()`. The original name is deprecated and will be removed in v0.5.
-	- **BREAKING**  `to_int()` has been renamed to `from_roman()`. The original name is deprecated and will be removed in v0.5.
-	- `from_roman()` now supports parsing roman fractions.
+  - **BREAKING**  `roman()` has been renamed to `to_roman()`. The original name is deprecated and will be removed in v0.5.
+  - **BREAKING**  `to_int()` has been renamed to `from_roman()`. The original name is deprecated and will be removed in v0.5.
+  - `from_roman()` now supports parsing roman fractions.
+- A minor cleanup was done for some files (removing unneeded imports etc.).
 
 ### <u>0.4.0</u>  _Final_
 
