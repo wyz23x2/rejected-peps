@@ -1,5 +1,18 @@
 # Rejected-PEPs Changelog
 
+### <u>0.4.2</u>  _Final_
+
+_Release Date: Not released_
+
+#### New
+
+- Rejected-PEPs is now typed! See [PEP 484](https://python.org/dev/peps/pep-0484.html) for more information about typing.
+
+#### Improved
+
+- `info()` now raises `rejected_peps.UnavailableError` if a PEP is supported but info is unavailable. It is a subclass of `NotImplementedError` and `LookupError`, so previous code catching `NotImplementedError` won't break.
+
+
 ### <u>0.4.1</u>  _Final_
 
 _Release Date: 2021-08-09_
