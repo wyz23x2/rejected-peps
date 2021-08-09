@@ -26,7 +26,7 @@ try:
     from . import pep416
 except ImportError as e:
     import pep416
-def freeze(obj, allow_frozendict=False):
+def freeze(obj, allow_frozendict: bool = False):
     try:
         hash(obj)
     except TypeError:

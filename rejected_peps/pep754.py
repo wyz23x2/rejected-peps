@@ -20,13 +20,13 @@ import math as _math
 NaN = float('nan')
 PosInf = float('inf')
 NegInf = -PosInf
-def isNaN(value):
+def isNaN(value) -> bool:
     return _math.isnan(value)
-def isPosInf(value):
+def isPosInf(value) -> bool:
     return _math.isinf(value) and value > 0
-def isNegInf(value):
+def isNegInf(value) -> bool:
     return _math.isinf(value) and value < 0
-def isFinite(value):
+def isFinite(value) -> bool:
     return _math.isfinite(value)
-def isInf(value):
+def isInf(value) -> bool:
     return _math.isinf(value)

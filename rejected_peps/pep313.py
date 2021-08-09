@@ -59,7 +59,7 @@ large_dict = {1_000_000_000: '__M',
 large_dict.update(modern_dict)
 DIGITS = set(classic_dict.values())
 default_zero = None
-def to_roman(x, mode=MODERN, *, zero=default_zero):
+def to_roman(x: _R, mode: str = MODERN, *, zero=default_zero) -> str:
     if mode not in (MODERN, CLASSIC, LARGE):
         raise ValueError(f'Invalid mode {mode!r}')
     if isinstance(x, _R) and not isinstance(x, (_I, float)):
@@ -93,7 +93,7 @@ def roman(*args, **kwargs):
             'and will be removed in v0.5.0. Use to_roman() instead.',
             DeprecationWarning, stacklevel=2)
     return to_roman(*args, **kwargs)
-def from_roman(s, *, zero=default_zero):
+def from_roman(s: str, *, zero=default_zero) -> _R:
     if zero is not None and s == zero:
         return 0
     if not isinstance(s, str):

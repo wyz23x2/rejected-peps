@@ -18,7 +18,7 @@ PEP 303: <https://www.python.org/dev/peps/pep-0303/>
 """
 PEP = 303
 
-def divmod(dividend, *divisors):
+def divmod(dividend, *divisors) -> tuple:
     # Mostly copied from PEP 303
     modulos = ()
     q = dividend
@@ -38,7 +38,7 @@ def divmod(dividend, *divisors):
         modulos = (r,) + modulos
         divisors = divisors[1:]
     return (q,) + modulos
-def rdivmod(dividend, *divisors):
+def rdivmod(dividend, *divisors) -> tuple:
     return divmod(dividend, *divisors[::-1])
 def inverse_divmod(seq, *factors):
     # Copied from PEP 303
