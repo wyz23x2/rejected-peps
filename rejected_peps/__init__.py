@@ -1,6 +1,7 @@
-__version__ = '0.4.2'
+__version__ = '0.5.0'
 import importlib as _imp
 from collections import namedtuple as _nt
+from itertools import chain as _chain
 # Typing
 from typing import Generator as _Gen, Optional as _O
 from types import ModuleType as _Module
@@ -17,9 +18,9 @@ def pep(n: int) -> _Module:
         raise ValueError(f'PEP {n!r} not supported') from None
 SUPPORTED = frozenset((204, 211, 212, 259,
                        265, 276, 281, 294,
-                       303, 313, 326, 336,
-                       349, 351, 416, 559,
-                       754, 3140))
+                       303, 313, 326, 335,
+                       336, 349, 351, 416,
+                       559, 754, 3140))
 # ↑ Not automatic because it's too slow
 def search(*s, strict: bool = False) -> _Gen:
     global SUPPORTED
@@ -30,7 +31,11 @@ def search(*s, strict: bool = False) -> _Gen:
         t = info(pep).title
         if all((func(x) in func(t)) for x in s):
             yield pep
-def search_one(*s, strict: bool = True) -> _O[int]:
+def _search_any(*s, strict: bool = False) -> _Gen:
+    for i in _chain.from_iterable(search(x, strict=strict) for x in s):
+        yield i
+search.any = _search_any
+def _search_one(*s, strict: bool = True) -> _O[int]:
     global SUPPORTED
     if not s:
         return
@@ -61,8 +66,55 @@ def search_one(*s, strict: bool = True) -> _O[int]:
     if not xs:
         raise ValueError(f'No match found')
     return xs[0]
+search.one = _search_one
+def search_one(*args, **kwargs):
+    import warnings as _w
+    _w.warn('search_one() is deprecated and will be removed in v0.9.',
+            PendingDeprecationWarning, 2)
+    return search.one(*args, **kwargs)
+def _search_one_any(*s, strict: bool = True) -> _O[int]:
+    global SUPPORTED
+    if not s:
+        return
+    func = ((lambda n: n) if strict else str.lower)
+    xs = []
+    for pep in sorted(SUPPORTED):
+        t = info(pep).title
+        for x in s:
+            try:
+                cond = (func(x) in t.lower() or
+                        func(x) in func(t) or
+                        func(x) in t.upper())
+                if cond:
+                    break
+            except TypeError:
+                message = ["args must be type 'str', ",
+                           f"not {type(x).__name__!r}"]
+                if isinstance(x, bool):
+                    message.append(f'. Did you mean strict={x!r}?')
+                raise TypeError(''.join(message)) from None
+        else:
+            continue
+        if not strict:
+            return pep
+        xs.append(pep)
+    if not strict:
+        return None
+    if xs[1:]:
+        raise ValueError(f'More than 1 match: {", ".join(map(str, xs))} ({len(xs)})')
+    if not xs:
+        raise ValueError(f'No match found')
+    return xs[0]
+search.one.any = _search_one_any
 def get(*s) -> _Module:
-    return pep(search_one(*s))
+    return pep(search.one(*s))
+def _get_any(*s) -> _Module:
+    return pep(search.one.any(*s))
+get.any = _get_any
+del _search_any
+del _search_one
+del _search_one_any
+del _get_any
 
 class UnavailableError(LookupError, NotImplementedError):
     pass

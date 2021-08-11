@@ -36,6 +36,15 @@ NeedOtherOperand = NeedOtherOperandType()
 _notimplemented_warning_message = ('NotImplemented should not be used '
                                    'in boolean contexts. Did you mean to '
                                    'return NeedOtherOperand?')
+def NOT(a) -> bool:
+    a_not = getattr(a, '__not__', None)
+    if a_not is None:
+        return not a
+    a_return = a_not()
+    if a_return is NeedOtherOperand or a_return is NotImplemented:
+        return not a
+    return bool(a_return)
+not_ = NOT
 class plain:
     def __init__(self):
         raise Exception('plain cannot be initialized')
@@ -77,18 +86,6 @@ class plain:
         return a or b
     or_ = OR
     NOT = not_ = staticmethod(NOT)
-def NOT(a) -> bool:
-    a_not = getattr(a, '__not__', None)
-    if a_not is None:
-        return not a
-    a_return = a_not()
-    if a_return is NeedOtherOperand:
-        return not a
-    if a_return is NotImplemented:
-        _w.warn(_notimplemented_warning_message,
-                Warning, 2)
-    return bool(a_return)
-not_ = NOT
 def AND(a, b):
     a_and = getattr(a, '__and1__', None)
     if a_and is None:

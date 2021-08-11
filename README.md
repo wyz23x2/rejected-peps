@@ -1,12 +1,12 @@
 ### What is this?
 
-[PEPs](https://www.python.org/dev/peps/) (Python Enhancement Proposals) are a big feature of the Python programming language. Some are accepted, and some were not. This package implements some PEPs that were rejected or withdrawn.
+[PEPs](https://www.python.org/dev/peps/) (Python Enhancement Proposals) are a big feature of the Python programming language. Some are accepted, and some were not. This package implements some PEPs that were rejected, deferred or withdrawn.
 
 ### Which PEPs are included?
 
 PEPs included need to match these points:
 
-- It's not a syntax or major API change.
+- It's not a syntax or major API change, or has a simple, clear way to bypass it.
 
 - It's about code, not governance etc.
 
