@@ -8,7 +8,7 @@ _Release Date: 2021-08-11_
 
 - Add support of [PEP 335](https://python.org/dev/peps/pep-0335/) — Overloadable Boolean ~~Operators~~ Operator Functions
 - The new `search.one` is now preferred over `search_one`.
-- Added `search.any` and `search.one.any` to match titles that contain _any_ of the arguments. The default behavior is still _all_ of them.
+- Add `search.any` and `search.one.any` to match titles that contain _any_ of the arguments. The default behavior is still _all_ of them.
 
 ### <u>0.4.2</u>  _Final_
 
@@ -31,9 +31,9 @@ _Release Date: 2021-08-09_
 #### Improved
 
 - The support of [PEP 313](https://python.org/dev/peps/pep-0313/) has underwent some major changes.
-  - **BREAKING**  `roman()` has been renamed to `to_roman()`. The original name is deprecated and will be removed in v0.6.
-  - **BREAKING**  `to_int()` has been renamed to `from_roman()`. The original name is deprecated and will be removed in v0.6.
-  - **BREAKING** `zero` has been renamed to `default_zero`. The original name is deprecated and will be removed in v0.6.
+  - **BREAKING**  `roman()` is renamed to `to_roman()`. The original name is deprecated and will be removed in v0.6.
+  - **BREAKING**  `to_int()` is renamed to `from_roman()`. The original name is deprecated and will be removed in v0.6.
+  - **BREAKING** `zero` is renamed to `default_zero`. The original name is deprecated and will be removed in v0.6.
   - `from_roman()` now supports parsing roman fractions.
 - A minor cleanup was done for some files (removing unneeded imports etc.).
 
