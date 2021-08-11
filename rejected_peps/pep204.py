@@ -1,4 +1,8 @@
 import sys
+try:
+    from . import pep211 as _p
+except ImportError:
+    import pep211 as _p
 class pep204:
     """\
 PEP INFO
@@ -34,4 +38,6 @@ PEP 204: <https://www.python.org/dev/peps/pep-204/>
                 step = 1
             return range(start, stop, step)
         return range(x)
+    def __repr__(self) -> str:
+        return repr(_p).replace('pep211', 'pep204')
 sys.modules[__name__] = pep204()

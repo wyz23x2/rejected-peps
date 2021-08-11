@@ -1,12 +1,12 @@
 ### What is this?
 
-[PEPs](https://www.python.org/dev/peps/) (Python Enhancement Proposals) are a big feature of the Python programming language. Some are accepted, and some were not. This package implements some PEPs that were rejected or withdrawn.
+[PEPs](https://www.python.org/dev/peps/) (Python Enhancement Proposals) are a big feature of the Python programming language. Some are accepted, and some were not. This package implements some PEPs that were rejected, deferred or withdrawn.
 
 ### Which PEPs are included?
 
 PEPs included need to match these points:
 
-- It's not a syntax or major API change.
+- It's not a syntax or major API change, or has a simple, clear way to bypass it.
 
 - It's about code, not governance etc.
 
@@ -19,7 +19,7 @@ Parts of bytecode, C API etc. are not implemented.
 
 PEPs with a \* are slightly changed.
 
-#### Finished (18)
+#### Finished (19)
 
 - [PEP 204](https://www.python.org/dev/peps/pep-0204/) — Range Literals
 - [PEP 211](https://www.python.org/dev/peps/pep-0211/) — Adding A New Outer Product Operator
@@ -32,6 +32,7 @@ PEPs with a \* are slightly changed.
 - [PEP 303](https://www.python.org/dev/peps/pep-0303/) — Extend `divmod()` for Multiple Divisors
 - [PEP 313](https://www.python.org/dev/peps/pep-0313/)\* – Adding Roman Numeral ~~Literals~~ Functions to Python
 - [PEP 326](https://www.python.org/dev/peps/pep-0326/) — A Case for Top and Bottom Values
+- [PEP 335](https://www.python.org/dev/peps/pep-0335/)\* – Overloadable Boolean ~~Operators~~ Operator Functions
 - [PEP 336](https://www.python.org/dev/peps/pep-0336/) — Make `None` callable
 - [PEP 349](https://www.python.org/dev/peps/pep-0349/)\* – Allow `str()` to return ~~unicode strings~~ bytes
 - [PEP 351](https://www.python.org/dev/peps/pep-0351/) — The `freeze` protocol
@@ -40,9 +41,10 @@ PEPs with a \* are slightly changed.
 - [PEP 754](https://python.org/dev/peps/pep-0754/) — IEEE 754 Floating Point Special Values
 - [PEP 3140](https://www.python.org/dev/peps/pep-3140/) – `str(container)` should call `str(item)`, not `repr(item)`
 
-#### Developing (1)
+#### Developing (2)
 
-- [PEP 335](https://www.python.org/dev/peps/pep-0335/)\* – Overloadable Boolean ~~Operators~~ Operator Functions
+- [PEP 535](https://python.org/dev/peps/pep-0535/) — Rich comparison chaining
+- [PEP 601](https://python.org/dev/peps/pep-0601/) — Forbid `return`/`break`/`continue` breaking out of `finally`
 
 ### How do I use it?
 Wiki is coming soon!
