@@ -17,7 +17,7 @@ PEP 259: <https://www.python.org/dev/peps/pep-0259/>
 PEP = 259
 
 import builtins as _b
-def print(*args, sep=' ', end='\n', flush=False):
+def print(*args, sep: str = ' ', end: str = '\n', flush: bool = False) -> None:
     if not args:
         return _b.print(sep=sep, end=end, flush=flush)
     # Use str.removesuffix as soon as support for Python 3.8 is dropped

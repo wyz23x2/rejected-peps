@@ -16,6 +16,6 @@ PEP 559: <https://www.python.org/dev/peps/pep-0559/>
 """
 PEP = 559
 
-def noop(*args, **kws):
+def noop(*args, **kws) -> None:
     # Copied
     return None

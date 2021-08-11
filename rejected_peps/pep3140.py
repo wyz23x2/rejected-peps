@@ -18,7 +18,7 @@ PEP = 3140
 import builtins as _b
 from collections.abc import Container as _C, Mapping as _M
 
-def str(x, *args, **kwargs):
+def str(x, *args, **kwargs) -> _b.str:
     if args or kwargs:
         return _b.str(x, *args, **kwargs)
     if (not isinstance(x, _C)) or isinstance(x, (_b.str, bytes)):

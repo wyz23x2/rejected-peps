@@ -1,8 +1,11 @@
-__version__ = '0.4.1'
+__version__ = '0.4.2'
 import importlib as _imp
 from collections import namedtuple as _nt
+# Typing
+from typing import Generator as _Gen, Optional as _O
+from types import ModuleType as _Module
 
-def pep(n: int):
+def pep(n: int) -> _Module:
     if (not isinstance(n, int)) or n < 0 or n > 9999:
         raise ValueError(f'Invalid PEP number {n!r}')
     try:
@@ -18,7 +21,7 @@ SUPPORTED = frozenset((204, 211, 212, 259,
                        349, 351, 416, 559,
                        754, 3140))
 # ↑ Not automatic because it's too slow
-def search(*s, strict=False):
+def search(*s, strict: bool = False) -> _Gen:
     global SUPPORTED
     if not s:
         return
@@ -27,7 +30,7 @@ def search(*s, strict=False):
         t = info(pep).title
         if all((func(x) in func(t)) for x in s):
             yield pep
-def search_one(*s, strict=True):
+def search_one(*s, strict: bool = True) -> _O[int]:
     global SUPPORTED
     if not s:
         return
@@ -42,7 +45,7 @@ def search_one(*s, strict=True):
                       func(x) in func(t) or
                       func(x) in t.upper())
             except TypeError:
-                message = ["args must be type 'str', "
+                message = ["args must be type 'str', ",
                            f"not {type(x).__name__!r}"]
                 if isinstance(x, bool):
                     message.append(f'. Did you mean strict={x!r}?')
@@ -58,14 +61,16 @@ def search_one(*s, strict=True):
     if not xs:
         raise ValueError(f'No match found')
     return xs[0]
-def get(*s):
+def get(*s) -> _Module:
     return pep(search_one(*s))
 
+class UnavailableError(LookupError, NotImplementedError):
+    pass
 pepinfo = _nt('pepinfo', ('number', 'title', 'status', 'creation', 'url'))
-def info(n: int):
+def info(n: int) -> pepinfo:
     doc = pep(n).__doc__.splitlines()
     if doc is None:
-        raise NotImplementedError(f'Info of PEP {n!r} unavailable')
+        raise UnavailableError(f'Info of PEP {n!r} unavailable')
     return pepinfo(number=n,
                    title=doc[2].split(' -- ')[1],
                    status=doc[3].lstrip('Status: '),
@@ -81,5 +86,5 @@ def __getattr__(name):
         else:
             return p
     raise AttributeError(f'module {__name__!r} has no attribute {name!r}')
-def __dir__():
+def __dir__() -> list:
     return sorted(set(globals().keys()) | {f'pep{n}' for n in SUPPORTED})

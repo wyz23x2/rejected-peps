@@ -14,10 +14,10 @@ numbers to numbers or fractions. There are 3 modes:
 - MODERN: Allow IV (4), CM (900) etc. in addition to CLASSIC
 - LARGE: Allow up to 2 leading underscores before letter to mean ×1000,
          for example _M -> 1000*1000 = 1000000 in addition to MODERN
-The zero parameters control handling of zero. If None, 0 raises an error; 
+The `zero` parameters control handling of zero. If None, 0 raises an error; 
 else it returns the value in to_roman(), and returns 0 if s is equal to it 
 in from_roman(). You can control the global default (first set to None) with 
-the zero attribute.
+the default_zero attribute.
 
 REFERENCES
 
@@ -59,7 +59,7 @@ large_dict = {1_000_000_000: '__M',
 large_dict.update(modern_dict)
 DIGITS = set(classic_dict.values())
 default_zero = None
-def to_roman(x, mode=MODERN, *, zero=default_zero):
+def to_roman(x: _R, mode: str = MODERN, *, zero=default_zero) -> str:
     if mode not in (MODERN, CLASSIC, LARGE):
         raise ValueError(f'Invalid mode {mode!r}')
     if isinstance(x, _R) and not isinstance(x, (_I, float)):
@@ -90,10 +90,10 @@ def to_roman(x, mode=MODERN, *, zero=default_zero):
 def roman(*args, **kwargs):
     import warnings as _w
     _w.warn('roman() was renamed to to_roman() in v0.4.1 '
-            'and will be removed in v0.5.0. Use to_roman() instead.',
+            'and roman() will be removed in v0.5.0. Use to_roman() instead.',
             DeprecationWarning, stacklevel=2)
     return to_roman(*args, **kwargs)
-def from_roman(s, *, zero=default_zero):
+def from_roman(s: str, *, zero=default_zero) -> _R:
     if zero is not None and s == zero:
         return 0
     if not isinstance(s, str):
@@ -122,6 +122,16 @@ def from_roman(s, *, zero=default_zero):
 def to_int(*args, **kwargs):
     import warnings as _w
     _w.warn('to_int() was renamed to from_roman() in v0.4.1 '
-            'and will be removed in v0.5.0. Use from_roman() instead.',
+            'and to_int() will be removed in v0.5.0. Use from_roman() instead.',
             DeprecationWarning, stacklevel=2)
     return from_roman(*args, **kwargs)
+def __getattr__(name: str):
+    if name == 'zero':
+        import warnings as _w
+        _w.warn('zero was renamed to default_zero in v0.4.1 '
+                'and zero will be removed in v0.5.0. '
+                'Use default_zero instead.', DeprecationWarning,
+                stacklevel=2)
+        return default_zero
+    raise AttributeError(f'module {__name__!r} has no attribute {name!r}')
+        

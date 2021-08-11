@@ -18,7 +18,8 @@ Related:
 PEP 279: <https://www.python.org/dev/peps/pep-0279/>
 """
 PEP = 212
+from typing import Sequence as _Seq
 
-def indices(sequence):
+def indices(sequence: _Seq) -> range:
     return range(len(sequence))
 irange = enumerate

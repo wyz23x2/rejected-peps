@@ -18,9 +18,10 @@ PEP 349: <https://www.python.org/dev/peps/pep-0349/>
 """
 PEP = 349
 import builtins as _b
+from typing import Union as _U
 # NOTE: bytearrays may be supported too, but not do it yet. <2021-08-08>
 
-def str(object=''):
+def str(object='') -> _U[_b.str, bytes]:
     if isinstance(object, (_b.str, bytes)):
         return object
     r = object.__str__()

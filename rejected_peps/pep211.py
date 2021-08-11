@@ -20,9 +20,9 @@ from itertools import product
 class wrapper:
     def __init__(self, obj):
         self._obj = obj
-    def __matmul__(self, other):
+    def __matmul__(self, other) -> product:
         return product(self(), getattr(other, '_obj', other))
-    def __rmatmul__(self, other):
+    def __rmatmul__(self, other) -> product:
         return product(getattr(other, '_obj', other), self())
     def __call__(self):
         return self._obj

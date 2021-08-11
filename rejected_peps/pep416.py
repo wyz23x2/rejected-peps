@@ -21,7 +21,7 @@ PEP = 416
 # Cannot subclass types.MappingProxyType
 class frozendict(dict):
     # Mostly copied from PEP 351 "Sample implementations"
-    def __hash__(self):
+    def __hash__(self) -> int:
         # PEP 416:
         # > However, frozendict values can be not hashable.
         # > A frozendict is hashable if and only if all values are hashable.
@@ -36,7 +36,7 @@ class frozendict(dict):
         hashes[0].sort()
         hashes[1].sort()
         return hash((tuple(hashes[0]), tuple(hashes[1])))
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f'{type(self).__name__}({super().__repr__()})'
     def __immutable(self, *args, **kwargs):
         raise TypeError(f'{type(self).__name__!r} object is immutable')
