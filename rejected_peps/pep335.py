@@ -9,7 +9,7 @@ MODULE INFO
 
 This module implements the and_/AND, or_/OR & not_/NOT functions that 
 check for the dunder methods specified in PEP 335. NeedOtherOperand is 
-alsp implemented. These functions also have "plain" versions in the 
+also implemented. These functions also have "plain" versions in the 
 `plain` namespace that does not do short-circuiting.
 
 REFERENCES
