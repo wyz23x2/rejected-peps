@@ -2,7 +2,7 @@
 
 ### <u>0.4.2</u>  _Final_
 
-_Release Date: Not released_
+_Release Date: 2021-08-11_
 
 #### New
 
@@ -11,6 +11,7 @@ _Release Date: Not released_
 #### Improved
 
 - `info()` now raises `rejected_peps.UnavailableError` if a PEP is supported but info is unavailable. It is a subclass of `NotImplementedError` and `LookupError`, so previous code catching `NotImplementedError` won't break.
+- Improve some documentation to be clearer.
 
 
 ### <u>0.4.1</u>  _Final_
@@ -22,6 +23,7 @@ _Release Date: 2021-08-09_
 - The support of [PEP 313](https://python.org/dev/peps/pep-0313/) has underwent some major changes.
   - **BREAKING**  `roman()` has been renamed to `to_roman()`. The original name is deprecated and will be removed in v0.5.
   - **BREAKING**  `to_int()` has been renamed to `from_roman()`. The original name is deprecated and will be removed in v0.5.
+  - **BREAKING** `zero` has been renamed to `default_zero`. The original name is deprecated and will be removed in v0.5.
   - `from_roman()` now supports parsing roman fractions.
 - A minor cleanup was done for some files (removing unneeded imports etc.).
 
