@@ -31,7 +31,7 @@ class NeedOtherOperandType(metaclass=_singleton):
         return 'NeedOtherOperand'
     __str__ = __repr__
     def __hash__(self):
-        return 9223363241139145779
+        return hash(id(self))
 NeedOtherOperand = NeedOtherOperandType()
 _notimplemented_warning_message = ('NotImplemented should not be used '
                                    'in boolean contexts. Did you mean to '
@@ -55,7 +55,7 @@ class plain:
             a_return = a_and(b)
             if a_return is NotImplemented:
                 _w.warn(_notimplemented_warning_message,
-                        Warning, 2)
+                        UserWarning, 2)
             if a_return is not NeedOtherOperand:
                 return a_return
         b_rand = getattr(b, '__rand2__', None)
@@ -72,7 +72,7 @@ class plain:
             a_return = a_or(b)
             if a_return is NotImplemented:
                 _w.warn(_notimplemented_warning_message,
-                        Warning, 2)
+                        UserWarning, 2)
             if a_return is not NeedOtherOperand:
                 return a_return
         b_ror = getattr(b, '__ror2__', None)
@@ -80,7 +80,7 @@ class plain:
             b_return = b_ror(a)
             if b_return is NotImplemented:
                 _w.warn(_notimplemented_warning_message,
-                        Warning, 2)
+                        UserWarning, 2)
             if b_return is not NeedOtherOperand:
                 return a_return
         return a or b
@@ -95,7 +95,7 @@ def AND(a, b):
         return plain.AND(a, b)
     if a_return is NotImplemented:
         _w.warn(_notimplemented_warning_message,
-                Warning, 2)
+                UserWarning, 2)
     return a_return
 and_ = AND
 def OR(a, b):
@@ -107,6 +107,6 @@ def OR(a, b):
         return plain.OR(a, b)
     if a_return is NotImplemented:
         _w.warn(_notimplemented_warning_message,
-                Warning, 2)
+                UserWarning, 2)
     return a_return
 or_ = OR
