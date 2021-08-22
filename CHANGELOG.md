@@ -20,7 +20,7 @@ _Release Date: 2021-08-22_
 
 #### Improved
 
-- `DeprecationWarning` is now issued instead of `Warning` in `pep335` if `NotImplemented` is returned. This matches the behavior starting from Python 3.9, and allows controlling it without effecting other `Warning` subclasses.
+- `DeprecationWarning` is now issued instead of `Warning` in [PEP 335](https://www.python.org/dev/peps/pep-0335/) if `NotImplemented` is returned. This matches the behavior starting from Python 3.9, and allows controlling it without effecting other `Warning` subclasses.
 - Since it's a singleton, `hash(pep335.NeedOtherOperand)` now returns the hash of it's ID, rather than the fixed value 9223363241139.
 - The filter action of `DeprecationWarning` is now turned to `always` since old names in `pep313` were deprecated in v0.4.1 and removal is scheduled on v0.6. `roman()`, `to_int()` and `zero` will be removed in the next release. Please make sure you use the new names `to_roman()`, `from_roman()` and `default_zero`.
 
@@ -46,7 +46,7 @@ _Release Date: 2021-08-11_
 
 #### New
 
-- Rejected-PEPs is now typed! See [PEP 484](https://www.python.org/dev/peps/pep-0484.html) for more information about typing.
+- Rejected-PEPs is now typed! See [PEP 484](https://www.python.org/dev/peps/pep-0484/) for more information about typing.
 
 #### Improved
 
@@ -104,7 +104,7 @@ _Release Date: 2021-08-08_
 
 #### New
 
-- Add support of [PEP 259](https://www.python.org/dev/peps/pep-0259) — Omit printing newline after newline
+- Add support of [PEP 259](https://www.python.org/dev/peps/pep-0259/) — Omit printing newline after newline
 
 #### Fixed
 
