@@ -2,7 +2,7 @@
 
 ### <u>0.6.0</u>  _Candidate 1_
 
-_Release Date: 2021-08-21_
+_Release Date: 2021-08-22_
 
 #### Breaking
 
@@ -11,7 +11,7 @@ _Release Date: 2021-08-21_
 	- Instead, the `apply(module=None, *, rename=pep294.underscore, strict=None)` function is added. [^1]  
 		- `module` defaults to `types` when it's `None`, otherwise attributes of it are set. 
 		- `rename` is a function that handles invalid names (i.e. a keyword or not an identifier). For example, `LambdaType` is converted to `lambda`, which is invalid. `rename(name)` returns the new variant.
-		- `strict` is a `bool` or `None`. If `strict` is `None`, It's `False` if `rename` is `pep294.original`, else `True`. If it's true and the new name is not a `str` or invalid, `TypeError` or `ValueError` is raised depending on the error. `rename` is _always_ called before checking.
+		- `strict` is a `bool` or `None`. If `strict` is `None`, it is `False` if `rename` is `pep294.original`, else `True`. If it's true and the new name is not a `str` or invalid, `TypeError` or `ValueError` is raised depending on the error. `rename` is _always_ called before checking.
 		- This function returns `None` since it is an in-place operation on `module`.
 	- The `underscore(s)`, `title(s)` and `original(s)` functions are for the `rename` parameter.
 		- `underscore` appends an underscore (`_`) to the name. For example, `lambda` → `lambda_`. This is the default value.
@@ -20,7 +20,13 @@ _Release Date: 2021-08-21_
 
 #### Improved
 
-- `UserWarning` is now issued instead of `Warning` in `pep335` if `NotImplemented` is returned. This allows control of it without modifying other subclasses.
+- `DeprecationWarning` is now issued instead of `Warning` in `pep335` if `NotImplemented` is returned. This matches the behavior starting from Python 3.9, and allows controlling it without effecting other `Warning` subclasses.
+- Since it's a singleton, `hash(pep335.NeedOtherOperand)` now returns the hash of it's ID, rather than the fixed value 9223363241139.
+- The filter action of `DeprecationWarning` is now turned to `always` since old names in `pep313` were deprecated in v0.4.1. `roman()`, `to_int()` and `zero` will be removed in the next version. Please make sure you use the new names `to_roman()`, `from_roman()` and `default_zero`.
+
+#### Fixed
+
+- The Python `DeprecationWarning` is now silenced in `pep335` since it's already issued manually. Note that `DeprecationWarning` in `NOT(NotImplementation)` is still the builtin one.
 
 [^1]: There is a built-in `apply()` function in Python 2.x, but anyway we didn't support 2.x from the start, and `apply` is just a name, not a keyword.
 
