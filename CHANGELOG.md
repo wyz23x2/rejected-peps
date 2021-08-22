@@ -2,7 +2,7 @@
 
 ### <u>0.6.0</u>  _Final_
 
-_Release Date: Not released_
+_Release Date: 2021-08-22_
 
 #### Removed
 
