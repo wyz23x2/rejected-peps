@@ -2,7 +2,7 @@
 
 ### <u>0.6.0</u>  _Candidate 2_
 
-_Release Date: Not released_
+_Release Date: 2021-08-22_
 
 #### Improved
 
@@ -20,7 +20,7 @@ _Release Date: 2021-08-22_
 #### Breaking
 
 - The [PEP 294](https://www.python.org/dev/peps/pep-0294/) implementation is rewritten.
-	- Importing `pep294` no longer directly sets attributes of the `types` module. The original behavior is fragile, surprising and requires `importlib.reload(types)` to rerun the code.
+	- Importing `pep294` no longer directly sets attributes of the `types` module. The original behavior is fragile, surprising and requires `importlib.reload(pep294)` to rerun the code.
 	- Instead, the `apply(module=None, *, rename=pep294.underscore, strict=None)` function is added. [^1]  
 		- `module` defaults to `types` when it's `None`, otherwise attributes of it are set. 
 		- `rename` is a function that handles invalid names (i.e. a keyword or not an identifier). For example, `LambdaType` is converted to `lambda`, which is invalid. `rename(name)` returns the new variant.
