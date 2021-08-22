@@ -1,8 +1,16 @@
 # Rejected-PEPs Changelog
 
-### <u>0.6.0</u>  _Candidate 2_
+### <u>0.6.0</u>  _Final_
 
 _Release Date: Not released_
+
+#### Removed
+
+- `roman()`, `to_int()` and `zero` deprecated for 5 versions in [PEP 313](https://www.python.org/dev/peps/pep-0313/) are removed. They were replaced by `to_roman()`, `from_roman()` and `default_zero` in v0.4.1.
+
+### <u>0.6.0</u>  _Candidate 2_
+
+_Release Date: 2021-08-22_
 
 #### Improved
 
