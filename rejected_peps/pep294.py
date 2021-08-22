@@ -7,21 +7,16 @@ Created: 2002-06-19
 
 MODULE INFO
 
-The apply(module=types, *, rename=underscore, strict=bool) function
-adds the lowercase regular version as in the PEP to 
-the module. If the new name is invalid (e.g. `lambda`), rename(name)
-is called. If strict is True, then the new return value of rename()
-and the type (should be str) will be checked. This is done in-place
-so apply() returns None.
-The underscore(), title() and original() functions are provided
-for the rename parameter.
-See the docstrings for more information.
+This module adds the lowercase regular version as in the PEP to 
+the types module and this module. If the new name is invalid 
+(e.g. `lambda`), a trailing underscore is added.
 
 REFERENCES
 
 PEP 294: <https://www.python.org/dev/peps/pep-0294/>
 """
 import keyword as _k
+from typing import Optional
 def underscore(s: str) -> str:
     """Appends an underscore (_) to s."""
     return f'{s}_'
@@ -34,8 +29,11 @@ def valid(name: str) -> bool:
     if not isinstance(name, str):
         return True
     return _k.iskeyword(name) + (not name.isidentifier()) == 0
-def apply(module=None, *, rename=underscore, strict: bool = True):
+def apply(module=None, *, rename=underscore,
+          strict: Optional[bool] = None):
     types = module or __import__('types')
+    if strict is None:
+        strict = rename is not original
     for name in dir(types):
         if name[-4:] == 'Type' and name[:-4]:
             new_name = name[:-4].lower()
