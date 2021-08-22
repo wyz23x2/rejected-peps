@@ -9,7 +9,7 @@ MODULE INFO
 
 This module implements solution #2 of PEP 212,
 i.e. the indices() and irange() functions.
-Note that irange() is exactly the same to PEP 279's enumerate().
+Note that irange() is exactly the same as PEP 279's enumerate().
 
 REFERENCES
 

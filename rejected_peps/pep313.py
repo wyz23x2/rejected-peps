@@ -12,7 +12,7 @@ to roman numbers, and the from_roman() function to convert roman
 numbers to numbers or fractions. There are 3 modes:
 - CLASSIC: Plain I, V, X etc.
 - MODERN: Allow IV (4), CM (900) etc. in addition to CLASSIC
-- LARGE: Allow up to 3 leading underscores before letter to mean ×1000,
+- LARGE: Allow up to 3 leading underscores before letter to mean ×1000 for each,
          for example _M -> 1000*1000 = 1000000 in addition to MODERN
 The `zero` parameters control handling of zero. If None, 0 raises an error; 
 else it returns the value in to_roman(), and returns 0 if s is equal to it 
