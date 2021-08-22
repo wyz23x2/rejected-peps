@@ -141,7 +141,10 @@ class TestPEP259(unittest.TestCase):
         self.assertEqual(s.getvalue(), '27575\t\n\n')
         del s
 
-def run():
-    unittest.main(verbosity=2)
+def run(**kwargs):
+    if 'v' in kwargs and 'verbosity' not in kwargs:
+        kwargs['verbosity'] = kwargs.pop('v')
+    kwargs.setdefault('verbosity', 2)
+    unittest.main(**kwargs)
 if __name__ == '__main__':
-    run()
+    run(v=20)
