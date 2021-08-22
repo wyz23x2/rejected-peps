@@ -34,7 +34,7 @@ class NeedOtherOperandType(metaclass=_singleton):
         return hash(id(self))
 NeedOtherOperand = NeedOtherOperandType()
 _notimplemented_warning_message = ('NotImplemented should not be used '
-                                   'in boolean a context. Did you mean to '
+                                   'in a boolean context. Did you mean to '
                                    'return NeedOtherOperand?')
 def NOT(a) -> bool:
     a_not = getattr(a, '__not__', None)

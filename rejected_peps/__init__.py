@@ -1,4 +1,4 @@
-__version__ = '0.6.0c1'
+__version__ = '0.6.0c2'
 import importlib as _imp
 from collections import namedtuple as _nt
 from itertools import chain as _chain
@@ -6,8 +6,6 @@ import warnings as _w
 # Typing
 from typing import Generator as _Gen, Optional as _O
 from types import ModuleType as _Module
-
-_w.simplefilter('always', DeprecationWarning)
 
 def pep(n: int) -> _Module:
     if (not isinstance(n, int)) or n < 0 or n > 9999:

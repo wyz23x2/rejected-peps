@@ -34,4 +34,4 @@ class NoneType(metaclass=_singleton):
         return isinstance(other, type(self)) or other is None
 none = NoneType()
 def isNone(object) -> bool:
-    return object is NoneType() or object is None
+    return object is none or object is None
