@@ -22,7 +22,7 @@ REFERENCES
 PEP 294: <https://www.python.org/dev/peps/pep-0294/>
 """
 import keyword as _k
-from typing import Optional
+from typing import Optional as _O
 def underscore(s: str) -> str:
     """Appends an underscore (_) to s."""
     return f'{s}_'
@@ -36,7 +36,7 @@ def valid(name: str) -> bool:
         return True
     return _k.iskeyword(name) + (not name.isidentifier()) == 0
 def apply(module=None, *, rename=underscore,
-          strict: Optional[bool] = None):
+          strict: _O[bool] = None):
     types = module or __import__('types')
     if strict is None:
         strict = rename is not original
