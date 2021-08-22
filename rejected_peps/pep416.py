@@ -7,8 +7,8 @@ Created: 2012-02-29
 
 MODULE INFO
 
-This module implements the frozendict type described in PEP 416. Note that since dict
-is ordered in supported versions, frozendict is also ordered.
+This module implements the frozendict type described in PEP 416. Note that
+since dict is ordered in supported versions, frozendict is also ordered.
 
 REFERENCES
 
@@ -27,7 +27,7 @@ class frozendict(dict):
         # > A frozendict is hashable if and only if all values are hashable.
         hashes = [], []
         # Needs two to avoid mixing keys and values, e.g.
-        # hash(frozendict({1: 2, 3: 4})) and hash(frozendict({1: 3, 2: 4}))
+        # hash(frozendict({1: 2, 3: 4})) & hash(frozendict({1: 3, 2: 4}))
         for k, v in self.items():
             hashes[0].append(hash(k))
             hashes[1].append(hash(v))
@@ -47,8 +47,8 @@ class frozendict(dict):
     setdefault  = __immutable
     pop         = __immutable
     popitem     = __immutable
-    def __dir__(self) -> list:
-        return sorted(set(object.__dir__(self))
-                      -{'__setitem__', '__delitem__',
-                        'clear', 'update', 'setdefault', 'pop',
-                        'popitem', f'_{type(self).__name__}__immutable'})
+    def __dir__(self):
+        return (set(object.__dir__(self))
+                -{'__setitem__', '__delitem__',
+                  'clear', 'update', 'setdefault', 'pop',
+                  'popitem', f'_{type(self).__name__}__immutable'})
