@@ -1,10 +1,13 @@
-__version__ = '0.5.0'
+__version__ = '0.6.0c1'
 import importlib as _imp
 from collections import namedtuple as _nt
 from itertools import chain as _chain
+import warnings as _w
 # Typing
 from typing import Generator as _Gen, Optional as _O
 from types import ModuleType as _Module
+
+_w.simplefilter('always', DeprecationWarning)
 
 def pep(n: int) -> _Module:
     if (not isinstance(n, int)) or n < 0 or n > 9999:
@@ -26,6 +29,8 @@ def search(*s, strict: bool = False) -> _Gen:
     global SUPPORTED
     if not s:
         return
+    if any((not isinstance(i, str)) for i in s):
+        raise TypeError('Invalid argument(s)')
     func = ((lambda n: n) if strict else str.lower)
     for pep in sorted(SUPPORTED):
         t = info(pep).title
@@ -68,7 +73,6 @@ def _search_one(*s, strict: bool = True) -> _O[int]:
     return xs[0]
 search.one = _search_one
 def search_one(*args, **kwargs):
-    import warnings as _w
     _w.warn('search_one() is deprecated and will be removed in v0.9.',
             PendingDeprecationWarning, 2)
     return search.one(*args, **kwargs)
@@ -120,8 +124,8 @@ class UnavailableError(LookupError, NotImplementedError):
     pass
 pepinfo = _nt('pepinfo', ('number', 'title', 'status', 'creation', 'url'))
 def info(n: int) -> pepinfo:
-    doc = pep(n).__doc__.splitlines()
-    if doc is None:
+    doc = getattr(pep(n), '__doc__', '').splitlines()
+    if not doc[3:]:
         raise UnavailableError(f'Info of PEP {n!r} unavailable')
     return pepinfo(number=n,
                    title=doc[2].split(' -- ')[1],

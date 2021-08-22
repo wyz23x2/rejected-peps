@@ -47,3 +47,8 @@ class frozendict(dict):
     setdefault  = __immutable
     pop         = __immutable
     popitem     = __immutable
+    def __dir__(self) -> list:
+        return sorted(set(object.__dir__(self))
+                      -{'__setitem__', '__delitem__',
+                        'clear', 'update', 'setdefault', 'pop',
+                        'popitem', f'_{type(self).__name__}__immutable'})

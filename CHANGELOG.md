@@ -1,12 +1,42 @@
 # Rejected-PEPs Changelog
 
+### <u>0.6.0</u>  _Candidate 1_
+
+_Release Date: 2021-08-22_
+
+#### Breaking
+
+- The [PEP 294](https://www.python.org/dev/peps/pep-0294/) implementation is rewritten.
+	- Importing `pep294` no longer directly sets attributes of the `types` module. The original behavior is fragile, surprising and requires `importlib.reload(types)` to rerun the code.
+	- Instead, the `apply(module=None, *, rename=pep294.underscore, strict=None)` function is added. [^1]  
+		- `module` defaults to `types` when it's `None`, otherwise attributes of it are set. 
+		- `rename` is a function that handles invalid names (i.e. a keyword or not an identifier). For example, `LambdaType` is converted to `lambda`, which is invalid. `rename(name)` returns the new variant.
+		- `strict` is a `bool` or `None`. If `strict` is `None`, it is `False` if `rename` is `pep294.original`, else `True`. If it's true and the new name is not a `str` or invalid, `TypeError` or `ValueError` is raised depending on the error. `rename` is _always_ called before checking.
+		- This function returns `None` since it is an in-place operation on `module`.
+	- The `underscore(s)`, `title(s)` and `original(s)` functions are for the `rename` parameter.
+		- `underscore` appends an underscore (`_`) to the name. For example, `lambda` → `lambda_`. This is the default value.
+		- `title` is an alias of `str.title`. For example, `lambda` → `Lambda`.
+		- `original` just returns the name unchanged. This is usually used when attributes aren't meant to be accessed by the `types.x` syntax, but `getattr(types, 'x')` etc. 
+
+#### Improved
+
+- `DeprecationWarning` is now issued instead of `Warning` in `pep335` if `NotImplemented` is returned. This matches the behavior starting from Python 3.9, and allows controlling it without effecting other `Warning` subclasses.
+- Since it's a singleton, `hash(pep335.NeedOtherOperand)` now returns the hash of it's ID, rather than the fixed value 9223363241139.
+- The filter action of `DeprecationWarning` is now turned to `always` since old names in `pep313` were deprecated in v0.4.1 and removal is scheduled on v0.6. `roman()`, `to_int()` and `zero` will be removed in the next release. Please make sure you use the new names `to_roman()`, `from_roman()` and `default_zero`.
+
+#### Fixed
+
+- The Python `DeprecationWarning` is now silenced in `pep335` since it's already issued manually. Note that `DeprecationWarning` in `NOT(NotImplementation)` is still the builtin one.
+
+[^1]: There is a built-in `apply()` function in Python 2.x, but anyway we didn't support 2.x from the start, and `apply` is just a name, not a keyword.
+
 ### <u>0.5.0</u>  _Final_
 
 _Release Date: 2021-08-11_
 
 #### New
 
-- Add support of [PEP 335](https://python.org/dev/peps/pep-0335/) — Overloadable Boolean ~~Operators~~ Operator Functions
+- Add support of [PEP 335](https://www.python.org/dev/peps/pep-0335/) — Overloadable Boolean ~~Operators~~ Operator Functions
 - The new `search.one` is now preferred over `search_one`.
 - Add `search.any` and `search.one.any` to match titles that contain _any_ of the arguments. The default behavior is still _all_ of them.
 
@@ -16,7 +46,7 @@ _Release Date: 2021-08-11_
 
 #### New
 
-- Rejected-PEPs is now typed! See [PEP 484](https://python.org/dev/peps/pep-0484.html) for more information about typing.
+- Rejected-PEPs is now typed! See [PEP 484](https://www.python.org/dev/peps/pep-0484.html) for more information about typing.
 
 #### Improved
 
@@ -30,7 +60,7 @@ _Release Date: 2021-08-09_
 
 #### Improved
 
-- The support of [PEP 313](https://python.org/dev/peps/pep-0313/) has underwent some major changes.
+- The support of [PEP 313](https://www.python.org/dev/peps/pep-0313/) has underwent some major changes.
   - **BREAKING**  `roman()` is renamed to `to_roman()`. The original name is deprecated and will be removed in v0.6.
   - **BREAKING**  `to_int()` is renamed to `from_roman()`. The original name is deprecated and will be removed in v0.6.
   - **BREAKING** `zero` is renamed to `default_zero`. The original name is deprecated and will be removed in v0.6.
@@ -43,7 +73,7 @@ _Release Date: 2021-08-09_
 
 #### New
 
-- Add support of [PEP 313](https://python.org/dev/peps/pep-0313/) — Adding Roman Numeral ~~Literals~~ Functions to Python
+- Add support of [PEP 313](https://www.python.org/dev/peps/pep-0313/) — Adding Roman Numeral ~~Literals~~ Functions to Python
 - Add functions `search(*s, strict=False)`, `search_one(*s, strict=True)` and `get(*s)`.
 
 
@@ -54,8 +84,8 @@ _Release Date: 2021-08-08_
 #### New
 
 - Add support of:
-	- [PEP 294](https://python.org/dev/peps/pep-0294/) — Type Names in the types Module
-	- [PEP 754](https://python.org/dev/peps/pep-0754/) — IEEE 754 Floating Point Special Values
+	- [PEP 294](https://www.python.org/dev/peps/pep-0294/) — Type Names in the types Module
+	- [PEP 754](https://www.python.org/dev/peps/pep-0754/) — IEEE 754 Floating Point Special Values
 
 ### <u>0.3.0</u>  _Final_
 
