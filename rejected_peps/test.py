@@ -10,7 +10,23 @@ def PEP(cls):
     if module is None:
         return unittest.skip('Import failure')(cls)
     setattr(cls, f'pep{num}', module)
+    setattr(cls, 'num', num)
     return cls
+objects = (1,
+           20.5,
+           complex(6, 2),
+           '666',
+           b'777',
+           (8, 9, 10),
+           [8, 9, 10],
+           {8: 9, 10: 11, 12: 13},
+           {8, 9, 10},
+           memoryview(b'Hello, world!'),
+           True,
+           (x for x in range(25)),
+           enumerate([555, 999, 666, -111]))
+iterables = objects[5:9]
+
 @PEP
 class TestPEP204(unittest.TestCase):
     def test_all_given(self):
@@ -72,19 +88,6 @@ class TestPEP211(unittest.TestCase):
             a, b = args[:2]
         return self.assertEqual(a, b, *args[2:], **kwargs)
     def test_call(self):
-        objects = (1,
-                   20.5,
-                   complex(6, 2),
-                   '666',
-                   b'777',
-                   (8, 9, 10),
-                   [8, 9, 10],
-                   {8: 9, 10: 11, 12: 13},
-                   {8, 9, 10},
-                   memoryview(b'Hello, world!'),
-                   True,
-                   (x for x in range(25)),
-                   enumerate([555, 999, 666, -111]))
         for obj in objects:
             with self.subTest(obj=obj):
                 self.assertEqual(self.w(obj)(), obj)
@@ -97,6 +100,46 @@ class TestPEP211(unittest.TestCase):
         self.assertEq((3.14, 3.15) @ self.w((2.71, 2.72)),
                       self.itertools.product((3.14, 3.15),
                                              (2.71, 2.72)))
+@PEP
+class TestPEP212(unittest.TestCase):
+    def test_indices(self):
+        for i in iterables:
+            with self.subTest(i=i):
+                self.assertEqual(self.pep212.indices(i), range(len(i)))
+    def test_irange(self):
+        for i in iterables:
+            with self.subTest(i=i):
+                self.assertEqual(list(self.pep212.irange(i)),
+                                list(enumerate(i)))
+                self.assertEqual(list(self.pep212.irange(i)),
+                                list(zip(range(len(i)), i)))
+@PEP
+class TestPEP259(unittest.TestCase):
+    def setUp(self):
+        self.sio = __import__('io').StringIO
+    def test_regular(self):
+        s = self.sio()
+        self.pep259.print(file=s)
+        self.assertEqual(s.getvalue(), '\n')
+        del s
+        s = self.sio()
+        self.pep259.print(1, 2, 3, 4, file=s)
+        self.assertEqual(s.getvalue(), '1 2 3 4\n')
+        del s
+        s = self.sio()
+        self.pep259.print(787, '4949848373737', -1.5,
+                          sep='\n', end='\t123\n', file=s)
+        self.assertEqual(s.getvalue(), '787\n4949848373737\n-1.5\t123\n')
+        del s
+    def test_omit(self):
+        s = self.sio()
+        self.pep259.print(1, 2, 3, 4, '\n', file=s)
+        self.assertEqual(s.getvalue(), '1 2 3 4 \n')
+        del s
+        s = self.sio()
+        self.pep259.print(27575, '\n\n', sep='\t', file=s)
+        self.assertEqual(s.getvalue(), '27575\t\n\n')
+        del s
 
 def run():
     unittest.main(verbosity=2)
