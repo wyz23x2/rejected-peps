@@ -9,7 +9,7 @@ Created: 2001-08-08
 MODULE INFO
 
 This module implements the sorting function on dicts in PEP 265.
-However, its __name__ is changed to itemlist, because it returns a list,
+However, its __name__ is changed to itemlist because it returns a list,
 not the regular items() type in Python 3. items() is an alias. Also,
 since dicts are ordered in supported versions, the sortby argument
 accepts -1 (ORIGINAL), 0 (KEYS) and 1 (VALUES).
