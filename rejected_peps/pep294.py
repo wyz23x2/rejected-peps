@@ -48,7 +48,7 @@ def apply(module=None, *, rename=underscore,
                 if strict and not valid(r):
                     raise ValueError(f'Invalid name {r!r}')
                 new_name = r
-            if strict and type(r) is not str:
+            if strict and type(new_name) is not str:
                 # str subclasses aren't allowed
                 raise TypeError(f'Invalid name {new_name!r} with type '
                                 f'{type(r).__name__!r}')

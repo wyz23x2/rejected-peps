@@ -70,7 +70,9 @@ def to_roman(x: _R, mode: str = MODERN, *, zero=default_zero) -> str:
     if isinstance(x, _R) and not isinstance(x, (_I, float)):
         return f'{to_roman(x.numerator)}/{to_roman(x.denominator)}'
     try:
-        x = int(x)
+        x = getattr(x, '__index__', (lambda *_: int(x)))()
+        if not isinstance(x, int):
+            raise TypeError(f'Invalid __index__ type {type(x).__name__!r}')
     except Exception as e:
         try:
             x = int(x, 0)
