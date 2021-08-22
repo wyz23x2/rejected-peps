@@ -1,4 +1,4 @@
-__version__ = '0.6.0c2'
+__version__ = '0.6.0'
 import importlib as _imp
 from collections import namedtuple as _nt
 from itertools import chain as _chain

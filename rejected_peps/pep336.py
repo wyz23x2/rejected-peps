@@ -7,7 +7,7 @@ Created: 2004-10-28
 
 MODULE INFO
 
-This module adds NoneType that makes None callable, 
+This module adds NoneType that makes None callable,
 and instance none (None is a keyword). This breaks the `x is None` usage, 
 so `isNone(obj)` checks if obj is None or none.
 
