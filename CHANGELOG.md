@@ -1,5 +1,17 @@
 # Rejected-PEPs Changelog
 
+### <u>0.6.0</u>  _Candidate 2_
+
+_Release Date: Not released_
+
+#### Improved
+
+- 3 leading underscores are now accepted in `pep335.large_dict`, e.g. `___D` → 500,000,000,000.
+
+#### Fixed
+
+- Correct a typo in the [PEP 335](https://www.python.org/dev/peps/pep-0335/) warning message.
+
 ### <u>0.6.0</u>  _Candidate 1_
 
 _Release Date: 2021-08-22_
@@ -22,7 +34,10 @@ _Release Date: 2021-08-22_
 
 - `DeprecationWarning` is now issued instead of `Warning` in [PEP 335](https://www.python.org/dev/peps/pep-0335/) if `NotImplemented` is returned. This matches the behavior starting from Python 3.9, and allows controlling it without effecting other `Warning` subclasses.
 - Since it's a singleton, `hash(pep335.NeedOtherOperand)` now returns the hash of it's ID, rather than the fixed value 9223363241139.
-- The filter action of `DeprecationWarning` is now turned to `always` since old names in `pep313` were deprecated in v0.4.1 and removal is scheduled on v0.6. `roman()`, `to_int()` and `zero` will be removed in the next release. Please make sure you use the new names `to_roman()`, `from_roman()` and `default_zero`.
+
+#### Deprecated
+
+- The filter action of `DeprecationWarning` is now turned to `always` since old names in `pep313` were deprecated in v0.4.1 and removal is scheduled on v0.6. `roman()`, `to_int()` and `zero` will be removed in v0.6.0 final. Please make sure you use the new names `to_roman()`, `from_roman()` and `default_zero`.
 
 #### Fixed
 
