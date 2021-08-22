@@ -21,6 +21,9 @@ def print(*args, sep: str = ' ', end: str = '\n', flush: bool = False) -> None:
     if not args:
         return _b.print(sep=sep, end=end, flush=flush)
     # Use str.removesuffix as soon as support for Python 3.8 is dropped
+    if not isinstance(end, (str, type(None))):
+        raise TypeError(f'end must be None or a string, '
+                        f'not {type(sep).__name__}')
     if str(args[-1]).endswith('\n') and end.startswith('\n'):
         return _b.print(*args[:-1], str(args[-1])[:-1],
                         sep=sep, end=end, flush=flush)

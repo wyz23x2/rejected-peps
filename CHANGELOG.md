@@ -11,6 +11,7 @@ _Release Date: Not released_
 #### Fixed
 
 - Correct a typo in the [PEP 335](https://www.python.org/dev/peps/pep-0335/) warning message.
+- Raise `TypeError` early in `print()` of [PEP 259](https://www.python.org/dev/peps/pep-0259/) when `end` is not `None` or a `str` to prevent unhelpful messages for `str.startswith` and incorrect usage of non str-subclass `startswith` methods.
 
 ### <u>0.6.0</u>  _Candidate 1_
 
@@ -73,13 +74,16 @@ _Release Date: 2021-08-11_
 
 _Release Date: 2021-08-09_
 
-#### Improved
+#### Breaking
 
 - The support of [PEP 313](https://www.python.org/dev/peps/pep-0313/) has underwent some major changes.
-  - **BREAKING**  `roman()` is renamed to `to_roman()`. The original name is deprecated and will be removed in v0.6.
-  - **BREAKING**  `to_int()` is renamed to `from_roman()`. The original name is deprecated and will be removed in v0.6.
-  - **BREAKING** `zero` is renamed to `default_zero`. The original name is deprecated and will be removed in v0.6.
+  - `roman()` is renamed to `to_roman()`. The original name is deprecated and will be removed in v0.6.
+  - `to_int()` is renamed to `from_roman()`. The original name is deprecated and will be removed in v0.6.
+  - `zero` is renamed to `default_zero`. The original name is deprecated and will be removed in v0.6.
   - `from_roman()` now supports parsing roman fractions.
+
+#### Improved
+
 - A minor cleanup was done for some files (removing unneeded imports etc.).
 
 ### <u>0.4.0</u>  _Final_
