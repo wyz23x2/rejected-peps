@@ -7,16 +7,16 @@ Created: 2003-04-01
 
 MODULE INFO
 
-This module implements the to_roman() function to convert numbers or fractions 
-to roman numbers, and the from_roman() function to convert roman 
+This module implements the to_roman() function to convert numbers or fractions
+to roman numbers, and the from_roman() function to convert roman
 numbers to numbers or fractions. There are 3 modes:
 - CLASSIC: Plain I, V, X etc.
 - MODERN: Allow IV (4), CM (900) etc. in addition to CLASSIC
 - LARGE: Allow up to 3 leading underscores before letter to mean ×1000 for each,
          for example _M -> 1000*1000 = 1000000 in addition to MODERN
-The `zero` parameters control handling of zero. If None, 0 raises an error; 
-else it returns the value in to_roman(), and returns 0 if s is equal to it 
-in from_roman(). You can control the global default (first set to None) with 
+The `zero` parameters control handling of zero. If None, 0 raises an error;
+else it returns the value in to_roman(), and returns 0 if s is equal to it
+in from_roman(). You can control the global default (first set to None) with
 the default_zero attribute.
 
 REFERENCES
@@ -26,6 +26,7 @@ PEP 313: <https://www.python.org/dev/peps/pep-0313/>
 from numbers import Rational as _R, Integral as _I
 from fractions import Fraction as _F
 MODERN, CLASSIC, LARGE = 'modern', 'classic', 'large'
+a
 classic_dict = {1000: 'M',
                 500: 'D',
                 100: 'C',

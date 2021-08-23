@@ -7,7 +7,7 @@ Created: 2001-06-11
 
 MODULE INFO
 
-This module provides the print() function that omits the trailing 
+This module provides the print() function that omits the trailing
 newline of the last argument if `end` starts with '\\n'.
 
 REFERENCES

@@ -7,9 +7,9 @@ Created: 2005-08-02
 
 MODULE INFO
 
-This module changes str() to allow returning **bytes**. 
-Since all strings are unicode starting from Python 3, 
-the title is changed. Note that str() is made a function, 
+This module changes str() to allow returning **bytes**.
+Since all strings are unicode starting from Python 3,
+the title is changed. Note that str() is made a function,
 and the three argument form is disallowed.
 
 REFERENCES
