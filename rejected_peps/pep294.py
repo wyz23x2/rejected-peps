@@ -8,7 +8,7 @@ Created: 2002-06-19
 MODULE INFO
 
 The apply(module=types, *, rename=underscore, strict=bool) function
-adds the lowercase regular version as in the PEP to 
+adds the lowercase regular version as in the PEP to
 the module. If the new name is invalid (e.g. `lambda`), rename(name)
 is called. If strict is True, then the new return value of rename()
 and the type (should be str) will be checked. This is done in-place

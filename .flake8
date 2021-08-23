@@ -1,0 +1,58 @@
+[flake8]
+# E101  indentation contains mixed spaces and tabs
+# E111  indentation is not a multiple of four
+# E112  expected an indented block
+# E113  unexpected indentation
+# E115  expected an indented block (comment)
+# E117  over-indented
+# E201  whitespace after '('
+# E202  whitespace before ')'
+# E203  whitespace before ':'
+# E211  whitespace before '('
+# E223  tab before operator
+# E224  tab after operator
+# E231  missing whitespace after ',', ';', or ':'
+# E242  tab after ','
+# E251  unexpected spaces around keyword / parameter equals
+# E261  at least two spaces before inline comment
+# E262  inline comment should start with '#'
+# E265  block comment should start with '#'
+# E271  multiple spaces after keyword
+# E272  multiple spaces before keyword
+# E273  tab after keyword
+# E274  tab before keyword
+# E275  missing whitespace after keyword
+# E303  too many blank lines (3)
+# E304  blank lines found after function decorator
+# E501  line too long (>99 chars)
+# E502  the backslash is redundant between brackets
+# E702  multiple statements on one line (semicolon)
+# E703  statement ends with a semicolon
+# E711  comparison to None should be 'if cond is None:'
+# E712  comparison to True should be 'if cond is True:' or 'if cond:'
+# E713  test for membership should be 'not in'
+# E714  test for object identity should be 'is not'
+# E741  do not use variables named 'l', 'O', or 'I'
+# E742  do not define classes named 'l', 'O', or 'I'
+# E743  do not define functions named 'l', 'O', or 'I'
+# E901  SyntaxError or IndentationError
+# W1    Indentation warning
+# W2    Whitespace warning
+# W505  doc line too long (>84 chars)
+select =
+    E101, E111, E112, E113, E115, E117,
+    E201, E202, E203, E211, E223, E224,
+    E231, E242, E251,
+    E261, E262, E265,
+    E271, E272, E273, E274, E275,
+    E303, E304,
+    E501, E502,
+    E702, E703,
+    E711, E712, E713, E714,
+    E741, E742, E743,
+    E901,
+    W1, W2, W505,
+    F, C901
+ignore = F541, F703, F811, F821
+max-line-length = 99
+max-doc-length  = 99

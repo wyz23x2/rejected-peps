@@ -7,7 +7,7 @@ Created: 2003-03-28
 
 MODULE INFO
 
-This module implements NaN, PosInf, NegInf and the functions 
+This module implements NaN, PosInf, NegInf and the functions
 in PEP 754.
 
 REFERENCES

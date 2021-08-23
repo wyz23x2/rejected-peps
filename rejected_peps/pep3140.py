@@ -7,7 +7,7 @@ Created: 2008-05-27
 
 MODULE INFO
 
-This module changes str() to a function matching behavior 
+This module changes str() to a function matching behavior
 described in the PEP.
 
 REFERENCES
