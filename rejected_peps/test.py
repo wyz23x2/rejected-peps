@@ -6,7 +6,10 @@ def PEP(cls):
     try:
         module = importlib.import_module(f'pep{num}')
     except ImportError:
-        module = None
+        try:
+            module = importlib.import_module(f'.pep{num}', 'rejected_peps')
+        except ImportError:
+            module = None
     if module is None:
         return unittest.skip('Import failure')(cls)
     setattr(cls, f'pep{num}', module)
@@ -140,6 +143,47 @@ class TestPEP259(unittest.TestCase):
         self.pep259.print(27575, '\n\n', sep='\t', file=s)
         self.assertEqual(s.getvalue(), '27575\t\n\n')
         del s
+@PEP
+class TestPEP265(unittest.TestCase):
+    def test_sorted(self):
+        self.assertIs(self.pep265.sorted, sorted)
+    def test_constants(self):
+        self.assertEqual(self.pep265.ORIGINAL, -1)
+        self.assertEqual(self.pep265.KEYS, 0)
+        self.assertEqual(self.pep265.VALUES, +1)
+    def test_itemlist(self):
+        import math
+        sp = self.pep265
+        testdict = {1: 9, 5: 6, 3: 3}
+        # Test ORIGINAL
+        self.assertListEqual(sp.itemlist(testdict, sp.ORIGINAL),
+                             list(testdict.items()))
+        # Test KEYS & key
+        self.assertListEqual(sp.itemlist(testdict, sp.KEYS,
+                                         key=math.log2),
+                             [(1, 9), (3, 3), (5, 6)])
+        # Test VALUES & reverse
+        self.assertListEqual(sp.itemlist(testdict, sp.VALUES, reverse=True),
+                             [(1, 9), (5, 6), (3, 3)])
+        # Test ORIGINAL & reverse
+        self.assertListEqual(sp.itemlist(testdict, sp.ORIGINAL, reverse=True),
+                             [(3, 3), (5, 6), (1, 9)])
+        with self.assertRaises(TypeError):
+            sp.itemlist({None: 1, 3: 2, 4: None}, sp.KEYS)
+    def test_alias(self):
+        self.assertIs(self.pep265.items, self.pep265.itemlist)
+@PEP
+class TestPEP276(unittest.TestCase):
+    def test_subclass(self):
+        self.assertIsInstance(self.pep276.int(20), int)
+    def test_iter(self):
+        self.assertTupleEqual(tuple(self.pep276.int(99)),
+                              tuple(range(99)))
+        self.assertTupleEqual(tuple(self.pep276.int('0')),
+                              tuple(range(0)))
+        self.assertTupleEqual(tuple(self.pep276.int(-3.14)),
+                              tuple(range(0)))
+
 
 def run(**kwargs):
     if 'v' in kwargs and 'verbosity' not in kwargs:
@@ -147,4 +191,4 @@ def run(**kwargs):
     kwargs.setdefault('verbosity', 2)
     unittest.main(**kwargs)
 if __name__ == '__main__':
-    run(v=20)
+    run(v=2)
