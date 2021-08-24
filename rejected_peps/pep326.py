@@ -52,6 +52,7 @@ class MaxType(metaclass=_singleton):
     def __repr__(self) -> str:
         return 'Max'
     __str__ = __repr__
+
 # 4 names appeared in PEP 326
 Min = UniversalMinimum = MinType()
 Max = UniversalMaximum = MaxType()

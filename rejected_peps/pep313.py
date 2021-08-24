@@ -26,7 +26,6 @@ PEP 313: <https://www.python.org/dev/peps/pep-0313/>
 from numbers import Rational as _R, Integral as _I
 from fractions import Fraction as _F
 MODERN, CLASSIC, LARGE = 'modern', 'classic', 'large'
-a
 classic_dict = {1000: 'M',
                 500: 'D',
                 100: 'C',
@@ -65,6 +64,7 @@ large_dict = {1_000_000_000_000: '___M',
 large_dict.update(modern_dict)
 DIGITS = set(classic_dict.values())
 default_zero = None
+
 def to_roman(x: _R, mode: str = MODERN, *, zero=default_zero) -> str:
     if mode not in (MODERN, CLASSIC, LARGE):
         raise ValueError(f'Invalid mode {mode!r}')

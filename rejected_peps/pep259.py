@@ -15,8 +15,8 @@ REFERENCES
 PEP 259: <https://www.python.org/dev/peps/pep-0259/>
 """
 PEP = 259
-
 import builtins as _b
+
 def print(*args, sep: str = ' ', end: str = '\n', file=None,
           flush: bool = False) -> None:
     if not args:

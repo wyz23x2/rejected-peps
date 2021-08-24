@@ -1,5 +1,5 @@
 import unittest
-import random
+import random  # NOQA
 def PEP(cls):
     import importlib
     num = int(cls.__name__.split('PEP')[1])
