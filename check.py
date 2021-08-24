@@ -13,7 +13,8 @@ if __name__ == '__main__':
     parser.add_argument('-r', '--coverage', action='count', default=0, dest='r',
                         help='Run coverage using green. '
                         'Specify 2+ times to keep the .coverage file.')
-    parser.add_argument('--n8', '--nf', '--no-flake8', action='store_true', dest='nf',
+    parser.add_argument('--n8', '--nf', '--no-flake8',
+                        action='store_true', dest='nf',
                         help='Disable flake8 checking.')
     parser.add_argument('--nb', '--no-bandint', action='store_true',
                         help='Disable bandint security checking.')

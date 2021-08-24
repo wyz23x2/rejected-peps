@@ -255,6 +255,85 @@ class TestPEP303(unittest.TestCase):
     def test_inverse(self):
         self.assertEqual(self.pep303.inverse_divmod([0, 1, 4, 3, 2],
                                                     9, 5, 7, 3), 200)
+@PEP
+class TestPEP313(unittest.TestCase):
+    def test_to(self):
+        f = self.pep313.to_roman
+        # MODERN
+        self.assertEqual(f(111), 'CXI')
+        self.assertEqual(f(-49), '-IL')
+        # CLASSIC
+        self.assertEqual(f(4, self.pep313.CLASSIC), 'IIII')
+        self.assertEqual(f(998, self.pep313.CLASSIC),
+                         'DCCCCLXXXXVIII')
+        # LARGE
+        self.assertEqual(f(-1_000_000, self.pep313.LARGE), '-_M')
+        self.assertEqual(f(500_000_000_000, self.pep313.LARGE), '___D')
+    def test_from(self):
+        f = self.pep313.from_roman
+        self.assertEqual(f('CXI'), 111)
+        self.assertEqual(f('IL'), 49)
+        self.assertEqual(f('-IIII'), -4)
+        self.assertEqual(f('DCCCCLXXXXVIII'), 998)
+        self.assertEqual(f('_M'), 1_000_000)
+        self.assertEqual(f('___D'), 500_000_000_000)
+    def test_zeros(self):
+        with self.assertRaisesRegex(ValueError, 'x cannot be 0'):
+            self.pep313.to_roman(0)
+        self.assertEqual(self.pep313.to_roman(0, zero='Z'), 'Z')
+        self.pep313.default_zero = 'N'
+        self.assertEqual(self.pep313.to_roman(0), 'N')
+        self.assertEqual(self.pep313.from_roman('N'), 0)
+        self.assertEqual(self.pep313.from_roman('O', zero='O'), 0)
+    def test_fraction(self):
+        from fractions import Fraction as F
+        self.assertEqual(self.pep313.to_roman(F(3, 7)), 'III/VII')
+        self.assertEqual(self.pep313.from_roman('-XIV/II'), F(-14, 2))
+    def test_errors(self):
+        invalid_index = type('Invalid', (),
+                             {'__index__': (lambda _: '')})
+        with self.assertRaises(ValueError):
+            self.pep313.to_roman(10, 'spam')
+        with self.assertRaisesRegex(ValueError, 'x cannot be 0'):
+            self.pep313.to_roman(0)
+        with self.assertRaises(TypeError):
+            self.pep313.to_roman(invalid_index())
+        with self.assertRaises(TypeError):
+            self.pep313.from_roman(b'foo')
+        with self.assertRaises(ValueError):
+            self.pep313.from_roman('')
+        with self.assertRaises(ValueError):
+            self.pep313.from_roman('bar')
+        with self.assertRaises(ValueError):
+            self.pep313.from_roman('__')
+@PEP
+class TestPEP326(unittest.TestCase):
+    def test_Min(self):
+        Min = self.pep326.Min
+        for obj in objects:
+            with self.subTest(obj=obj):
+                self.assertLess(Min, obj)
+                self.assertLessEqual(Min, obj)
+                self.assertFalse(Min >= obj)
+        self.assertEqual(Min, Min)
+        self.assertIs(Min, type(Min)())
+    def test_Max(self):
+        Max = self.pep326.Max
+        for obj in objects:
+            with self.subTest(obj=obj):
+                self.assertGreater(Max, obj)
+                self.assertGreaterEqual(Max, obj)
+                self.assertFalse(Max <= obj)
+        self.assertEqual(Max, Max)
+        self.assertIs(Max, type(Max)())
+    def test_alias(self):
+        self.assertIs(self.pep326.Min, self.pep326.UniversalMinimum)
+        self.assertIs(self.pep326.Max, self.pep326.UniversalMaximum)
+@unittest.skip('TODO')
+@PEP
+class TestPEP335(unittest.TestCase):
+    def test_xxx(self):
+        ...
 
 def run(**kwargs):
     if 'v' in kwargs and 'verbosity' not in kwargs:
