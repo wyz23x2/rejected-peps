@@ -183,7 +183,34 @@ class TestPEP276(unittest.TestCase):
                               tuple(range(0)))
         self.assertTupleEqual(tuple(self.pep276.int(-3.14)),
                               tuple(range(0)))
-
+@PEP
+class TestPEP281(unittest.TestCase):
+    def test_regular(self):
+        from decimal import Decimal
+        r = self.pep281.range
+        self.assertTupleEqual(tuple(r(1, 6)),
+                              (1, 2, 3, 4, 5))
+        self.assertTupleEqual(tuple(r(7, 3, -1)),
+                              (7, 6, 5, 4))
+        self.assertTupleEqual(tuple(r(1, 9, 2)),
+                              (1, 3, 5, 7))
+        A = type('A', (), {'__index__': (lambda s: 2)})
+        self.assertTupleEqual(tuple(r(A(), 5)),
+                              (2, 3, 4))
+        for a in [(1.0, 2.0, 0.5),
+                  (Decimal('1')),
+                  (complex(2, 7), 7)]:
+            with self.subTest(arg=a):
+                with self.assertRaises(TypeError):
+                    r(1.0, 2.0, 0.5)
+    def test_new(self):
+        import itertools
+        r = self.pep281.range
+        for a, b, c in itertools.permutations(iterables, 3):
+            with self.subTest(a=a, b=b, c=c):
+                self.assertEqual(r(a, b, c), range(len(a),
+                                                   len(b),
+                                                   len(c)))
 
 def run(**kwargs):
     if 'v' in kwargs and 'verbosity' not in kwargs:
