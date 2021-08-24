@@ -26,20 +26,21 @@ def divmod(dividend, *divisors) -> tuple:
         try:
             qd = q.__divmod__
         except AttributeError:
-            raise ValueError(f"TypeError: unsupported operand type(s) "
-                             f"for divmod(): {type(q).__name__!r} and "
-                             f"{type(divisors[0]).__name__!r}") from None
+            raise TypeError(f"unsupported operand type(s) "
+                            f"for divmod(): {type(q).__name__!r} and "
+                            f"{type(divisors[0]).__name__!r}") from None
         qr = qd(divisors[0])
         if qr is NotImplemented:
-            raise ValueError(f"TypeError: unsupported operand type(s) "
-                             f"for divmod(): {type(q).__name__!r} and "
-                             f"{type(divisors[0]).__name__!r}")
+            raise TypeError(f"unsupported operand type(s) "
+                            f"for divmod(): {type(q).__name__!r} and "
+                            f"{type(divisors[0]).__name__!r}")
         q, r = qr
         modulos = (r,) + modulos
         divisors = divisors[1:]
-    return (q,) + modulos
+    return (q,) + modulos[::-1]
 def rdivmod(dividend, *divisors) -> tuple:
-    return divmod(dividend, *divisors[::-1])
+    x = divmod(dividend, *divisors[::-1])
+    return (x[0], *x[1:][::-1])
 def inverse_divmod(seq, *factors):
     # Copied from PEP 303
     product = seq[0]

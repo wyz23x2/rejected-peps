@@ -194,7 +194,7 @@ class TestPEP281(unittest.TestCase):
                               (7, 6, 5, 4))
         self.assertTupleEqual(tuple(r(1, 9, 2)),
                               (1, 3, 5, 7))
-        A = type('A', (), {'__index__': (lambda s: 2)})
+        A = type('A', (), {'__index__': (lambda _: 2)})
         self.assertTupleEqual(tuple(r(A(), 5)),
                               (2, 3, 4))
         for a in [(1.0, 2.0, 0.5),
@@ -211,6 +211,50 @@ class TestPEP281(unittest.TestCase):
                 self.assertEqual(r(a, b, c), range(len(a),
                                                    len(b),
                                                    len(c)))
+@PEP
+class TestPEP294(unittest.TestCase):
+    def test_helpers(self):
+        # Success
+        self.assertEqual(self.pep294.underscore('lambda'), 'lambda_')
+        self.assertEqual(self.pep294.title('lambda'), 'Lambda')
+        self.assertEqual(self.pep294.original('lambda'), 'lambda')
+        # Errors
+        with self.assertRaises(TypeError):
+            self.pep294.underscore(1.5)
+        with self.assertRaises(TypeError):
+            self.pep294.title([666, 272])
+        with self.assertRaises(TypeError):
+            self.pep294.original(b'6666666')
+    def test_apply(self):
+        import types
+        self.pep294.apply()
+        self.assertIn('function', dir(types))
+        self.assertIn('lambda_', dir(types))
+        self.assertNotIn('lambda', dir(types))
+        self.pep294.apply(rename=self.pep294.title)
+        self.assertIn('Lambda', dir(types))
+        self.pep294.apply(rename=self.pep294.original)
+        self.assertIn('lambda', dir(types))
+        # TODO: Check strict
+@PEP
+class TestPEP303(unittest.TestCase):
+    def test_divmod(self):
+        d = self.pep303.divmod
+        self.assertEqual(d(200, 3, 7, 5, 9),
+                         (0, 2, 3, 4, 1))
+        self.assertEqual(d(373, 4), (93, 1))
+        with self.assertRaises(TypeError):
+            d(314, 159.265, '1521')
+    def test_rdivmod(self):
+        r = self.pep303.rdivmod
+        self.assertEqual(r(200, 9, 5, 7, 3),
+                         (0, 1, 4, 3, 2))
+        self.assertEqual(r(373, 4), (93, 1))
+        with self.assertRaises(TypeError):
+            r(314, 159.265, '1521')
+    def test_inverse(self):
+        self.assertEqual(self.pep303.inverse_divmod([0, 1, 4, 3, 2],
+                                                    9, 5, 7, 3), 200)
 
 def run(**kwargs):
     if 'v' in kwargs and 'verbosity' not in kwargs:

@@ -25,10 +25,14 @@ import keyword as _k
 from typing import Optional as _O
 def underscore(s: str) -> str:
     """Appends an underscore (_) to s."""
+    if not isinstance(s, str):
+        raise TypeError(f's must be str, not {type(s).__name__}')
     return f'{s}_'
 title = str.title
 def original(s: str) -> str:
     """Returns s."""
+    if not isinstance(s, str):
+        raise TypeError(f's must be str, not {type(s).__name__}')
     return s
 def valid(name: str) -> bool:
     """True if name is an identifier & not a keyword. Note that non-str types return True."""
