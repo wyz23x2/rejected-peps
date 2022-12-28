@@ -22,10 +22,6 @@ REFERENCES
 PEP 294: <https://www.python.org/dev/peps/pep-0294/>
 """
 PEP = 294
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 import keyword as _k
 from typing import Optional as _O
 
