@@ -329,11 +329,11 @@ class TestPEP326(unittest.TestCase):
     def test_alias(self):
         self.assertIs(self.pep326.Min, self.pep326.UniversalMinimum)
         self.assertIs(self.pep326.Max, self.pep326.UniversalMaximum)
-@unittest.skip('TODO')
-@PEP
-class TestPEP335(unittest.TestCase):
-    def test_xxx(self):
-        ...
+# @unittest.skip('TODO')
+# @PEP
+# class TestPEP335(unittest.TestCase):
+#     def test_xxx(self):
+#         ...
 
 def run(**kwargs):
     if 'v' in kwargs and 'verbosity' not in kwargs:
