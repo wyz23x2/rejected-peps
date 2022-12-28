@@ -18,7 +18,6 @@ setuptools.setup(
         "Changelog": "https://github.com/wyz23x2/rejected-peps/blob/main/CHANGELOG.md"
     },
     classifiers=[
-        "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
@@ -31,5 +30,5 @@ setuptools.setup(
         "Typing :: Typed",
     ],
     packages=setuptools.find_packages(),
-    python_requires=">=3.6",
+    python_requires=">=3.7",
 )
