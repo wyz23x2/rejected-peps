@@ -28,7 +28,7 @@ class _singleton(type):
 # 2) It's not a singleton in the reference implementation
 class MinType(metaclass=_singleton):
     def __lt__(self, other) -> bool:
-        return True
+        return self is not other
     __le__ = __lt__
     def __gt__(self, other) -> bool:
         return False
@@ -41,7 +41,7 @@ class MinType(metaclass=_singleton):
     __str__ = __repr__
 class MaxType(metaclass=_singleton):
     def __gt__(self, other) -> bool:
-        return True
+        return self is not other
     __ge__ = __gt__
     def __lt__(self, other) -> bool:
         return False

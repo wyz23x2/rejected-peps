@@ -1,8 +1,16 @@
 # Rejected-PEPs Changelog
 
+### <u>0.7.0</u>  _Candidate 1_
+
+_Release Date: 2022-12-28_
+
+#### Fixed
+
+- `pep326.Min` is no longer less than itself; `pep326.Max` is no longer greater than itself.
+
 ### <u>0.7.0</u>  _Beta 1_
 
-_Release Date: 202X-XX-XX_
+_Release Date: 2022-12-28_
 
 #### New
 
