@@ -1,12 +1,31 @@
 # Rejected-PEPs Changelog
 
+### <u>0.7.0</u>  _Beta 1_
+
+_Release Date: 202X-XX-XX_
+
+#### New
+
+- Tests for PEPs 204 to 559 are supported. Call `rp.run` to run the test suite.
+
+#### Improved
+
+- Update URLs in `info()` to the newest `peps.python.org` format.
+- Add `file` parameter to `pep259.print()`.
+- Correct the error messages of `pep303.divmod()`.
+- Fix `pep303.rdivmod()`; the first argument is no longer touched.
+- Add `PEP` constants to PEPs 259 and 313.
+- Fix implementation of mode `modern` for 49+ in PEP 313.
+- The parameter `allow_frozendict` of `pep351.freeze()` is keyword-only.
+- `pep294.original(s)` and `pep294.underscore(s)` ensure that `s` is a `str`.
+
 ### <u>0.6.1</u>  _Final_
 
 _Release Date: 2021-08-22_
 
 #### Fixed
 
-- Fixed a possible `UnboundLocalError` in `pep294.apply()`.
+- Fix a possible `UnboundLocalError` in `pep294.apply()`.
 
 #### Improved
 
