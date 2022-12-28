@@ -1,20 +1,31 @@
 import unittest
 import random  # NOQA
-def PEP(cls):
-    import importlib
-    num = int(cls.__name__.split('PEP')[1])
-    try:
-        module = importlib.import_module(f'pep{num}')
-    except ImportError:
+import importlib
+def PEP(cls=None, *, testnum=True, module=True):
+    def pep(cls):
+        nonlocal testnum, module
+        num = int(cls.__name__.split('PEP')[1])
         try:
-            module = importlib.import_module(f'.pep{num}', 'rejected_peps')
+            module = importlib.import_module(f'pep{num}')
         except ImportError:
-            module = None
-    if module is None:
-        return unittest.skip('Import failure')(cls)
-    setattr(cls, f'pep{num}', module)
-    setattr(cls, 'num', num)
-    return cls
+            try:
+                module = importlib.import_module(f'.pep{num}', 'rejected_peps')
+            except ImportError:
+                module = None
+        if module is None:
+            return unittest.skip('Import failure')(cls)
+        if module:
+            setattr(cls, f'pep{num}', module)
+        setattr(cls, 'num', num)
+        def test_pepnum(self):
+            nonlocal num
+            self.assertEqual(getattr(self, f'pep{num}').PEP, self.num)
+        if testnum:
+            cls.test_pepnum = test_pepnum
+        return cls
+    if callable(cls):
+        return pep(cls)
+    return pep
 objects = (1,
            20.5,
            complex(6, 2),
@@ -22,12 +33,12 @@ objects = (1,
            b'777',
            (8, 9, 10),
            [8, 9, 10],
-           {8: 9, 10: 11, 12: 13},
            {8, 9, 10},
+           {'8': 9, '10': 11, '12': 13},
            memoryview(b'Hello, world!'),
            True,
            (x for x in range(25)),
-           enumerate([555, 999, 666, -111]))
+           enumerate([555, 999, 777, -111]))
 iterables = objects[5:9]
 
 @PEP
@@ -200,9 +211,9 @@ class TestPEP281(unittest.TestCase):
         for a in [(1.0, 2.0, 0.5),
                   (Decimal('1')),
                   (complex(2, 7), 7)]:
-            with self.subTest(arg=a):
+            with self.subTest(a=a):
                 with self.assertRaises(TypeError):
-                    r(1.0, 2.0, 0.5)
+                    r(*a)
     def test_new(self):
         import itertools
         r = self.pep281.range
@@ -329,11 +340,107 @@ class TestPEP326(unittest.TestCase):
     def test_alias(self):
         self.assertIs(self.pep326.Min, self.pep326.UniversalMinimum)
         self.assertIs(self.pep326.Max, self.pep326.UniversalMaximum)
-# @unittest.skip('TODO')
-# @PEP
-# class TestPEP335(unittest.TestCase):
-#     def test_xxx(self):
-#         ...
+@PEP
+class TestPEP335(unittest.TestCase):
+    def setUp(self):
+        self.plain = self.pep335.plain
+    def test_alias(self):
+        self.assertIs(self.pep335.not_, self.pep335.NOT)
+        self.assertIs(self.pep335.or_, self.pep335.OR)
+        self.assertIs(self.pep335.and_, self.pep335.AND)
+        self.assertIs(self.plain.and_, self.plain.AND)
+        self.assertIs(self.plain.or_, self.plain.OR)
+        self.assertIs(self.plain.not_, self.plain.NOT)
+    ...
+@PEP
+class TestPEP336(unittest.TestCase):
+    def setUp(self):
+        self.nt = self.pep336.NoneType
+    def test_singleton(self):
+        n = self.nt()
+        self.assertEqual(repr(n), 'None')
+        self.assertIs(n, self.nt())
+    def test_eq(self):
+        self.assertEqual(self.nt(), self.nt())
+        self.assertEqual(self.nt(), None)
+        self.assertNotEqual(self.nt(), 10)
+    def test_isNone(self):
+        self.assertTrue(self.pep336.isNone(self.nt()))
+        self.assertTrue(self.pep336.isNone(None))
+        self.assertFalse(self.pep336.isNone(...))
+@PEP
+class TestPEP351(unittest.TestCase):
+    def setUp(self):
+        self.freeze = self.pep351.freeze
+    def test_hashable(self):
+        class H:
+            def __hash__(self): return -3
+            def __eq__(self, other): return isinstance(other, H)
+        hashables = {0, 3.14, 'string', b'foo',
+                     ((3, 4), 5), H()}
+        for h in hashables:
+            with self.subTest(h=h):
+                self.assertEqual(self.freeze(h), h)
+    def test_set(self):
+        self.assertEqual(self.freeze({1, 2}), frozenset((1, 2)))
+        self.assertEqual(self.freeze(set()), frozenset(()))
+    def test_list(self):
+        self.assertEqual(self.freeze([(6, 3), 'xxx']),
+                         ((6, 3), 'xxx'))
+        self.assertEqual(self.freeze([]), ())
+    def test_dict(self):
+        from types import MappingProxyType as MPT
+        fd = self.pep351.pep416.frozendict
+        # MappingProxyType
+        self.assertEqual(self.freeze({'a': 20, 10: -5}),
+                         MPT({'a': 20, 10: -5}))
+        # frozendict
+        self.assertEqual(self.freeze({'a': 5, 'b': -20}),
+                         fd(a=5, b=-20))
+    def test_manual(self):
+        class A:
+            __hash__ = None
+            def __freeze__(self): return 2
+        self.assertEqual(self.freeze(A()), 2)
+    def test_failure(self):
+        class A:
+            __hash__ = None
+        with self.assertRaises(TypeError):
+            self.freeze(A())
+@PEP
+class TestPEP416(unittest.TestCase):
+    def setUp(self):
+        self.d = self.pep416.frozendict
+    def test_errors(self):
+        d = self.d()
+        for name in {'__setitem__', '__delitem__', 'clear',
+                     'update', 'setdefault', 'pop', 'popitem'}:
+            with self.subTest(name=name):
+                with self.assertRaises(TypeError):
+                    try:
+                        getattr(d, name)()
+                    except Exception as e:
+                        try:
+                            getattr(d, name)()
+                        except Exception:
+                            raise e from None
+    def test_initread(self):
+        d = self.d({'1': 20, -3: 77.})
+        self.assertEqual(d['1'], 20)
+        self.assertEqual(d.get(-3), 77//1.)
+        self.assertEqual(d.get(23, 2), 2)
+        self.assertTupleEqual(tuple(d.keys()), ('1', -3))
+        self.assertEqual(d, d.copy())
+@PEP
+class TestPEP559(unittest.TestCase):
+    def test_noop(self):
+        noop = self.pep559.noop
+        self.assertIsNone(noop())
+        for i in iterables[:-1]:
+            self.assertIsNone(noop(*i))
+        self.assertIsNone(noop(**iterables[-1]))
+        for o in objects:
+            self.assertIsNone(noop(o))
 
 def run(**kwargs):
     if 'v' in kwargs and 'verbosity' not in kwargs:
