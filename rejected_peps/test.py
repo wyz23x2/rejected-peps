@@ -470,6 +470,18 @@ class TestPEP754(unittest.TestCase):
         self.assertTrue(p.isInf(p.NegInf))
         self.assertFalse(p.isInf(p.NaN))
         self.assertFalse(p.isInf(-0.0))
+@PEP
+class TestPEP3140(unittest.TestCase):
+    def setUp(self) -> None:
+        self.s = self.pep3140.str
+    def test_str(self):
+        self.assertEqual(self.s(['1', '2']), '[1, 2]')
+        self.assertEqual(self.s({'1': '2', 3: '4'}), '{1: 2, 3: 4}')
+        self.assertEqual(self.s((16, 25, '43', 93)), '(16, 25, 43, 93)')
+    def test_methods(self):
+        self.assertEqual(self.s(['1', '2'])[0], '[')
+        self.assertFalse(self.s({'1': '2', 3: '4'}).startswith('('))
+        self.assertEqual(self.s((16, 25, '43', 93)) + 'x', '(16, 25, 43, 93)x')
 
 def run(**kwargs):
     if 'v' in kwargs and 'verbosity' not in kwargs:
