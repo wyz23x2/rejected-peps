@@ -1,5 +1,13 @@
 # Rejected-PEPs Changelog
 
+### <u>0.7.0</u>  _Final_
+
+_Release Date: 2022-12-28_
+
+#### Added
+
+- Tests for PEPs 754 and 3140 are supported.
+
 ### <u>0.7.0</u>  _Candidate 1_
 
 _Release Date: 2022-12-28_
