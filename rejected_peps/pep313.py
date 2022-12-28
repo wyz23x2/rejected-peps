@@ -23,8 +23,10 @@ REFERENCES
 
 PEP 313: <https://www.python.org/dev/peps/pep-0313/>
 """
+PEP = 313
 from numbers import Rational as _R, Integral as _I
 from fractions import Fraction as _F
+
 MODERN, CLASSIC, LARGE = 'modern', 'classic', 'large'
 classic_dict = {1000: 'M',
                 500: 'D',

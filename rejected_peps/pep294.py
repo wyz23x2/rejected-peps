@@ -21,8 +21,10 @@ REFERENCES
 
 PEP 294: <https://www.python.org/dev/peps/pep-0294/>
 """
+PEP = 294
 import keyword as _k
 from typing import Optional as _O
+
 def underscore(s: str) -> str:
     """Appends an underscore (_) to s."""
     if not isinstance(s, str):
