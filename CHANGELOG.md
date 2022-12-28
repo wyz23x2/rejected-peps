@@ -1,5 +1,17 @@
 # Rejected-PEPs Changelog
 
+### <u>0.7.0</u>  _Beta 1_
+
+_Release Date: 202X-XX-XX_
+
+#### New
+
+- Tests for PEPs 204 to 559 are supported. Call `rp.run` to run the test suite.
+
+#### Improved
+
+- `to_roman(x)` now checks for `x.__index__` before falling back to `int(x)` & `int(x, 0)`.
+
 ### <u>0.6.1</u>  _Final_
 
 _Release Date: 2021-08-22_
