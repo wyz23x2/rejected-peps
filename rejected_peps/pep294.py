@@ -8,7 +8,7 @@ Created: 2002-06-19
 MODULE INFO
 
 The apply(module=types, *, rename=underscore, strict=bool) function
-adds the lowercase regular version as in the PEP to 
+adds the lowercase regular version as in the PEP to
 the module. If the new name is invalid (e.g. `lambda`), rename(name)
 is called. If strict is True, then the new return value of rename()
 and the type (should be str) will be checked. This is done in-place
@@ -25,10 +25,14 @@ import keyword as _k
 from typing import Optional as _O
 def underscore(s: str) -> str:
     """Appends an underscore (_) to s."""
+    if not isinstance(s, str):
+        raise TypeError(f's must be str, not {type(s).__name__}')
     return f'{s}_'
 title = str.title
 def original(s: str) -> str:
     """Returns s."""
+    if not isinstance(s, str):
+        raise TypeError(f's must be str, not {type(s).__name__}')
     return s
 def valid(name: str) -> bool:
     """True if name is an identifier & not a keyword. Note that non-str types return True."""

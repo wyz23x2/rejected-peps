@@ -7,16 +7,16 @@ Created: 2003-04-01
 
 MODULE INFO
 
-This module implements the to_roman() function to convert numbers or fractions 
-to roman numbers, and the from_roman() function to convert roman 
+This module implements the to_roman() function to convert numbers or fractions
+to roman numbers, and the from_roman() function to convert roman
 numbers to numbers or fractions. There are 3 modes:
 - CLASSIC: Plain I, V, X etc.
 - MODERN: Allow IV (4), CM (900) etc. in addition to CLASSIC
 - LARGE: Allow up to 3 leading underscores before letter to mean ×1000 for each,
          for example _M -> 1000*1000 = 1000000 in addition to MODERN
-The `zero` parameters control handling of zero. If None, 0 raises an error; 
-else it returns the value in to_roman(), and returns 0 if s is equal to it 
-in from_roman(). You can control the global default (first set to None) with 
+The `zero` parameters control handling of zero. If None, 0 raises an error;
+else it returns the value in to_roman(), and returns 0 if s is equal to it
+in from_roman(). You can control the global default (first set to None) with
 the default_zero attribute.
 
 REFERENCES
@@ -34,12 +34,16 @@ classic_dict = {1000: 'M',
                 5: 'V',
                 1: 'I'}
 modern_dict = {1000: 'M',
+               999: 'IM',
                900: 'CM',
                500: 'D',
+               499: 'ID',
                400: 'CD',
                100: 'C',
+               99: 'IC',
                90: 'XC',
                50: 'L',
+               49: 'IL',
                40: 'XL',
                10: 'X',
                9: 'IX',
@@ -47,7 +51,7 @@ modern_dict = {1000: 'M',
                4: 'IV',
                1: 'I'}
 large_dict = {1_000_000_000_000: '___M',
-              500_000_000_000: '__D',
+              500_000_000_000: '___D',
               100_000_000_000: '___C',
               50_000_000_000: '___L',
               10_000_000_000: '___X',
@@ -64,7 +68,10 @@ large_dict = {1_000_000_000_000: '___M',
 large_dict.update(modern_dict)
 DIGITS = set(classic_dict.values())
 default_zero = None
-def to_roman(x: _R, mode: str = MODERN, *, zero=default_zero) -> str:
+
+def to_roman(x: _R, mode: str = MODERN, *, zero=...) -> str:
+    if zero is ...:
+        zero = default_zero
     if mode not in (MODERN, CLASSIC, LARGE):
         raise ValueError(f'Invalid mode {mode!r}')
     if isinstance(x, _R) and not isinstance(x, (_I, float)):
@@ -83,7 +90,7 @@ def to_roman(x: _R, mode: str = MODERN, *, zero=default_zero) -> str:
             raise ValueError('x cannot be 0')
         return zero
     if x < 0:
-        return f'-{to_roman(abs(x))}'
+        return f'-{to_roman(abs(x), mode)}'
     r = {CLASSIC: classic_dict,
          MODERN: modern_dict,
          LARGE: large_dict}[mode]
@@ -94,7 +101,9 @@ def to_roman(x: _R, mode: str = MODERN, *, zero=default_zero) -> str:
         if x <= 0:
             break
     return ''.join(lis)
-def from_roman(s: str, *, zero=default_zero) -> _R:
+def from_roman(s: str, *, zero=...) -> _R:
+    if zero is ...:
+        zero = default_zero
     if zero is not None and s == zero:
         return 0
     if not isinstance(s, str):

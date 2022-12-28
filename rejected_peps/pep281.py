@@ -27,5 +27,5 @@ def range(*args):
             except (TypeError, ValueError):
                 raise TypeError(f'TypeError: {type(arg).__name__!r} object '
                                 'cannot be interpreted '
-                                'as an integer') from None
+                                'as an integer or sequence') from None
     return _b.range(*a)

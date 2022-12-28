@@ -7,7 +7,7 @@ Created: 2000-07-15
 
 MODULE INFO
 
-This module implements a wrapper that enables the @ operator 
+This module implements a wrapper that enables the @ operator
 to mean itertools.product. Call the wrapper to get the original object.
 
 REFERENCES

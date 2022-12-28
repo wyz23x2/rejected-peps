@@ -24,7 +24,7 @@ from types import MappingProxyType as _MPT
 from collections import deque as _deq, OrderedDict as _OD, defaultdict as _dd
 try:
     from . import pep416
-except ImportError as e:
+except ImportError:
     import pep416
 def freeze(obj, allow_frozendict: bool = False):
     try:

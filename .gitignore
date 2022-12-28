@@ -2,6 +2,7 @@
 **/__pycache__/
 **/.*
 !**/.gitignore
+!**/.flake8
 rejected[-_]peps/docs/
 dist/
 **/*.egg*
