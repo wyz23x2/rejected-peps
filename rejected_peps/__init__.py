@@ -1,4 +1,4 @@
-__version__ = '0.9.0dev1'
+__version__ = '0.7.0b1'
 import importlib as _imp
 from collections import namedtuple as _nt
 from itertools import chain as _chain
@@ -129,7 +129,7 @@ def info(n: int) -> pepinfo:
                    title=doc[2].split(' -- ')[1],
                    status=doc[3].lstrip('Status: '),
                    creation=doc[4].lstrip('Created: '),
-                   url=f'https://www.python.org/dev/peps/pep-{n:0>4}/')
+                   url=f'https://peps.python.org/pep-{n:0>4}/')
 
 def __getattr__(name):
     if name.startswith('pep'):
