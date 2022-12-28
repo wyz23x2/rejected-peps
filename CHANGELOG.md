@@ -10,7 +10,14 @@ _Release Date: 202X-XX-XX_
 
 #### Improved
 
-- `to_roman(x)` now checks for `x.__index__` before falling back to `int(x)` & `int(x, 0)`.
+- Update URLs in `info()` to the newest `peps.python.org` format.
+- Add `file` parameter to `pep259.print()`.
+- Correct the error messages of `pep303.divmod()`.
+- Fix `pep303.rdivmod()`; the first argument is no longer touched.
+- Add `PEP` constants to PEPs 259 and 313.
+- Fix implementation of mode `modern` for 49+ in PEP 313.
+- The parameter `allow_frozendict` of `pep351.freeze()` is keyword-only.
+- `pep294.original(s)` and `pep294.underscore(s)` ensure that `s` is a `str`.
 
 ### <u>0.6.1</u>  _Final_
 
@@ -18,7 +25,7 @@ _Release Date: 2021-08-22_
 
 #### Fixed
 
-- Fixed a possible `UnboundLocalError` in `pep294.apply()`.
+- Fix a possible `UnboundLocalError` in `pep294.apply()`.
 
 #### Improved
 
