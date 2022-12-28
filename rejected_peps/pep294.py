@@ -36,7 +36,7 @@ def original(s: str) -> str:
     if not isinstance(s, str):
         raise TypeError(f's must be str, not {type(s).__name__}')
     return s
-def valid(name: str) -> bool:
+def valid(name) -> bool:
     """True if name is an identifier & not a keyword. Note that non-str types return True."""
     if not isinstance(name, str):
         return True
