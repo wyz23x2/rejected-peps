@@ -69,7 +69,7 @@ if __name__ == '__main__':
             if c.strip():
                 print(c)
             else:
-                print('\033[32mChecks all ran, no violations reported.\033[m\n')
+                print('\033[32mChecks all run, no violations reported.\033[m\n')
     if not args.nb:
         print('\033[1m==== Bandit ====\033[m')
         try:
