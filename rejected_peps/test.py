@@ -441,6 +441,47 @@ class TestPEP559(unittest.TestCase):
         self.assertIsNone(noop(**iterables[-1]))
         for o in objects:
             self.assertIsNone(noop(o))
+@PEP
+class TestPEP754(unittest.TestCase):
+    def test_values(self):
+        p = self.pep754
+        self.assertIs(p.NaN, p.NaN)
+        self.assertNotEqual(p.NaN, p.NaN)
+        self.assertEqual(p.PosInf, float('inf'))
+        self.assertEqual(p.NegInf, -float('inf'))
+        self.assertNotEqual(-1, p.PosInf / p.NegInf)
+    def test_functions(self):
+        p = self.pep754
+        self.assertTrue(p.isNaN(p.NaN))
+        self.assertFalse(p.isNaN(0.5))
+        self.assertFalse(p.isNaN(-2))
+        self.assertTrue(p.isPosInf(p.PosInf))
+        self.assertFalse(p.isPosInf(3.14))
+        self.assertFalse(p.isPosInf(p.NegInf))
+        self.assertTrue(p.isNegInf(p.NegInf))
+        self.assertFalse(p.isNegInf(-2.718))
+        self.assertFalse(p.isNegInf(p.NaN))
+        self.assertTrue(p.isFinite(42))
+        self.assertTrue(p.isFinite(-0.618))
+        self.assertFalse(p.isFinite(p.PosInf))
+        self.assertFalse(p.isFinite(p.NegInf))
+        self.assertFalse(p.isFinite(p.NaN))
+        self.assertTrue(p.isInf(p.PosInf))
+        self.assertTrue(p.isInf(p.NegInf))
+        self.assertFalse(p.isInf(p.NaN))
+        self.assertFalse(p.isInf(-0.0))
+@PEP
+class TestPEP3140(unittest.TestCase):
+    def setUp(self) -> None:
+        self.s = self.pep3140.str
+    def test_str(self):
+        self.assertEqual(self.s(['1', '2']), '[1, 2]')
+        self.assertEqual(self.s({'1': '2', 3: '4'}), '{1: 2, 3: 4}')
+        self.assertEqual(self.s((16, 25, '43', 93)), '(16, 25, 43, 93)')
+    def test_methods(self):
+        self.assertEqual(self.s(['1', '2'])[0], '[')
+        self.assertFalse(self.s({'1': '2', 3: '4'}).startswith('('))
+        self.assertEqual(self.s((16, 25, '43', 93)) + 'x', '(16, 25, 43, 93)x')
 
 def run(**kwargs):
     if 'v' in kwargs and 'verbosity' not in kwargs:

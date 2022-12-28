@@ -1,5 +1,21 @@
 # Rejected-PEPs Changelog
 
+### <u>0.7.1</u>  _Final_
+
+_Release Date: 2022-12-28_
+
+#### Breaking
+
+- Support for Python 3.6 is officially dropped. The `rejected_peps.pep204` format never worked since module `__getattr__` was not added until 3.7, and 3.6 entered EOL on Dec. 23, 2021. Support for Python 3.7 will be dropped starting from Jan. 27, 2023.
+
+### <u>0.7.0</u>  _Final_
+
+_Release Date: 2022-12-28_
+
+#### Added
+
+- Tests for PEPs 754 and 3140 are supported.
+
 ### <u>0.7.0</u>  _Candidate 1_
 
 _Release Date: 2022-12-28_
