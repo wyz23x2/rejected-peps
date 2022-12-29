@@ -1,5 +1,13 @@
 # Rejected-PEPs Changelog
 
+### <u>0.8.0</u>  _Beta 1_
+
+_Release Date: 2022-12-29_
+
+#### New
+
+- Add support of [PEP 535](https://peps.python.org/pep-0535/) — Rich comparison chaining.
+
 ### <u>0.7.2</u>  _Final_
 
 _Release Date: 2022-12-29_
@@ -124,7 +132,7 @@ _Release Date: 2021-08-11_
 
 #### New
 
-- Add support of [PEP 335](https://www.python.org/dev/peps/pep-0335/) — Overloadable Boolean ~~Operators~~ Operator Functions
+- Add support of [PEP 335](https://www.python.org/dev/peps/pep-0335/) — Overloadable Boolean ~~Operators~~ Operator Functions.
 - The new `search.one` is now preferred over `search_one`.
 - Add `search.any` and `search.one.any` to match titles that contain _any_ of the arguments. The default behavior is still _all_ of them.
 
