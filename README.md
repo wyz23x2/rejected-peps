@@ -19,7 +19,7 @@ Parts related to the bytecode, C API etc. are not implemented.
 
 PEPs with an \* are slightly modified.
 
-#### Finished (19)
+#### Finished (20)
 
 - [PEP 204](https://peps.python.org/pep-0204/) — Range Literals
 - [PEP 211](https://peps.python.org/pep-0211/) — Adding A New Outer Product Operator
@@ -37,13 +37,13 @@ PEPs with an \* are slightly modified.
 - [PEP 349](https://peps.python.org/pep-0349/)\* – Allow `str()` to return ~~unicode strings~~ bytes
 - [PEP 351](https://peps.python.org/pep-0351/) — The `freeze` protocol
 - [PEP 416](https://peps.python.org/pep-0416/) — Add a `frozendict` builtin type
+- [PEP 535](https://peps.python.org/pep-0535/) — Rich comparison chaining
 - [PEP 559](https://peps.python.org/pep-0559/) — Built-in `noop()`
 - [PEP 754](https://peps.python.org/pep-0754/) — IEEE 754 Floating Point Special Values
 - [PEP 3140](https://peps.python.org/pep-3140/) – `str(container)` should call `str(item)`, not `repr(item)`
 
-#### Developing (2)
+#### Developing (1)
 
-- [PEP 535](https://peps.python.org/pep-0535/) — Rich comparison chaining
 - [PEP 601](https://peps.python.org/pep-0601/) — Forbid `return`/`break`/`continue` breaking out of `finally`
 
 ### How do I use it?
