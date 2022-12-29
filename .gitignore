@@ -8,3 +8,4 @@ dist/
 **/*.egg*
 **/linecounter.md
 !.mailmap
+!.upload.*
