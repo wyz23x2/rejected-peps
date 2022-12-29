@@ -67,6 +67,7 @@ class _str_meta(type):
         return isinstance(i, _b.str)
 class str(_b.str, metaclass=_str_meta):
     def __new__(cls, arg, *args, **kwargs):
-        arg = _str(arg)
+        if (not args) and (not kwargs):
+            arg = _str(arg)
         return _b.str.__new__(_b.str, arg, *args, **kwargs)
     __init__ = None

@@ -530,6 +530,7 @@ class TestPEP3140(unittest.TestCase):
         self.assertFalse(self.s({'1': '2', 3: '4'}).startswith('('))
         self.assertEqual(self.s((16, 25, '43', 93)) + 'x', '(16, 25, 43, 93)x')
         self.assertTrue(self.s.startswith('50', '5'))
+        self.assertEqual(self.s(b'50', 'utf-8'), '50')
     def test_isinstance_issubclass(self):
         self.assertTrue(isinstance('1', self.s))
         self.assertFalse(isinstance(-1, self.s))
