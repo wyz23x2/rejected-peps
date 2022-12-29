@@ -1,5 +1,14 @@
 # Rejected-PEPs Changelog
 
+### <u>0.8.1</u>  _Final_
+
+_Release Date: 2022-12-29_
+
+#### Improved
+
+- [#6](https://github.com/wyz23x2/rejected-peps/issues/6): `pep349.str` is now also a class, supporting `isinstance` and `issubclass` checks. In these two contexts, it behaves the same as `builtins.str` _only_; hence, `isinstance('1', pep3140.str)` returns `True`. Note that `pep349.str(…)` returns a `builtins.str` or `builtins.bytes` instance, so it's compatible.
+- [#6](https://github.com/wyz23x2/rejected-peps/issues/6): `pep349.str` now accepts the `str(bytes_or_buffer, encoding[, errors])` form; in these cases, it's interpreted as normal.
+
 ### <u>0.8.0</u>  _Final_
 
 _Release Date: 2022-12-29_
