@@ -369,6 +369,40 @@ class TestPEP336(unittest.TestCase):
         self.assertTrue(self.pep336.isNone(None))
         self.assertFalse(self.pep336.isNone(...))
 @PEP
+class TestPEP349(unittest.TestCase):
+    def setUp(self):
+        self.s = self.pep349.str
+    def test_str(self):
+        # Normal
+        self.assertEqual(self.s('16'), '16')
+        self.assertEqual(self.s(['1', 2]), "['1', 2]")
+        self.assertEqual(self.s(b'pep349', 'utf-8'), 'pep349')
+        # Bytes
+        class A:
+            def __str__(self): return b'A'
+        self.assertEqual(self.s(A()), b'A')
+        self.assertEqual(self.s(b'A'), b'A')
+        # Fallbacks & Errors
+        class B:
+            def __repr__(self): return 'B'
+        class C:
+            def __str__(self): return 1
+        self.assertEqual(self.s(B()), 'B')
+        with self.assertRaises(TypeError):
+            self.s(C())
+    def test_methods(self):
+        self.assertEqual(self.s('16')[0], '1')
+        self.assertFalse(self.s(['1', 2]).startswith('('))
+        class A:
+            def __str__(self): return b'A'
+        self.assertEqual(self.s(A()).lower(), b'a')
+        self.assertTrue(self.s.startswith('50', '5'))
+    def test_isinstance_issubclass(self):
+        self.assertTrue(isinstance('1', self.s))
+        self.assertFalse(isinstance(-1, self.s))
+        self.assertTrue(issubclass(str, self.s))
+        self.assertTrue(issubclass(self.s, str))
+@PEP
 class TestPEP351(unittest.TestCase):
     def setUp(self):
         self.freeze = self.pep351.freeze
