@@ -433,6 +433,29 @@ class TestPEP416(unittest.TestCase):
         self.assertTupleEqual(tuple(d.keys()), ('1', -3))
         self.assertEqual(d, d.copy())
 @PEP
+class TestPEP535(unittest.TestCase):
+    def setUp(self):
+        self._cmp = self.pep535._cmp
+        self.cmp = self.pep535.cmp
+        self.p = self.pep535
+    def test_cmpfunc(self):
+        self.assertTrue(self._cmp(5, '<', 6))
+        self.assertTrue(self._cmp(7.6, self.p.GT, -9.3))
+    def test_cmp(self):
+        self.assertTrue(self.cmp(5, '<', 6, '<', 7))
+        self.assertTrue(self.cmp(9, '>', 7, '<', 15, '!=', 90, '==', 90))
+        self.assertFalse(self.cmp(5, '<', 9, '>', 7, '<', 6))
+        self.assertTrue(self.cmp(5, '>', 7, '>', 9, and_func=(lambda x, y: True)))
+    def test_numpy(self):
+        try:
+            import numpy as np  # NOQA
+        except Exception:
+            self.skipTest('numpy not found')
+        else:
+            i = np.arange(5)
+            self.assertEqual(repr(self.cmp(0, '<', i, '<', 4, and_func=np.logical_and)),
+                             repr(np.array([False, True, True, True, False], dtype=bool)))
+@PEP
 class TestPEP559(unittest.TestCase):
     def test_noop(self):
         noop = self.pep559.noop
@@ -473,7 +496,7 @@ class TestPEP754(unittest.TestCase):
         self.assertFalse(p.isInf(-0.0))
 @PEP
 class TestPEP3140(unittest.TestCase):
-    def setUp(self) -> None:
+    def setUp(self):
         self.s = self.pep3140.str
     def test_str(self):
         self.assertEqual(self.s(['1', '2']), '[1, 2]')
