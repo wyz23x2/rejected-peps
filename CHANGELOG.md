@@ -1,5 +1,14 @@
 # Rejected-PEPs Changelog
 
+### <u>0.8.0</u>  _Beta 2_
+
+_Release Date: 2022-12-29_
+
+#### Improved
+
+- The order of the check for `__andfunc__` in `pep535.cmp` is adjusted; now in `A and B`, `A.__andfunc__` is checked before `B.__randfunc__`.
+- The exception note is now added correctly in Python 3.11 when `AttributeError` is raised during the fallback in `pep535.cmp`.
+
 ### <u>0.8.0</u>  _Beta 1_
 
 _Release Date: 2022-12-29_

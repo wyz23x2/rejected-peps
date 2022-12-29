@@ -21,7 +21,7 @@ REFERENCES
 
 PEP 265: <https://www.python.org/dev/peps/pep-0265/>
 Related:""" +
-f'sorted: <https://docs.python.org/'
+f'\nsorted: <https://docs.python.org/'
 f'{".".join(map(str, _vi[:2]))}/library/functions.html#sorted>')
 PEP = 265
 import builtins as _b

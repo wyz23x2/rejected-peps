@@ -1,4 +1,4 @@
-__version__ = '0.8.0b1'
+__version__ = '0.8.0b2'
 import importlib as _imp
 from collections import namedtuple as _nt
 from itertools import chain as _chain
@@ -72,7 +72,7 @@ def _search_one(*s, strict: bool = True) -> _O[int]:
 search.one = _search_one
 def search_one(*args, **kwargs):
     _w.warn('search_one() is deprecated and will be removed in v0.9.',
-            PendingDeprecationWarning, 2)
+            DeprecationWarning, 2)
     return search.one(*args, **kwargs)
 def _search_one_any(*s, strict: bool = True) -> _O[int]:
     global SUPPORTED
