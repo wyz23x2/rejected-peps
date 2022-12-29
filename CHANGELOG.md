@@ -1,5 +1,14 @@
 # Rejected-PEPs Changelog
 
+### <u>0.8.0</u>  _Final_
+
+_Release Date: 2022-12-29_
+
+#### Improved
+
+- `pep204` no longer fails when imported if `pep211` is unavailable; however, `repr(pep204)` still fails if `pep211` is unavailable.
+
+
 ### <u>0.8.0</u>  _Candidate 1_
 
 _Release Date: 2022-12-29_
