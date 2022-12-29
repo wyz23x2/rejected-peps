@@ -48,10 +48,10 @@ def cmp(*args, and_func: _O[_C] = None):
     for i in range(1, len(obj)-1):
         c = _cmp(obj[i], op[i], obj[i+1])
         if and_func is None:
-            if hasattr(c, '__andfunc__'):
-                b = c.__andfunc__(b)
-            elif hasattr(b, '__andfunc__'):
+            if hasattr(b, '__andfunc__'):
                 b = b.__andfunc__(c)
+            elif hasattr(c, '__randfunc__'):
+                b = c.__randfunc__(b)
             else:
                 try:
                     b = b and c
@@ -59,9 +59,10 @@ def cmp(*args, and_func: _O[_C] = None):
                     try:
                         e.add_note('Error occurred while falling back to '
                                    '{b!r} and {c!r}')
-                        raise e from None
                     except AttributeError:
                         raise e
+                    else:
+                        raise e from None
         else:
             b = and_func(b, c)
     return b
