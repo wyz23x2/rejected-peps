@@ -86,7 +86,7 @@ _Release Date: 2021-08-22_
 
 #### Improved
 
-- 3 leading underscores are now accepted in `pep335.large_dict`, e.g. `___D` → 500,000,000,000.
+- 3 leading underscores are now accepted in `pep313.large_dict`, e.g. `___D` → 500,000,000,000.
 
 #### Fixed
 
