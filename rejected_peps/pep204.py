@@ -2,7 +2,12 @@ import sys
 try:
     from . import pep211 as _p
 except ImportError:
-    import pep211 as _p
+    try:
+        import pep211 as _p
+    except ImportError as e:
+        _imp_e = e
+        _imp_e.__suppress_context__ = True
+        _p = None
 class pep204:
     """\
 PEP INFO
@@ -39,5 +44,7 @@ PEP 204: <https://www.python.org/dev/peps/pep-204/>
             return range(start, stop, step)
         return range(x)
     def __repr__(self) -> str:
+        if _p is None:
+            raise ValueError('repr unavailable') from _imp_e
         return repr(_p).replace('pep211', 'pep204')
 sys.modules[__name__] = pep204()
