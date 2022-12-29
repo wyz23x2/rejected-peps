@@ -29,10 +29,7 @@ class str(_b.str, metaclass=_str_meta):
     def __new__(cls, arg, *args, **kwargs):
         if (not args) and (not kwargs):
             if not isinstance(arg, (_b.str, bytes)):
-                try:
-                    arg = arg.__str__()
-                except AttributeError:
-                    arg = arg.__repr__()
+                arg = arg.__str__()
                 if not isinstance(arg, (_b.str, bytes)):
                     raise TypeError(f'__str__ returned non-string or non-{bytes.__name__} '
                                     f'(type {type(arg).__name__})')
