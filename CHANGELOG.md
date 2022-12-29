@@ -1,5 +1,15 @@
 # Rejected-PEPs Changelog
 
+### <u>0.8.0</u>  _Candidate 1_
+
+_Release Date: 2022-12-29_
+
+#### Improved
+
+- [#5](https://github.com/wyz23x2/rejected-peps/issues/5): `pep3140.str` now handles recursive objects correctly by replacing them with `…`, just as the builtin `str` does.
+
+- `pep3140.str` is now a class, supporting `isinstance` and `issubclass` checks. In these two contexts, it behaves the same as `builtins.str`; hence, `isinstance('1', pep3140.str)` returns `True`. Note that `pep3140.str(…)` returns a `builtins.str` instance, so it's compatible.
+
 ### <u>0.8.0</u>  _Beta 2_
 
 _Release Date: 2022-12-29_
