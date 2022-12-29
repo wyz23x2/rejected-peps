@@ -1,4 +1,4 @@
-__version__ = '0.7.2'
+__version__ = '0.8.0b1'
 import importlib as _imp
 from collections import namedtuple as _nt
 from itertools import chain as _chain
@@ -21,7 +21,7 @@ SUPPORTED = frozenset((204, 211, 212, 259,
                        265, 276, 281, 294,
                        303, 313, 326, 335,
                        336, 349, 351, 416,
-                       559, 754, 3140))
+                       535, 559, 754, 3140))
 # ↑ Not automatic because it's too slow
 def search(*s, strict: bool = False) -> _Gen:
     global SUPPORTED
