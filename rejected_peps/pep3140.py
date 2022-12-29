@@ -16,11 +16,11 @@ PEP 3140: <https://www.python.org/dev/peps/pep-3140/>
 """
 PEP = 3140
 import builtins as _b
+from reprlib import recursive_repr as _rr
 from collections.abc import Container as _C, Mapping as _M
 
-def str(x, *args, **kwargs) -> _b.str:
-    if args or kwargs:
-        return _b.str(x, *args, **kwargs)
+@_rr()
+def _str(x) -> _b.str:
     if (not isinstance(x, _C)) or isinstance(x, (_b.str, bytes)):
         xs = getattr(x, '__str__', None)
         if xs is not None:
@@ -55,3 +55,19 @@ def str(x, *args, **kwargs) -> _b.str:
         else:
             parts[-1] = ','
         return ''.join((*parts, suffix))
+class _str_meta(type):
+    def __getattr__(self, attr: str):
+        try:
+            return getattr(_b.str, attr)
+        except Exception as e:
+            raise e from None
+    def __subclasscheck__(cls, c: type) -> bool:
+        return issubclass(c, _b.str)
+    def __instancecheck__(cls, i) -> bool:
+        return isinstance(i, _b.str)
+class str(_b.str, metaclass=_str_meta):
+    def __new__(cls, arg, *args, **kwargs):
+        if (not args) and (not kwargs):
+            arg = _str(arg)
+        return _b.str.__new__(_b.str, arg, *args, **kwargs)
+    __init__ = None
