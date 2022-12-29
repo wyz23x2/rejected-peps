@@ -38,7 +38,7 @@
 # E901  SyntaxError or IndentationError
 # W1    Indentation warning
 # W2    Whitespace warning
-# W505  doc line too long (>84 chars)
+# W505  doc line too long (>99 chars)
 select =
     E101, E111, E112, E113, E115, E117,
     E201, E202, E203, E211, E223, E224,
