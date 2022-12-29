@@ -65,7 +65,7 @@ class _str_meta(type):
         return issubclass(c, _b.str)
     def __instancecheck__(cls, i) -> bool:
         return isinstance(i, _b.str)
-class str(metaclass=_str_meta):
+class str(_b.str, metaclass=_str_meta):
     def __new__(cls, arg, *args, **kwargs):
         arg = _str(arg)
         return _b.str.__new__(_b.str, arg, *args, **kwargs)
