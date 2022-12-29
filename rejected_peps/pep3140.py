@@ -56,11 +56,6 @@ def _str(x) -> _b.str:
             parts[-1] = ','
         return ''.join((*parts, suffix))
 class _str_meta(type):
-    def __getattr__(self, attr: str):
-        try:
-            return getattr(_b.str, attr)
-        except Exception as e:
-            raise e from None
     def __subclasscheck__(cls, c: type) -> bool:
         return issubclass(c, _b.str)
     def __instancecheck__(cls, i) -> bool:
