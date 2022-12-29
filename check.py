@@ -26,7 +26,7 @@ if __name__ == '__main__':
     os.system('')
     # Test suite
     if not args.nt:
-        print('\033[1m==== TEST SUITE ====\033[m')
+        print('\033[1m==== Test Suite ====\033[m')
         try:
             if args.u:
                 raise ImportError
@@ -39,7 +39,7 @@ if __name__ == '__main__':
                 print('\033[33mgreen not found, test suite skipped\033[m',
                       file=sys.stderr)
             else:
-                os.system('py ./rejected_peps/test.py')
+                os.system('py -3 ./rejected_peps/test.py')
         else:
             g.main(['-vv', *(('-r',) if args.r else ())])
             if args.r == 1:
