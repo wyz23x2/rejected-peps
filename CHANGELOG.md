@@ -7,6 +7,7 @@ _Release Date: 2022-12-XX_
 #### Improved
 
 - `pep351.freeze` doesn't import `pep416` until needed (lazy import).
+- Improve some error messages.
 
 ### <u>0.7.1</u>  _Final_
 
