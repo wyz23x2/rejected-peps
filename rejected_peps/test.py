@@ -438,14 +438,37 @@ class TestPEP535(unittest.TestCase):
         self._cmp = self.pep535._cmp
         self.cmp = self.pep535.cmp
         self.p = self.pep535
-    def test_cmpfunc(self):
+    def test_acmp(self):
         self.assertTrue(self._cmp(5, '<', 6))
         self.assertTrue(self._cmp(7.6, self.p.GT, -9.3))
+        with self.assertRaisesRegex(ValueError, 'Invalid op'):
+            self._cmp(6, '!<', 5)
+        with self.assertRaisesRegex(ValueError, 'Invalid op'):
+            self._cmp(6, '<>', 5)
+        with self.assertRaisesRegex(TypeError, 'Invalid op'):
+            self._cmp(6, 0, 5)
     def test_cmp(self):
         self.assertTrue(self.cmp(5, '<', 6, '<', 7))
         self.assertTrue(self.cmp(9, '>', 7, '<', 15, '!=', 90, '==', 90))
         self.assertFalse(self.cmp(5, '<', 9, '>', 7, '<', 6))
         self.assertTrue(self.cmp(5, '>', 7, '>', 9, and_func=(lambda x, y: True)))
+        with self.assertRaisesRegex(ValueError, '^Invalid arguments'):
+            self.cmp(5, '>', 3, '>')
+        import sys as _sys
+        if _sys.version_info >= (3, 11):
+            class A:
+                def __bool__(self):
+                    raise ValueError('Value Invalid')
+            class B:
+                def __lt__(self, other):
+                    return A()
+            try:
+                c = self.cmp(B(), '<', B(), '<', B())
+            except ValueError as e:
+                self.assertRegex(e.__notes__[0], 'Error occurred while falling back')
+            else:
+                self.fail(f"ValueError not raised during 'self.cmp(B(), '<', A())'; "
+                          f'{c!r} returned')
     def test_numpy(self):
         try:
             import numpy as np  # NOQA
