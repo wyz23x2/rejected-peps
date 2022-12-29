@@ -24,6 +24,7 @@ if __name__ == '__main__':
     if args.g and args.u:
         parser.error('Cannot specify both -g and -u')
     os.system('')
+    ecode = 0
     # Test suite
     if not args.nt:
         print('\033[1m==== Test Suite ====\033[m')
@@ -41,7 +42,7 @@ if __name__ == '__main__':
             else:
                 os.system('py -3 ./rejected_peps/test.py')
         else:
-            g.main(['-vv', *(('-r',) if args.r else ())])
+            ecode = g.main(['-vv', *(('-r',) if args.r else ())])
             if args.r == 1:
                 try:
                     os.remove('.coverage')
@@ -83,3 +84,4 @@ if __name__ == '__main__':
         else:
             del bandit
             os.system('py -m bandit -r rejected_peps')
+    sys.exit(ecode)
