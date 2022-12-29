@@ -22,11 +22,8 @@ PEP = 351
 
 from types import MappingProxyType as _MPT
 from collections import deque as _deq, OrderedDict as _OD, defaultdict as _dd
-try:
-    from . import pep416
-except ImportError:
-    import pep416
 def freeze(obj, *, allow_frozendict: bool = False):
+    global _pep416
     try:
         hash(obj)
     except TypeError:
@@ -40,7 +37,15 @@ def freeze(obj, *, allow_frozendict: bool = False):
         if isinstance(obj, (dict, _OD, _dd)):
             if allow_frozendict:
                 # Allow using manual PEP 416 implementation from pep416 module
-                d = pep416.frozendict(obj)
+                try:
+                    _pep416
+                except NameError:
+                    try:
+                        from . import pep416
+                    except ImportError:
+                        import pep416
+                    _pep416 = pep416
+                d = _pep416.frozendict(obj)
             else:
                 d = _MPT(obj)  # MappingProxyType by default
             return d

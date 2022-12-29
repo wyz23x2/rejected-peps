@@ -390,13 +390,14 @@ class TestPEP351(unittest.TestCase):
         self.assertEqual(self.freeze([]), ())
     def test_dict(self):
         from types import MappingProxyType as MPT
-        fd = self.pep351.pep416.frozendict
+        fd = TestPEP416.pep416.frozendict
         # MappingProxyType
         self.assertEqual(self.freeze({'a': 20, 10: -5}),
                          MPT({'a': 20, 10: -5}))
         # frozendict
-        self.assertEqual(self.freeze({'a': 5, 'b': -20}),
+        self.assertEqual(self.freeze({'a': 5, 'b': -20}, allow_frozendict=True),
                          fd(a=5, b=-20))
+        self.assertIsNotNone(self.pep351._pep416)  # Lazy import
     def test_manual(self):
         class A:
             __hash__ = None

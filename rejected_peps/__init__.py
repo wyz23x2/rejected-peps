@@ -1,4 +1,4 @@
-__version__ = '0.7.1'
+__version__ = '0.7.2'
 import importlib as _imp
 from collections import namedtuple as _nt
 from itertools import chain as _chain
@@ -131,7 +131,7 @@ def info(n: int) -> pepinfo:
                    creation=doc[4].lstrip('Created: '),
                    url=f'https://peps.python.org/pep-{n:0>4}/')
 
-def __getattr__(name):
+def __getattr__(name: str):
     if name.startswith('pep'):
         try:
             p = pep(int(name[3:]))
@@ -139,6 +139,12 @@ def __getattr__(name):
             pass
         else:
             return p
+    if name.upper() == 'SUPPORTED':
+        raise AttributeError(f'module {__name__!r} has no attribute {name!r}. '
+                             "Did you mean: 'SUPPORTED'?")
+    if name.lower().startswith('info'):
+        raise AttributeError(f'module {__name__!r} has no attribute {name!r}. '
+                             "Did you mean: 'info'?")
     raise AttributeError(f'module {__name__!r} has no attribute {name!r}')
 def __dir__() -> list:
     return sorted(set(globals().keys()) | {f'pep{n}' for n in SUPPORTED})
