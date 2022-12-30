@@ -26,13 +26,16 @@ def pep(n: int, *ns, allow_empty: bool = False) -> _Module:
         ns = frozenset((n, *ns))
         mp = map(str, sorted(ns))
         m = _Module(f'pep' + '_'.join(mp))  # Use := after 3.7 dropped
-        v, f= vars(combined), False
+        v, f = vars(combined), False
         for i in v:
-            if getattr(v[i], 'combines', None) == ns:
-                setattr(m, i, v[i])
-                f = True
+            try:
+                if not (getattr(v[i], 'combines') - ns):
+                    setattr(m, i, v[i])
+                    f = True
+            except AttributeError:
+                pass
         if not (f or allow_empty):
-            raise ValueError('PEPs ' + ', '.join(m[:-1]) + f' and {m[-1]} are not supported'
+            raise ValueError('PEPs ' + ', '.join(mp[:-1]) + f' and {mp[-1]} are not supported'
                              'or cannot be combined')
         return m
 SUPPORTED = frozenset((204, 211, 212, 259,

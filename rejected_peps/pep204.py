@@ -47,4 +47,16 @@ PEP 204: <https://www.python.org/dev/peps/pep-204/>
         if _p is None:
             raise ValueError('repr unavailable') from _imp_e
         return repr(_p).replace('pep211', 'pep204')
+    def __and__(self, cls2: type) -> type:
+        try:
+            from . import pep281
+        except ImportError:
+            import pep281
+        if cls2 == pep281.range:
+            try:
+                from . import combined
+            except ImportError:
+                import combined
+            return combined.rliteral
+        raise TypeError(f'Cannot combine {self!r} and {cls2!r}')
 sys.modules[__name__] = pep204()
