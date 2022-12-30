@@ -1,5 +1,13 @@
 # Rejected-PEPs Changelog
 
+### <u>0.9.0</u>  _Alpha 1_
+
+_Release Date: 2022-12-30_
+
+#### New
+
+- [#7](https://github.com/wyz23x2/rejected-peps/issues/7), [#8](https://github.com/wyz23x2/rejected-peps/issues/8): You can now combine PEPs 349 and 3140; use `rp.pep(349, 3140).str` or `str = pep349.str & pep3140.str` to let `str()` use `str()` on items and allow returning `bytes`.
+
 ### <u>0.8.1</u>  _Final_
 
 _Release Date: 2022-12-29_
