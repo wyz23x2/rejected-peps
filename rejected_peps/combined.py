@@ -14,8 +14,8 @@ def _cb(*combines):
 try:
     from pep3140 import _str
 except ImportError:
-    from . import pep3140
-    _str = pep3140._str
+    from . import pep3140 as _p
+    _str = _p._str
 class _str_meta(type):
     def __subclasscheck__(cls, c: type) -> bool:
         return issubclass(c, _b.str)
@@ -35,3 +35,33 @@ class str(_b.str, metaclass=_str_meta):
         else:
             return _b.bytes.__new__(_b.bytes, arg, *args, **kwargs)
     __init__ = None
+
+# PEPs 204 & 281
+try:
+    from pep281 import range as _r
+except ImportError:
+    from . import pep281 as _p
+    _r = _p.range
+class _rliteral:
+    def __getitem__(self, x) -> range:
+        if isinstance(x, slice):
+            start, stop, step = x.start, x.stop, x.step
+            if stop is None:
+                raise ValueError('Stop is required')
+            if start is None:
+                start = 0
+            if step is None:
+                step = 1
+            return _r(start, stop, step)
+        return _r(x)
+    def __repr__(self):
+        return "<class 'combined.rliteral'>"
+rliteral = _cb(204, 281)(_rliteral())
+
+# PEPs 212 & 281
+try:
+    from pep212 import indices
+except ImportError:
+    from . import pep212 as _p
+    indices =  _p.indices
+indices = _cb(212, 281)(indices)

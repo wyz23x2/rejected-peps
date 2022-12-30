@@ -570,7 +570,26 @@ class TestPEP3140(unittest.TestCase):
         self.assertFalse(isinstance(-1, self.s))
         self.assertTrue(issubclass(str, self.s))
         self.assertTrue(issubclass(self.s, str))
-
+class TestCombine(unittest.TestCase):
+    def setUp(self):
+        try:
+            from . import combined
+            from . import pep349, pep3140, pep204, pep212, pep281
+        except ImportError:
+            import combined
+            import pep349, pep3140, pep204, pep212, pep281
+        self.c = combined
+        self.p349, self.p3140 = pep349, pep3140
+        self.p204, self.p212, self.p281 = pep204, pep212, pep281
+    def test349_3140(self):
+        self.assertEqual(self.p349.str & self.p3140.str, self.c.str)
+    def test204_281(self):
+        self.assertEqual(self.p204 & self.p281.range, self.c.rliteral)
+    def test212_281(self):
+        self.assertEqual(self.p212.indices & self.p281.range, self.p212.indices)
+    def test204_212_raises(self):
+        with self.assertRaises(TypeError):
+            self.p204 & self.p212.indices
 def run(**kwargs):
     if 'v' in kwargs and 'verbosity' not in kwargs:
         kwargs['verbosity'] = kwargs.pop('v')
