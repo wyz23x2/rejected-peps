@@ -1,5 +1,13 @@
 # Rejected-PEPs Changelog
 
+### <u>0.9.0</u>  _Alpha 2_
+
+_Release Date: 2022-12-30_
+
+#### New
+
+- [#7](https://github.com/wyz23x2/rejected-peps/issues/7), [#9](https://github.com/wyz23x2/rejected-peps/issues/9): You can now combine PEPs 204 & 281 and 212 & 281; use `r = pep204 & pep281.range` and `indices = pep212.indices & pep281.range`, or `rp.pep(204, 212, 281)` to get a namespace with `rliteral` for PEP 204 and `indices` for PEP 281. You cannot directly combine PEPs 204 and 212.
+
 ### <u>0.9.0</u>  _Alpha 1_
 
 _Release Date: 2022-12-30_
