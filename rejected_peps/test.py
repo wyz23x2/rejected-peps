@@ -570,6 +570,19 @@ class TestPEP3140(unittest.TestCase):
         self.assertFalse(isinstance(-1, self.s))
         self.assertTrue(issubclass(str, self.s))
         self.assertTrue(issubclass(self.s, str))
+class TestCombine(unittest.TestCase):
+    def setUp(self):
+        try:
+            from . import combined
+            from . import pep349
+            from . import pep3140
+        except ImportError:
+            import combined
+            import pep349, pep3140
+        self.c = combined
+        self.p349, self.p3140 = pep349, pep3140
+    def test349_3140(self):
+        self.assertEqual(self.p349.str & self.p3140.str, self.c.str)
 
 def run(**kwargs):
     if 'v' in kwargs and 'verbosity' not in kwargs:
