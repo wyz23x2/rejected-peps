@@ -7,16 +7,34 @@ import warnings as _w
 from typing import Generator as _Gen, Optional as _O
 from types import ModuleType as _Module
 
-def pep(n: int) -> _Module:
-    if (not isinstance(n, int)) or n < 0 or n > 9999:
-        raise ValueError(f'Invalid PEP number {n!r}')
-    try:
+def pep(n: int, *ns, allow_empty: bool = False) -> _Module:
+    if not ns:
+        if (not isinstance(n, int)) or n < 0 or n > 9999:
+            raise ValueError(f'Invalid PEP number {n!r}')
         try:
-            return _imp.import_module(f'..pep{n}', 'rejected_peps.subpkg')
+            try:
+                return _imp.import_module(f'..pep{n}', 'rejected_peps.subpkg')
+            except ImportError:
+                return _imp.import_module(f'pep{n}')
         except ImportError:
-            return _imp.import_module(f'pep{n}')
-    except ImportError:
-        raise ValueError(f'PEP {n!r} not supported') from None
+            raise ValueError(f'PEP {n!r} not supported') from None
+    else:
+        try:
+            from . import combined
+        except ImportError:
+            import combined
+        ns = frozenset((n, *ns))
+        mp = map(str, sorted(ns))
+        m = _Module(f'pep' + '_'.join(mp))  # Use := after 3.7 dropped
+        v, f= vars(combined), False
+        for i in v:
+            if getattr(v[i], 'combines', None) == ns:
+                setattr(m, i, v[i])
+                f = True
+        if not (f or allow_empty):
+            raise ValueError('PEPs ' + ', '.join(m[:-1]) + f' and {m[-1]} are not supported'
+                             'or cannot be combined')
+        return m
 SUPPORTED = frozenset((204, 211, 212, 259,
                        265, 276, 281, 294,
                        303, 313, 326, 335,
