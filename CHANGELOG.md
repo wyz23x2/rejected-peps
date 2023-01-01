@@ -1,5 +1,16 @@
 # Rejected-PEPs Changelog
 
+### <u>0.9.0</u>  _Beta 1_
+
+_Release Date: 2023-01-01_
+
+Happy New Year!
+
+#### Improved
+
+- `pep326.Min`, `pep326.Max` and `pep336.NoneType` can now be hashed.
+- `DeprecationWarning` is now changed to `default`; `search_one` will be removed in v0.9.
+
 ### <u>0.9.0</u>  _Alpha 2_
 
 _Release Date: 2022-12-30_
