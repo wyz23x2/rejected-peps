@@ -32,6 +32,8 @@ class NoneType(metaclass=_singleton):
         return self
     def __eq__(self, other) -> bool:
         return isinstance(other, type(self)) or other is None
+    def __hash__(self):
+        return hash(None)
 none = NoneType()
 def isNone(object) -> bool:
     return object is none or object is None
