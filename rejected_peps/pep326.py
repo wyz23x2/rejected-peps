@@ -39,6 +39,8 @@ class MinType(metaclass=_singleton):
     def __repr__(self) -> str:
         return 'Min'
     __str__ = __repr__
+    def __hash__(self):
+        return hash(id(self))
 class MaxType(metaclass=_singleton):
     def __gt__(self, other) -> bool:
         return self is not other
@@ -52,7 +54,8 @@ class MaxType(metaclass=_singleton):
     def __repr__(self) -> str:
         return 'Max'
     __str__ = __repr__
-
+    def __hash__(self):
+        return hash(id(self))
 # 4 names appeared in PEP 326
 Min = UniversalMinimum = MinType()
 Max = UniversalMaximum = MaxType()
