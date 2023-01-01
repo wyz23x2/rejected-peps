@@ -55,7 +55,7 @@ class plain:
             a_return = a_and(b)
             if a_return is NotImplemented:
                 _w.warn(_notimplemented_warning_message,
-                        DeprecationWarning, 2)
+                        PendingDeprecationWarning, 2)
             if a_return is not NeedOtherOperand:
                 return a_return
         b_rand = getattr(b, '__rand2__', None)
@@ -72,8 +72,9 @@ class plain:
         if a_or is not None:
             a_return = a_or(b)
             if a_return is NotImplemented:
+                #
                 _w.warn(_notimplemented_warning_message,
-                        DeprecationWarning, 2)
+                        PendingDeprecationWarning, 2)
             if a_return is not NeedOtherOperand:
                 return a_return
         b_ror = getattr(b, '__ror2__', None)
@@ -81,7 +82,7 @@ class plain:
             b_return = b_ror(a)
             if b_return is NotImplemented:
                 _w.warn(_notimplemented_warning_message,
-                        DeprecationWarning, 2)
+                        PendingDeprecationWarning, 2)
             if b_return is not NeedOtherOperand:
                 return a_return
         with _w.catch_warnings():
@@ -97,7 +98,7 @@ def AND(a, b):
         return plain.AND(a, b)
     if a_return is NotImplemented:
         _w.warn(_notimplemented_warning_message,
-                DeprecationWarning, 2)
+                PendingDeprecationWarning, 2)
     return a_return
 and_ = AND
 def OR(a, b):
@@ -109,6 +110,6 @@ def OR(a, b):
         return plain.OR(a, b)
     if a_return is NotImplemented:
         _w.warn(_notimplemented_warning_message,
-                DeprecationWarning, 2)
+                PendingDeprecationWarning, 2)
     return a_return
 or_ = OR
