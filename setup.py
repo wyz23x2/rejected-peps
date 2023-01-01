@@ -15,7 +15,7 @@ setuptools.setup(
     url="https://github.com/wyz23x2/rejected-peps/",
     project_urls={
         "Bug Tracker": "https://github.com/wyz23x2/rejected-peps/issues",
-        "Changelog": "https://github.com/wyz23x2/rejected-peps/blob/main/CHANGELOG.md"
+        "Changelog": "https://github.com/wyz23x2/rejected-peps/blob/0.9/CHANGELOG.md"
     },
     classifiers=[
         "Programming Language :: Python :: 3.7",
