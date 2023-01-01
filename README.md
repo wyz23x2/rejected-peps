@@ -42,9 +42,9 @@ PEPs with an \* are slightly modified.
 - [PEP 754](https://peps.python.org/pep-0754/) — IEEE 754 Floating Point Special Values
 - [PEP 3140](https://peps.python.org/pep-3140/) – `str(container)` should call `str(item)`, not `repr(item)`
 
-#### Developing (1)
+<!--#### Developing (1)
 
-- [PEP 601](https://peps.python.org/pep-0601/) — Forbid `return`/`break`/`continue` breaking out of `finally`
+- [PEP 601](https://peps.python.org/pep-0601/) — Forbid `return`/`break`/`continue` breaking out of `finally`-->
 
 ### How do I use it?
 Wiki is coming soon!
