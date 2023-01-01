@@ -9,7 +9,7 @@ Happy New Year!
 #### Improved
 
 - `pep326.Min`, `pep326.Max` and `pep336.NoneType` can now be hashed.
-- `DeprecationWarning` is now changed to `default`; `search_one` will be removed in v0.9.
+- `DeprecationWarning` is now changed to `error`; `search_one` will be removed in v0.9.
 
 ### <u>0.9.0</u>  _Alpha 2_
 
