@@ -1,22 +1,42 @@
-__version__ = '0.8.2'
+__version__ = '0.9.0'
 import importlib as _imp
 from collections import namedtuple as _nt
 from itertools import chain as _chain
-import warnings as _w
 # Typing
 from typing import Generator as _Gen, Optional as _O
 from types import ModuleType as _Module
 
-def pep(n: int) -> _Module:
-    if (not isinstance(n, int)) or n < 0 or n > 9999:
-        raise ValueError(f'Invalid PEP number {n!r}')
-    try:
+def pep(n: int, *ns, allow_empty: bool = False) -> _Module:
+    if not ns:
+        if (not isinstance(n, int)) or n < 0 or n > 9999:
+            raise ValueError(f'Invalid PEP number {n!r}')
         try:
-            return _imp.import_module(f'..pep{n}', 'rejected_peps.subpkg')
+            try:
+                return _imp.import_module(f'..pep{n}', 'rejected_peps.subpkg')
+            except ImportError:
+                return _imp.import_module(f'pep{n}')
         except ImportError:
-            return _imp.import_module(f'pep{n}')
-    except ImportError:
-        raise ValueError(f'PEP {n!r} not supported') from None
+            raise ValueError(f'PEP {n!r} not supported') from None
+    else:
+        try:
+            from . import combined
+        except ImportError:
+            import combined
+        ns = frozenset((n, *ns))
+        mp = map(str, sorted(ns))
+        m = _Module(f'pep' + '_'.join(mp))  # Use := after 3.7 dropped
+        v, f = vars(combined), False
+        for i in v:
+            try:
+                if not (getattr(v[i], 'combines') - ns):
+                    setattr(m, i, v[i])
+                    f = True
+            except AttributeError:
+                pass
+        if not (f or allow_empty):
+            raise ValueError('PEPs ' + ', '.join(mp[:-1]) + f' and {mp[-1]} are not supported'
+                             'or cannot be combined')
+        return m
 SUPPORTED = frozenset((204, 211, 212, 259,
                        265, 276, 281, 294,
                        303, 313, 326, 335,
@@ -70,11 +90,6 @@ def _search_one(*s, strict: bool = True) -> _O[int]:
         raise ValueError(f'No match found')
     return xs[0]
 search.one = _search_one
-_w.simplefilter('default', DeprecationWarning)
-def search_one(*args, **kwargs):
-    _w.warn('search_one() is deprecated and will be removed in v0.9.',
-            DeprecationWarning, 2)
-    return search.one(*args, **kwargs)
 def _search_one_any(*s, strict: bool = True) -> _O[int]:
     global SUPPORTED
     if not s:

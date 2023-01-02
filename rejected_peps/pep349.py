@@ -25,6 +25,19 @@ class _str_meta(type):
         return issubclass(c, _b.str)
     def __instancecheck__(cls, i) -> bool:
         return isinstance(i, _b.str)
+    def __and__(cls: type, cls2: type) -> type:
+        try:
+            from . import pep3140
+        except ImportError:
+            import pep3140
+        if cls2 == pep3140.str:
+            try:
+                from . import combined
+            except ImportError:
+                import combined
+            return combined.str
+        raise TypeError(f'Cannot combine {cls!r} and {cls2!r}')
+    __rand__ = __and__
 class str(_b.str, metaclass=_str_meta):
     def __new__(cls, arg, *args, **kwargs):
         if (not args) and (not kwargs):
