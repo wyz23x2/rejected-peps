@@ -1,5 +1,22 @@
 # Rejected-PEPs Changelog
 
+### <u>0.9.0</u>  _Final_
+
+_Release Date: 2023-01-02_
+
+#### Breaking
+
+- Remove `search_one` deprecated from v0.5; use `search.one` instead.
+
+### <u>0.9.0</u>  _Beta 1_
+
+_Release Date: 2023-01-01_
+
+#### Improved
+
+- `pep326.Min`, `pep326.Max` and `pep336.NoneType` can now be hashed.
+- `DeprecationWarning` is now changed to `error`; `search_one` will be removed in v0.9.
+
 ### <u>0.8.2</u>  _Final_
 
 _Release Date: 2023-01-01_
@@ -10,6 +27,22 @@ Happy New Year!
 
 - `pep326.Min`, `pep326.Max` and `pep336.NoneType` can now be hashed.
 - `DeprecationWarning` is now changed to `default`; `search_one` will be removed in v0.9.
+
+### <u>0.9.0</u>  _Alpha 2_
+
+_Release Date: 2022-12-30_
+
+#### New
+
+- [#7](https://github.com/wyz23x2/rejected-peps/issues/7), [#9](https://github.com/wyz23x2/rejected-peps/issues/9): You can now combine PEPs 204 & 281 and 212 & 281; use `r = pep204 & pep281.range` and `indices = pep212.indices & pep281.range`, or `rp.pep(204, 212, 281)` to get a namespace with `rliteral` for PEP 204 and `indices` for PEP 281. You cannot directly combine PEPs 204 and 212.
+
+### <u>0.9.0</u>  _Alpha 1_
+
+_Release Date: 2022-12-30_
+
+#### New
+
+- [#7](https://github.com/wyz23x2/rejected-peps/issues/7), [#8](https://github.com/wyz23x2/rejected-peps/issues/8): You can now combine PEPs 349 and 3140; use `rp.pep(349, 3140).str` or `str = pep349.str & pep3140.str` to let `str()` use `str()` on items and allow returning `bytes`.
 
 ### <u>0.8.1</u>  _Final_
 
