@@ -1,5 +1,13 @@
 # Rejected-PEPs Changelog
 
+### <u>0.9.0</u>  _Final_
+
+_Release Date: 2023-01-02_
+
+#### Breaking
+
+- Remove `search_one` deprecated from v0.5; use `search.one` instead.
+
 ### <u>0.9.0</u>  _Beta 1_
 
 _Release Date: 2023-01-01_

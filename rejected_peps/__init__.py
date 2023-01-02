@@ -1,8 +1,7 @@
-__version__ = '0.9.0b1'
+__version__ = '0.9.0'
 import importlib as _imp
 from collections import namedtuple as _nt
 from itertools import chain as _chain
-import warnings as _w
 # Typing
 from typing import Generator as _Gen, Optional as _O
 from types import ModuleType as _Module
@@ -91,11 +90,6 @@ def _search_one(*s, strict: bool = True) -> _O[int]:
         raise ValueError(f'No match found')
     return xs[0]
 search.one = _search_one
-_w.simplefilter('error', DeprecationWarning)
-def search_one(*args, **kwargs):
-    _w.warn('search_one() is deprecated and will be removed in v0.9.',
-            DeprecationWarning, 2)
-    return search.one(*args, **kwargs)
 def _search_one_any(*s, strict: bool = True) -> _O[int]:
     global SUPPORTED
     if not s:
