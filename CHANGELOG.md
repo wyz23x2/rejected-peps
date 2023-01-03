@@ -1,5 +1,15 @@
 # Rejected-PEPs Changelog
 
+### <u>0.9.2</u>  _Final_
+
+_Release Date: 2023-01-03_
+
+#### Improved
+
+- Functions in `__init__.py` are now cached.
+
+### <u>0.9.0</u>  _Final_
+
 ### <u>0.9.1</u>  _Final_
 
 _Release Date: 2023-01-03_
