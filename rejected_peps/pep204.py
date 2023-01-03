@@ -6,8 +6,9 @@ except ImportError:
         import pep211 as _p
     except ImportError as e:
         _imp_e = e
-        _imp_e.__suppress_context__ = True
+        _imp_e.__suppress_context__ = True  # Don't include the previous ImportError
         _p = None
+
 class pep204:
     """\
 PEP INFO
@@ -46,6 +47,7 @@ PEP 204: <https://www.python.org/dev/peps/pep-204/>
     def __repr__(self) -> str:
         if _p is None:
             raise ValueError('repr unavailable') from _imp_e
+        # Module repr
         return repr(_p).replace('pep211', 'pep204')
     def __and__(self, cls2: type) -> type:
         try:

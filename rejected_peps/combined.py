@@ -48,7 +48,7 @@ except ImportError:
     _r = _p.range
 class _rliteral:
     """Combination of PEPs 204 & 281.
-    Use rliteral[a:b:c] to get range(a, b, c), rliteral[:a] to get range(a).
+    Use rliteral[a:b:c] to get range(a, b, c), rliteral[a] to get range(a).
     """
     def __getitem__(self, x) -> range:
         if isinstance(x, slice):
