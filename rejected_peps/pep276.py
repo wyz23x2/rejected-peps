@@ -17,6 +17,7 @@ PEP = 276
 import builtins as _b
 
 class IntType(_b.int):
+    """Same as `builtins.int`, but `iter(x)` returns `range(max(x, 0))`."""
     def __iter__(self):
         if self < 0:
             return iter(())
