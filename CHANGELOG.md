@@ -1,5 +1,13 @@
 # Rejected-PEPs Changelog
 
+### <u>0.9.3</u>  _Final_
+
+_Release Date: 2023-01-03_
+
+#### Fixed
+
+- Fix `test.run()`; it no longer exits when finished and can correctly run the tests in the module. You can override the non-exiting by specifying `exit=True`.
+
 ### <u>0.9.2</u>  _Final_
 
 _Release Date: 2023-01-03_
@@ -7,8 +15,6 @@ _Release Date: 2023-01-03_
 #### Improved
 
 - Functions in `__init__.py` are now cached.
-
-### <u>0.9.0</u>  _Final_
 
 ### <u>0.9.1</u>  _Final_
 
