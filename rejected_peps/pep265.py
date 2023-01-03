@@ -19,7 +19,7 @@ function is more flexable, thus we recommend it instead of itemlist().
 
 REFERENCES
 
-PEP 265: <https://www.python.org/dev/peps/pep-0265/>
+PEP 265: <https://peps.python.org/pep-0265/>
 Related:""" +
 f'\nsorted: <https://docs.python.org/'
 f'{".".join(map(str, _vi[:2]))}/library/functions.html#sorted>')
@@ -40,6 +40,12 @@ ORIGINAL, KEYS, VALUES = -1, 0, 1
 # Since dicts are now ordered, an option to not sort is needed
 def itemlist(dic, sortby: int = ORIGINAL, *,
              key=None, reverse: bool = False) -> list:
+    """Returns list(dic.items()), but sorted:
+    if sortby is `ORIGINAL`, it is returned untouched;
+    if sortby is `KEYS`, it is sorted by the keys;
+    if sortby is `VALUES`, it is sorted by the values.
+    `key` is respected as in `sorted`; it is sorted in ascending order unless reverse is `True`.
+    """
     i = list(dic.items())
     if sortby <= ORIGINAL:
         return (i[::-1] if reverse else i)
