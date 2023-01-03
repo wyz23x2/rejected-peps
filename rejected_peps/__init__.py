@@ -6,6 +6,13 @@ from itertools import chain as _chain
 from typing import Generator as _Gen, Optional as _O
 from types import ModuleType as _Module
 
+SUPPORTED = frozenset((204, 211, 212, 259,
+                       265, 276, 281, 294,
+                       303, 313, 326, 335,
+                       336, 349, 351, 416,
+                       535, 559, 754, 3140))
+# ↑ Not automatic because it's too slow
+
 def pep(n: int, *ns, allow_empty: bool = False) -> _Module:
     if not ns:
         if (not isinstance(n, int)) or n < 0 or n > 9999:
@@ -37,12 +44,7 @@ def pep(n: int, *ns, allow_empty: bool = False) -> _Module:
             raise ValueError('PEPs ' + ', '.join(mp[:-1]) + f' and {mp[-1]} are not supported'
                              'or cannot be combined')
         return m
-SUPPORTED = frozenset((204, 211, 212, 259,
-                       265, 276, 281, 294,
-                       303, 313, 326, 335,
-                       336, 349, 351, 416,
-                       535, 559, 754, 3140))
-# ↑ Not automatic because it's too slow
+
 def search(*s, strict: bool = False) -> _Gen:
     global SUPPORTED
     if not s:
@@ -54,10 +56,12 @@ def search(*s, strict: bool = False) -> _Gen:
         t = info(pep).title
         if all((func(x) in func(t)) for x in s):
             yield pep
+
 def _search_any(*s, strict: bool = False) -> _Gen:
     for i in _chain.from_iterable(search(x, strict=strict) for x in s):
         yield i
 search.any = _search_any
+
 def _search_one(*s, strict: bool = True) -> _O[int]:
     global SUPPORTED
     if not s:
@@ -90,6 +94,7 @@ def _search_one(*s, strict: bool = True) -> _O[int]:
         raise ValueError(f'No match found')
     return xs[0]
 search.one = _search_one
+
 def _search_one_any(*s, strict: bool = True) -> _O[int]:
     global SUPPORTED
     if not s:
@@ -124,11 +129,13 @@ def _search_one_any(*s, strict: bool = True) -> _O[int]:
         raise ValueError(f'No match found')
     return xs[0]
 search.one.any = _search_one_any
+
 def get(*s) -> _Module:
     return pep(search.one(*s))
 def _get_any(*s) -> _Module:
     return pep(search.one.any(*s))
 get.any = _get_any
+
 del _search_any
 del _search_one
 del _search_one_any
