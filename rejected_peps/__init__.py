@@ -1,20 +1,33 @@
-__version__ = '0.9.1'
+__version__ = '0.9.2'
 import importlib as _imp
 from collections import namedtuple as _nt
 from itertools import chain as _chain
+from functools import lru_cache as _lc
 # Typing
 from typing import Generator as _Gen, Optional as _O
 from types import ModuleType as _Module
 
+SUPPORTED = frozenset((204, 211, 212, 259,
+                       265, 276, 281, 294,
+                       303, 313, 326, 335,
+                       336, 349, 351, 416,
+                       535, 559, 754, 3140))
+# ↑ Not automatic because it's too slow
+
+_pep_imported = {}
 def pep(n: int, *ns, allow_empty: bool = False) -> _Module:
     if not ns:
+        if n in _pep_imported:
+            return _pep_imported[n]
         if (not isinstance(n, int)) or n < 0 or n > 9999:
             raise ValueError(f'Invalid PEP number {n!r}')
         try:
             try:
-                return _imp.import_module(f'..pep{n}', 'rejected_peps.subpkg')
+                md =  _imp.import_module(f'..pep{n}', 'rejected_peps.subpkg')
             except ImportError:
-                return _imp.import_module(f'pep{n}')
+                md = _imp.import_module(f'pep{n}')
+            _pep_imported[n] = md
+            return md
         except ImportError:
             raise ValueError(f'PEP {n!r} not supported') from None
     else:
@@ -22,6 +35,7 @@ def pep(n: int, *ns, allow_empty: bool = False) -> _Module:
             from . import combined
         except ImportError:
             import combined
+        combined = _imp.reload(combined)
         ns = frozenset((n, *ns))
         mp = map(str, sorted(ns))
         m = _Module(f'pep' + '_'.join(mp))  # Use := after 3.7 dropped
@@ -37,12 +51,8 @@ def pep(n: int, *ns, allow_empty: bool = False) -> _Module:
             raise ValueError('PEPs ' + ', '.join(mp[:-1]) + f' and {mp[-1]} are not supported'
                              'or cannot be combined')
         return m
-SUPPORTED = frozenset((204, 211, 212, 259,
-                       265, 276, 281, 294,
-                       303, 313, 326, 335,
-                       336, 349, 351, 416,
-                       535, 559, 754, 3140))
-# ↑ Not automatic because it's too slow
+
+@_lc(maxsize=64, typed=True)
 def search(*s, strict: bool = False) -> _Gen:
     global SUPPORTED
     if not s:
@@ -54,10 +64,14 @@ def search(*s, strict: bool = False) -> _Gen:
         t = info(pep).title
         if all((func(x) in func(t)) for x in s):
             yield pep
+
+@_lc(maxsize=64, typed=True)
 def _search_any(*s, strict: bool = False) -> _Gen:
     for i in _chain.from_iterable(search(x, strict=strict) for x in s):
         yield i
 search.any = _search_any
+
+@_lc(maxsize=64, typed=True)
 def _search_one(*s, strict: bool = True) -> _O[int]:
     global SUPPORTED
     if not s:
@@ -90,6 +104,8 @@ def _search_one(*s, strict: bool = True) -> _O[int]:
         raise ValueError(f'No match found')
     return xs[0]
 search.one = _search_one
+
+@_lc(maxsize=64, typed=True)
 def _search_one_any(*s, strict: bool = True) -> _O[int]:
     global SUPPORTED
     if not s:
@@ -124,8 +140,11 @@ def _search_one_any(*s, strict: bool = True) -> _O[int]:
         raise ValueError(f'No match found')
     return xs[0]
 search.one.any = _search_one_any
+
+@_lc(maxsize=64, typed=True)
 def get(*s) -> _Module:
     return pep(search.one(*s))
+@_lc(maxsize=64, typed=True)
 def _get_any(*s) -> _Module:
     return pep(search.one.any(*s))
 get.any = _get_any
@@ -137,6 +156,7 @@ del _get_any
 class UnavailableError(LookupError, NotImplementedError):
     pass
 pepinfo = _nt('pepinfo', ('number', 'title', 'status', 'creation', 'url'))
+@_lc(maxsize=32, typed=True)
 def info(n: int) -> pepinfo:
     doc = getattr(pep(n), '__doc__', '').splitlines()
     if not doc[3:]:
