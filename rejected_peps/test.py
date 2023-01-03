@@ -643,6 +643,7 @@ def run(**kwargs):
     if 'v' in kwargs and 'verbosity' not in kwargs:
         kwargs['verbosity'] = kwargs.pop('v')
     kwargs.setdefault('verbosity', 2)
-    unittest.main(**kwargs)
+    kw = {'exit': False, 'module': __name__, **kwargs}
+    unittest.main(**kw)
 if __name__ == '__main__':
-    run(v=2)
+    run(v=2, exit=True)
