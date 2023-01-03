@@ -12,13 +12,16 @@ newline of the last argument if `end` starts with '\\n'.
 
 REFERENCES
 
-PEP 259: <https://www.python.org/dev/peps/pep-0259/>
+PEP 259: <https://peps.python.org/pep-0259/>
 """
 PEP = 259
 import builtins as _b
 
 def print(*args, sep: str = ' ', end: str = '\n', file=None,
           flush: bool = False) -> None:
+    """Same as `builtins.print()`, but omit the trailing newline
+    of the last argument if `end` starts with '\\n'.
+    """
     if not args:
         return _b.print(sep=sep, end=end, file=file, flush=flush)
     # Use str.removesuffix as soon as support for Python 3.8 is dropped
