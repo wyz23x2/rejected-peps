@@ -14,6 +14,14 @@ SUPPORTED = frozenset((204, 211, 212, 259,
 # ↑ Not automatic because it's too slow
 
 def pep(n: int, *ns, allow_empty: bool = False) -> _Module:
+    """Return a pep module based on the pep number(s).
+
+    If a single number is provided, the corresponding module is returned.
+
+    If several numbers are provided, a namespace containing the combined objects is returned;
+    if there are none, an error is raised unless `allow_empty=True`, where an empty
+    namespace is returned.
+    """
     if not ns:
         if (not isinstance(n, int)) or n < 0 or n > 9999:
             raise ValueError(f'Invalid PEP number {n!r}')
@@ -35,7 +43,7 @@ def pep(n: int, *ns, allow_empty: bool = False) -> _Module:
         v, f = vars(combined), False
         for i in v:
             try:
-                if not (getattr(v[i], 'combines') - ns):
+                if not (getattr(v[i], 'combines') - ns):  # If .combines is a subset of ns
                     setattr(m, i, v[i])
                     f = True
             except AttributeError:
@@ -46,9 +54,13 @@ def pep(n: int, *ns, allow_empty: bool = False) -> _Module:
         return m
 
 def search(*s, strict: bool = False) -> _Gen:
+    """Return the numbers of PEPs that have a title matching *all* the keywords.
+
+    If `strict=True` (default False), the search is case sensitive.
+    """
     global SUPPORTED
     if not s:
-        return
+        return  # Empty
     if any((not isinstance(i, str)) for i in s):
         raise TypeError('Invalid argument(s)')
     func = ((lambda n: n) if strict else str.lower)
@@ -58,11 +70,19 @@ def search(*s, strict: bool = False) -> _Gen:
             yield pep
 
 def _search_any(*s, strict: bool = False) -> _Gen:
+    """Return the numbers of PEPs that have a title matching *any* of the keywords.
+
+    If `strict=True` (default False), the search is case sensitive.
+    """
     for i in _chain.from_iterable(search(x, strict=strict) for x in s):
         yield i
 search.any = _search_any
 
 def _search_one(*s, strict: bool = True) -> _O[int]:
+    """Return the number of the PEP that has a title matching *all* the keywords.
+    If zero or several PEPs are found, an error is raised.
+    If `strict=True` (default False), the search is case sensitive.
+    """
     global SUPPORTED
     if not s:
         return None
@@ -96,9 +116,13 @@ def _search_one(*s, strict: bool = True) -> _O[int]:
 search.one = _search_one
 
 def _search_one_any(*s, strict: bool = True) -> _O[int]:
+    """Return the number of the PEP that has a title matching *any* of the keywords.
+    If zero or several PEPs are found, an error is raised.
+    If `strict=True` (default False), the search is case sensitive.
+    """
     global SUPPORTED
     if not s:
-        return
+        return None
     func = ((lambda n: n) if strict else str.lower)
     xs = []
     for pep in sorted(SUPPORTED):
@@ -131,8 +155,16 @@ def _search_one_any(*s, strict: bool = True) -> _O[int]:
 search.one.any = _search_one_any
 
 def get(*s) -> _Module:
+    """Return the module of the PEP that has a title matching *all* the keyword(s).
+    If zero or several PEPs are found, an error is raised.
+    If `strict=True` (default False), the search is case-sensitive.
+    """
     return pep(search.one(*s))
 def _get_any(*s) -> _Module:
+    """Return the module of the PEP that has a title matching *any* of the keyword(s).
+    If zero or several PEPs are found, an error is raised.
+    If `strict=True` (default False), the search is case-sensitive.
+    """
     return pep(search.one.any(*s))
 get.any = _get_any
 
@@ -145,6 +177,10 @@ class UnavailableError(LookupError, NotImplementedError):
     pass
 pepinfo = _nt('pepinfo', ('number', 'title', 'status', 'creation', 'url'))
 def info(n: int) -> pepinfo:
+    """Return the info of a PEP.
+
+    If the info is unavailable, an UnavailableError is raised.
+    """
     doc = getattr(pep(n), '__doc__', '').splitlines()
     if not doc[3:]:
         raise UnavailableError(f'Info of PEP {n!r} unavailable')
@@ -162,6 +198,7 @@ def __getattr__(name: str):
             pass
         else:
             return p
+    # Suggestions
     if name.upper() == 'SUPPORTED':
         raise AttributeError(f'module {__name__!r} has no attribute {name!r}. '
                              "Did you mean: 'SUPPORTED'?")
