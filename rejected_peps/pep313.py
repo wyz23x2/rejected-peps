@@ -26,6 +26,20 @@ PEP 313: <https://www.python.org/dev/peps/pep-0313/>
 PEP = 313
 from numbers import Rational as _R, Integral as _I
 from fractions import Fraction as _F
+try:
+    from . import pep336 as _p
+except ImportError:
+    try:
+        import pep336 as _p
+    except ImportError:
+        def isNone(x):
+            return x is None
+    else:
+        isNone = _p.isNone
+        del _p
+else:
+    isNone = _p.isNone
+    del _p
 
 MODERN, CLASSIC, LARGE = 'modern', 'classic', 'large'
 classic_dict = {1000: 'M',
@@ -88,7 +102,7 @@ def to_roman(x: _R, mode: str = MODERN, *, zero=...) -> str:
         except Exception:
             raise e from None
     if x == 0:
-        if zero is None:
+        if isNone(zero):
             raise ValueError('x cannot be 0')
         return zero
     if x < 0:
@@ -106,7 +120,7 @@ def to_roman(x: _R, mode: str = MODERN, *, zero=...) -> str:
 def from_roman(s: str, *, zero=...) -> _R:
     if zero is ...:
         zero = default_zero
-    if zero is not None and s == zero:
+    if not isNone(zero) and s == zero:
         return 0
     if not isinstance(s, str):
         raise TypeError(f'Invalid roman string type: {type(s).__name__!r}')

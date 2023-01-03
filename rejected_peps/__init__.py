@@ -1,4 +1,4 @@
-__version__ = '0.9.0'
+__version__ = '0.9.1'
 import importlib as _imp
 from collections import namedtuple as _nt
 from itertools import chain as _chain
@@ -61,7 +61,7 @@ search.any = _search_any
 def _search_one(*s, strict: bool = True) -> _O[int]:
     global SUPPORTED
     if not s:
-        return
+        return None
     func = ((lambda n: n) if strict else str.lower)
     xs = []
     for pep in sorted(SUPPORTED):

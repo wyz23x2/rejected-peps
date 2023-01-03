@@ -1,5 +1,14 @@
 # Rejected-PEPs Changelog
 
+### <u>0.9.1</u>  _Final_
+
+_Release Date: 2023-01-03_
+
+#### Improved
+
+- Add tests for `__init__.py`.
+- Functions in `pep313` now reject 0 if `pep336.isNone(zero)` instead of just checking for the builtin `None`.
+
 ### <u>0.9.0</u>  _Final_
 
 _Release Date: 2023-01-02_
