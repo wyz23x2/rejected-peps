@@ -35,6 +35,7 @@ class _range_meta(type):
         return cls1
     __rand__ = __and__
 class range(metaclass=_range_meta):
+    """Same as `builtins.range`, but sequence arguments are converted to their lengths."""
     def __new__(cls, *args):
         a = []
         for arg in args:
