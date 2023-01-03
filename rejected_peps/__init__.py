@@ -61,7 +61,7 @@ search.any = _search_any
 def _search_one(*s, strict: bool = True) -> _O[int]:
     global SUPPORTED
     if not s:
-        return
+        return None
     func = ((lambda n: n) if strict else str.lower)
     xs = []
     for pep in sorted(SUPPORTED):

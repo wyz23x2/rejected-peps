@@ -41,6 +41,46 @@ objects = (1,
            enumerate([555, 999, 777, -111]))
 iterables = objects[5:9]
 
+class TestInit(unittest.TestCase):
+    def setUp(self):
+        try:
+            from . import pep, search, get, pepinfo, info, SUPPORTED
+        except ImportError:
+            self.skipTest(f'Import failure')
+        self.pep, self.search, self.get = pep, search, get
+        self.pepinfo, self.info = pepinfo, info
+        self.sp = SUPPORTED
+    def assertModuleEqual(self, first, pepnum: int, msg=None):
+        # @PEP is run before test cases are run, so it's OK if TestInit is run before other cases.
+        self.assertEqual(first, getattr(globals()[f'TestPEP{pepnum}'], f'pep{pepnum}'),
+                         msg=msg)
+    def test_pep(self):
+        # Warning: SUPPORTED is not tested. Please make sure it is correct.
+        for p in self.sp:
+            self.assertModuleEqual(self.pep(p), p)
+        # Combinations tested in TestCombine.
+    def test_search(self):
+        self.assertListEqual(list(self.search('range literals')), [204])
+        self.assertListEqual(list(self.search('and')), [281, 326])
+        self.assertListEqual(list(self.search('A', strict=True)), [211, 313, 326, 349, 416])
+        self.assertListEqual(list(self.search('a', 'for')), [276, 326])
+    def test_search_any(self):
+        self.assertListEqual(list(self.search.any('range literals', 'and')), [204, 281, 326])
+    def test_search_one(self):
+        self.assertEqual(self.search.one('iterator'), 276)
+        with self.assertRaisesRegex(ValueError, 'More than 1 match'):
+            self.search.one('int')
+        with self.assertRaisesRegex(ValueError, 'No match found'):
+            self.search.one('integer')
+    def test_search_one_any(self):
+        self.assertEqual(self.search.one.any('iterator', 'integer'), 276)
+        with self.assertRaisesRegex(ValueError, 'More than 1 match'):
+            self.search.one.any('int', 'iterator')
+        with self.assertRaisesRegex(ValueError, 'No match found'):
+            self.search.one.any('iterators', 'integer')
+    def test_get(self):
+        self.assertModuleEqual(self.get('iterator'), 276)
+        self.assertModuleEqual(self.get.any('iterator', 'integer'), 276)
 @PEP
 class TestPEP204(unittest.TestCase):
     def test_all_given(self):
@@ -53,8 +93,7 @@ class TestPEP204(unittest.TestCase):
                   }
         for p in params:
             with self.subTest(p=p):
-                self.assertEqual(self.pep204[p[0]:p[1]:p[2]],
-                                 range(*p))
+                self.assertEqual(self.pep204[p[0]:p[1]:p[2]], range(*p))
     def test_omitted(self):
         params = ((1, 2),
                   (7,),
