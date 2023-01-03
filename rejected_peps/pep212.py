@@ -13,13 +13,14 @@ Note that irange() is exactly the same as PEP 279's enumerate().
 
 REFERENCES
 
-PEP 212: <https://www.python.org/dev/peps/pep-0212/>
+PEP 212: <https://peps.python.org/pep-0212/>
 Related:
-PEP 279: <https://www.python.org/dev/peps/pep-0279/>
+PEP 279: <https://peps.python.org/pep-0279/>
 """
 PEP = 212
 from typing import Sequence as _Seq
 
 def indices(sequence: _Seq) -> range:
+    """Return range(len(sequence))."""
     return range(len(sequence))
 irange = enumerate
