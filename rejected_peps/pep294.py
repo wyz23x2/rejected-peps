@@ -41,8 +41,15 @@ def valid(name) -> bool:
     if not isinstance(name, str):
         return True
     return _k.iskeyword(name) + (not name.isidentifier()) == 0
+
 def apply(module=None, *, rename=underscore,
           strict: _O[bool] = None):
+    """Add the lowercase regular version as in PEP 294 to
+    the module. If the new name is invalid (e.g. `lambda`), `rename(name)`
+    is called. If strict is True, then the new return value of `rename(name)`
+    and the type (should be str) will be checked. If `None`, true only if `rename` is `original`.
+    This is done in-place so `apply()` returns None.
+    """
     types = module or __import__('types')
     if strict is None:
         strict = rename is not original
