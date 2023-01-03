@@ -2,6 +2,7 @@ __version__ = '1.0.0a1'  # or dev1
 import importlib as _imp
 from collections import namedtuple as _nt
 from itertools import chain as _chain
+from functools import lru_cache as _lc
 # Typing
 from typing import Generator as _Gen, Optional as _O
 from types import ModuleType as _Module
@@ -13,6 +14,7 @@ SUPPORTED = frozenset((204, 211, 212, 259,
                        535, 559, 754, 3140))
 # ↑ Not automatic because it's too slow
 
+_pep_imported = {}
 def pep(n: int, *ns, allow_empty: bool = False) -> _Module:
     """Return a pep module based on the pep number(s).
 
@@ -23,13 +25,17 @@ def pep(n: int, *ns, allow_empty: bool = False) -> _Module:
     namespace is returned.
     """
     if not ns:
+        if n in _pep_imported:
+            return _pep_imported[n]
         if (not isinstance(n, int)) or n < 0 or n > 9999:
             raise ValueError(f'Invalid PEP number {n!r}')
         try:
             try:
-                return _imp.import_module(f'..pep{n}', 'rejected_peps.subpkg')
+                md =  _imp.import_module(f'..pep{n}', 'rejected_peps.subpkg')
             except ImportError:
-                return _imp.import_module(f'pep{n}')
+                md = _imp.import_module(f'pep{n}')
+            _pep_imported[n] = md
+            return md
         except ImportError:
             raise ValueError(f'PEP {n!r} not supported') from None
     else:
@@ -37,6 +43,7 @@ def pep(n: int, *ns, allow_empty: bool = False) -> _Module:
             from . import combined
         except ImportError:
             import combined
+        combined = _imp.reload(combined)
         ns = frozenset((n, *ns))
         mp = map(str, sorted(ns))
         m = _Module(f'pep' + '_'.join(mp))  # Use := after 3.7 dropped
@@ -53,6 +60,7 @@ def pep(n: int, *ns, allow_empty: bool = False) -> _Module:
                              'or cannot be combined')
         return m
 
+@_lc(maxsize=64, typed=True)
 def search(*s, strict: bool = False) -> _Gen:
     """Return the numbers of PEPs that have a title matching *all* the keywords.
 
@@ -69,6 +77,7 @@ def search(*s, strict: bool = False) -> _Gen:
         if all((func(x) in func(t)) for x in s):
             yield pep
 
+@_lc(maxsize=64, typed=True)
 def _search_any(*s, strict: bool = False) -> _Gen:
     """Return the numbers of PEPs that have a title matching *any* of the keywords.
 
@@ -78,6 +87,7 @@ def _search_any(*s, strict: bool = False) -> _Gen:
         yield i
 search.any = _search_any
 
+@_lc(maxsize=64, typed=True)
 def _search_one(*s, strict: bool = True) -> _O[int]:
     """Return the number of the PEP that has a title matching *all* the keywords.
     If zero or several PEPs are found, an error is raised.
@@ -115,6 +125,7 @@ def _search_one(*s, strict: bool = True) -> _O[int]:
     return xs[0]
 search.one = _search_one
 
+@_lc(maxsize=64, typed=True)
 def _search_one_any(*s, strict: bool = True) -> _O[int]:
     """Return the number of the PEP that has a title matching *any* of the keywords.
     If zero or several PEPs are found, an error is raised.
@@ -154,12 +165,14 @@ def _search_one_any(*s, strict: bool = True) -> _O[int]:
     return xs[0]
 search.one.any = _search_one_any
 
+@_lc(maxsize=64, typed=True)
 def get(*s) -> _Module:
     """Return the module of the PEP that has a title matching *all* the keyword(s).
     If zero or several PEPs are found, an error is raised.
     If `strict=True` (default False), the search is case-sensitive.
     """
     return pep(search.one(*s))
+@_lc(maxsize=64, typed=True)
 def _get_any(*s) -> _Module:
     """Return the module of the PEP that has a title matching *any* of the keyword(s).
     If zero or several PEPs are found, an error is raised.
@@ -176,6 +189,7 @@ del _get_any
 class UnavailableError(LookupError, NotImplementedError):
     pass
 pepinfo = _nt('pepinfo', ('number', 'title', 'status', 'creation', 'url'))
+@_lc(maxsize=32, typed=True)
 def info(n: int) -> pepinfo:
     """Return the info of a PEP.
 

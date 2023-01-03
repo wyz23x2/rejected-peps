@@ -33,6 +33,7 @@ REFERENCES
 PEP 204: <https://peps.python.org/pep-204/>
 """
     PEP = 204
+    __name__ = 'pep204'
     def __getitem__(self, x) -> range:
         if isinstance(x, slice):
             start, stop, step = x.start, x.stop, x.step
