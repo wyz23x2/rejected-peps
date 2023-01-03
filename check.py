@@ -1,9 +1,10 @@
+import os
+import sys
+import argparse
 if __name__ == '__main__':
-    import os
-    import sys
-    import argparse
     os.chdir(os.getcwd())
     parser = argparse.ArgumentParser('check')
+    # See `help` argument
     parser.add_argument('--nt', '--no-tests', action='store_true', dest='nt',
                         help='Disable unit tests.')
     parser.add_argument('-g', '--green-only', action='store_true', dest='g',
@@ -24,7 +25,7 @@ if __name__ == '__main__':
     if args.g and args.u:
         parser.error('Cannot specify both -g and -u')
     os.system('')
-    ecode = 0
+    ecode = 0  # Exit 1 if green returns 1 (test failed)
     # Test suite
     if not args.nt:
         print('\033[1m==== Test Suite ====\033[m')
@@ -40,8 +41,10 @@ if __name__ == '__main__':
                 print('\033[33mgreen not found, test suite skipped\033[m',
                       file=sys.stderr)
             else:
+                # unittest
                 os.system('py -3 ./rejected_peps/test.py')
         else:
+            # green (verbose 2)
             ecode = g.main(['-vv', *(('-r',) if args.r else ())])
             if args.r == 1:
                 try:
@@ -71,6 +74,7 @@ if __name__ == '__main__':
                 print(c)
             else:
                 print('\033[32mChecks all run, no violations reported.\033[m\n')
+    # Bandit
     if not args.nb:
         print('\033[1m==== Bandit ====\033[m')
         try:
