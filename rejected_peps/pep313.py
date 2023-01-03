@@ -120,7 +120,7 @@ def to_roman(x: _R, mode: str = MODERN, *, zero=...) -> str:
 def from_roman(s: str, *, zero=...) -> _R:
     if zero is ...:
         zero = default_zero
-    if not isNone(zero) and s == zero:
+    if (not isNone(zero)) and s == zero:
         return 0
     if not isinstance(s, str):
         raise TypeError(f'Invalid roman string type: {type(s).__name__!r}')
