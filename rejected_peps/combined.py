@@ -4,6 +4,7 @@ This is where combined versions are stored.
 import builtins as _b
 from functools import wraps as _w
 def _cb(*combines):
+    # Sets the `combines` atrribute.
     @_w(_cb)
     def _i(func):
         func.combines = frozenset(combines)
@@ -23,6 +24,9 @@ class _str_meta(type):
         return isinstance(i, _b.str)
 @_cb(349, 3140)
 class str(_b.str, metaclass=_str_meta):
+    """Combination of PEPs 349 & 3140.
+    See pep349.str and pep3140.str for more information.
+    """  # "See ..." temporary; replace it later.
     def __new__(cls, arg, *args, **kwargs):
         if (not args) and (not kwargs):
             if not isinstance(arg, (_b.str, bytes)):
@@ -43,6 +47,9 @@ except ImportError:
     from . import pep281 as _p
     _r = _p.range
 class _rliteral:
+    """Combination of PEPs 204 & 281.
+    Use rliteral[a:b:c] to get range(a, b, c), rliteral[:a] to get range(a).
+    """
     def __getitem__(self, x) -> range:
         if isinstance(x, slice):
             start, stop, step = x.start, x.stop, x.step
