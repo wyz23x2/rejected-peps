@@ -25,15 +25,19 @@ class _singleton(type):
             cls._instances[cls] = super().__call__(*args, **kwargs)
         return cls._instances[cls]
 class NoneType(metaclass=_singleton):
+    """Same as type(None), but callable."""
     def __repr__(self) -> str:
         return 'None'
     __str__ = __repr__
     def __call__(self, *args, **kwargs) -> 'NoneType':
+        """Return none."""
         return self
     def __eq__(self, other) -> bool:
         return isinstance(other, type(self)) or other is None
     def __hash__(self):
+        # none should be treated just like None, but callable.
         return hash(None)
 none = NoneType()
 def isNone(object) -> bool:
+    """Return True if object is None or none, else False."""
     return object is none or object is None
