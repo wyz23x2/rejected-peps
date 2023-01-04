@@ -14,11 +14,14 @@ from PEP 303 is also added.
 
 REFERENCES
 
-PEP 303: <https://www.python.org/dev/peps/pep-0303/>
+PEP 303: <https://peps.python.org/pep-0303/>
 """
 PEP = 303
 
 def divmod(dividend, *divisors) -> tuple:
+    """Divide the dividend by the divisors in the order they are given.
+    Returns the final quotient followed by all remainders.
+    """
     # Mostly copied from PEP 303
     modulos = ()
     q = dividend
@@ -35,13 +38,17 @@ def divmod(dividend, *divisors) -> tuple:
                             f"for divmod(): {type(q).__name__!r} and "
                             f"{type(divisors[0]).__name__!r}")
         q, r = qr
-        modulos = (r,) + modulos
+        modulos = modulos + (r,)
         divisors = divisors[1:]
-    return (q,) + modulos[::-1]
+    return (q,) + modulos
 def rdivmod(dividend, *divisors) -> tuple:
+    """Divide the dividend by the divisors in the order reversed.
+    Returns the final quotient followed by all remainders in the order given.
+    """
     x = divmod(dividend, *divisors[::-1])
     return (x[0], *x[1:][::-1])
 def inverse_divmod(seq, *factors):
+    """The inverse operation of `divmod()`."""
     # Copied from PEP 303
     product = seq[0]
     for x, y in zip(factors, seq[1:]):

@@ -11,7 +11,7 @@ This module changes range into a function that runs like specified in PEP 281.
 
 REFERENCES
 
-PEP 281: <https://www.python.org/dev/peps/pep-0281/>
+PEP 281: <https://peps.python.org/pep-0281/>
 """
 PEP = 281
 import builtins as _b

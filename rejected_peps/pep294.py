@@ -19,7 +19,7 @@ See the docstrings for more information.
 
 REFERENCES
 
-PEP 294: <https://www.python.org/dev/peps/pep-0294/>
+PEP 294: <https://peps.python.org/pep-0294/>
 """
 PEP = 294
 import keyword as _k
