@@ -26,6 +26,7 @@ PEP 313: <https://www.python.org/dev/peps/pep-0313/>
 PEP = 313
 from numbers import Rational as _R, Integral as _I
 from fractions import Fraction as _F
+from functools import lru_cache as _lc
 try:
     from . import pep336 as _p
 except ImportError:
@@ -85,15 +86,15 @@ large_dict.update(modern_dict)
 DIGITS = set(classic_dict.values())
 default_zero = None
 
-def to_roman(x: _R, mode: str = MODERN, *, zero=...) -> str:
-    if zero is ...:
-        zero = default_zero
+@_lc(maxsize=256, typed=True)
+def _tr(x, mode, zero):
     if mode not in (MODERN, CLASSIC, LARGE):
         raise ValueError(f'Invalid mode {mode!r}')
     if isinstance(x, _R) and not isinstance(x, (_I, float)):
+        # Fractions
         return f'{to_roman(x.numerator)}/{to_roman(x.denominator)}'
     try:
-        x = getattr(x, '__index__', (lambda *_: int(x)))()
+        x = getattr(x, '__index__', (lambda: int(x)))()
         if not isinstance(x, int):
             raise TypeError(f'Invalid __index__ type {type(x).__name__!r}')
     except Exception as e:
@@ -117,9 +118,27 @@ def to_roman(x: _R, mode: str = MODERN, *, zero=...) -> str:
         if x <= 0:
             break
     return ''.join(lis)
-def from_roman(s: str, *, zero=...) -> _R:
+def to_roman(x: _R, mode: str = MODERN, *, zero=...) -> str:
+    """Convert an int or fraction to a roman number.
+
+    x: The number or fraction.
+
+    mode:   There are 3 modes:
+          - CLASSIC: Plain I, V, X etc.
+          - MODERN: Allow IV (4), CM (900) etc. in addition to CLASSIC
+          - LARGE: Allow up to 3 leading underscores before letter to mean ×1000 for each,
+                   for example _M -> 1000*1000 = 1000000 in addition to MODERN
+
+    zero: Control the handling of zero.
+          If None, 0 raises an error;
+          If not None, returns it when x is 0.
+          You can control the global default (first set to None) with the default_zero variable.
+    """
     if zero is ...:
         zero = default_zero
+    return _tr(x, mode, zero)
+@_lc(maxsize=256, typed=True)
+def _fr(s, zero):
     if (not isNone(zero)) and s == zero:
         return 0
     if not isinstance(s, str):
@@ -145,5 +164,16 @@ def from_roman(s: str, *, zero=...) -> _R:
     if result == 0:
         raise ValueError(f'Invalid roman numeral: {s!r}')
     return result
-# def __getattr__(name: str):
-#    raise AttributeError(f'module {__name__!r} has no attribute {name!r}')
+def from_roman(s: str, *, zero=...) -> _R:
+    """Convert roman number (str) to an int or fraction.
+
+    s: The roman number.
+
+    zero: Control the handling of zero.
+          If None, 0 raises an error;
+          If not None, returns it when x is 0.
+          You can control the global default (first set to None) with the default_zero variable.
+    """
+    if zero is ...:
+        zero = default_zero
+    return _fr(s, zero)
