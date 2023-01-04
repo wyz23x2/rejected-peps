@@ -2,11 +2,16 @@
 
 ### <u>0.9.5</u>  _Final_
 
-_Release Date: 2023-01-XX_
+_Release Date: 2023-01-04_
 
-#### Breaking
+#### Announcement
 
-- TBD 3.7. Note that 3.8 is planned to be dropped on May 3, 2023; if you need extended support, please report it.
+- Support for Python 3.8 is planned to be dropped on October 14, 2023; if you need extended support, please report it.
+
+#### Fixed
+
+- `pep351.freeze` now detects any sequence or mapping.
+- `pep351.freeze(…, allow_frozendict=True)` no longer crashes if the `pep416` import fails.
 
 ### <u>0.9.4</u>  _Final_
 
@@ -22,7 +27,7 @@ _Release Date: 2023-01-03_
 
 #### Fixed
 
-- Fix `test.run()`; it no longer exits when finished and can correctly run the tests in the module. You can override the non-exiting by specifying `exit=True`.
+- Fix `test.run()`: it no longer exits when finished and can correctly run the tests in the module. You can override the non-exiting by specifying `exit=True`.
 
 ### <u>0.9.2</u>  _Final_
 
