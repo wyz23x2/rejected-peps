@@ -1,5 +1,13 @@
 # Rejected-PEPs Changelog
 
+### <u>0.9.5</u>  _Final_
+
+_Release Date: 2023-01-XX_
+
+#### Breaking
+
+- TBD 3.7. Note that 3.8 is planned to be dropped on May 3, 2023; if you need extended support, please report it.
+
 ### <u>0.9.4</u>  _Final_
 
 _Release Date: 2023-01-04_

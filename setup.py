@@ -18,8 +18,11 @@ setuptools.setup(
         "Changelog": "https://github.com/wyz23x2/rejected-peps/blob/main/CHANGELOG.md"
     },
     classifiers=[
-        "Programming Language :: Python :: 3.7",
-        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3 :: Only",
+        "Programming Language :: Python :: 3.7",  # To Jan 27, 2023
+        "Programming Language :: Python :: 3.8",  # To May  3, 2023 +
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
