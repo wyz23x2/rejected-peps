@@ -25,6 +25,7 @@ f'\nsorted: <https://docs.python.org/'
 f'{".".join(map(str, _vi[:2]))}/library/functions.html#sorted>')
 PEP = 265
 import builtins as _b
+import warnings as _w
 
 sorted = sorted  # Recommended
 def _sort(items: list, index: int, *,
@@ -38,14 +39,20 @@ def _sort(items: list, index: int, *,
                      reverse=reverse)
 ORIGINAL, KEYS, VALUES = -1, 0, 1
 # Since dicts are now ordered, an option to not sort is needed
-def itemlist(dic, sortby: int = ORIGINAL, *,
+def itemlist(dic, sortby: int = -2, *,
              key=None, reverse: bool = False) -> list:
     """Returns list(dic.items()), but sorted:
     if sortby is `ORIGINAL`, it is returned untouched;
     if sortby is `KEYS`, it is sorted by the keys;
     if sortby is `VALUES`, it is sorted by the values.
+    sortby is `VALUES` by default.
     `key` is respected as in `sorted`; it is sorted in ascending order unless reverse is `True`.
     """
+    if sortby == -2:
+        _w.warn('The default value of sortby will become VALUES instead of ORIGINAL '
+                'in future versions; specify either to suppress this warning.',
+                DeprecationWarning, stacklevel=2)
+        sortby = ORIGINAL
     i = list(dic.items())
     if sortby <= ORIGINAL:
         return (i[::-1] if reverse else i)
