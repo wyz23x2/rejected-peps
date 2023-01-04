@@ -27,6 +27,9 @@ class _singleton(type):
 # 1) __cmp__ is removed
 # 2) It's not a singleton in the reference implementation
 class MinType(metaclass=_singleton):
+    """type(Min).
+    Min is less than anything but itself and only equal to itself.
+    """
     def __lt__(self, other) -> bool:
         return self is not other
     __le__ = __lt__
@@ -42,6 +45,9 @@ class MinType(metaclass=_singleton):
     def __hash__(self):
         return hash(id(self))
 class MaxType(metaclass=_singleton):
+    """type(Max).
+    Max is greater than anything but itself and only equal to itself.
+    """
     def __gt__(self, other) -> bool:
         return self is not other
     __ge__ = __gt__
