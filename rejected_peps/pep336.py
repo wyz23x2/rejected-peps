@@ -13,7 +13,7 @@ so `isNone(obj)` checks if obj is None or none.
 
 REFERENCES
 
-PEP 336: <https://www.python.org/dev/peps/pep-0336/>
+PEP 336: <https://pep.python.org/pep-0336/>
 """
 PEP = 336
 

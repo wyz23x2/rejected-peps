@@ -21,7 +21,7 @@ the default_zero attribute.
 
 REFERENCES
 
-PEP 313: <https://www.python.org/dev/peps/pep-0313/>
+PEP 313: <https://pep.python.org/pep-0313/>
 """
 PEP = 313
 from numbers import Rational as _R, Integral as _I
