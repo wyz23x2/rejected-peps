@@ -21,7 +21,7 @@ PEP 416: <https://www.python.org/dev/peps/pep-0416/>
 PEP = 351
 
 from types import MappingProxyType as _MPT
-from collections import deque as _deq, OrderedDict as _OD, defaultdict as _dd
+from collections.abc import Mapping as _M, Sequence as _S
 def freeze(obj, *, allow_frozendict: bool = False):
     global _pep416
     try:
@@ -31,21 +31,24 @@ def freeze(obj, *, allow_frozendict: bool = False):
         # so manual check is needed
         if isinstance(obj, set):
             return frozenset(obj)
-        if isinstance(obj, (list, set, _deq)):
+        if isinstance(obj, _S):
             t = tuple(obj)
             return t
-        if isinstance(obj, (dict, _OD, _dd)):
+        if isinstance(obj, _M):
             if allow_frozendict:
                 # Allow using manual PEP 416 implementation from pep416 module
                 try:
-                    _pep416
-                except NameError:
                     try:
-                        from . import pep416
-                    except ImportError:
-                        import pep416
-                    _pep416 = pep416
-                d = _pep416.frozendict(obj)
+                        _pep416
+                    except NameError:
+                        try:
+                            from . import pep416
+                        except ImportError:
+                            import pep416
+                        _pep416 = pep416
+                    d = _pep416.frozendict(obj)
+                except Exception:
+                    d = _MPT(obj)
             else:
                 d = _MPT(obj)  # MappingProxyType by default
             return d
