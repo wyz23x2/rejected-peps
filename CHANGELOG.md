@@ -1,5 +1,13 @@
 # Rejected-PEPs Changelog
 
+### <u>0.9.4</u>  _Final_
+
+_Release Date: 2023-01-04_
+
+#### Improved
+
+- Functions in `pep313` are now cached.
+
 ### <u>0.9.3</u>  _Final_
 
 _Release Date: 2023-01-03_
