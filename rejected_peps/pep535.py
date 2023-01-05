@@ -40,6 +40,15 @@ def _cmp(a, op: str, b):
     if op == '>': return a > b
     raise ValueError(f'Invalid op {op!r}')
 def cmp(*args, and_func: _O[_C] = None):
+    """Chain comparison.
+    Pass arguments in the regular order, e.g. cmp(a, '<', b, '<', c[, andfunc=...]).
+
+    If keyword argument `and_func` is not None, `and_func(x, y)` chains the comparisons,
+    e.g. `and_func(a<b, b<c)`.
+    If it is None, `x.__andfunc__` is checked, e.g. (a<b).__andfunc__(b<c).
+    If `x.__andfunc__` does not exist, `y.__randfunc__` is checked, e.g. (b<c).__randfunc__(a<b).
+    If `y.__randfunc__` does not exists, the classic `x and y` is used.
+    """
     if len(args) % 2 == 0:
         raise ValueError(f'Invalid arguments ({len(args)}; should be odd)')
     obj = args[::2]
@@ -60,9 +69,9 @@ def cmp(*args, and_func: _O[_C] = None):
                         e.add_note('Error occurred while falling back to '
                                    '{b!r} and {c!r}')
                     except AttributeError:
-                        raise e
-                    else:
                         raise e from None
+                    else:
+                        raise e
         else:
             b = and_func(b, c)
     return b
