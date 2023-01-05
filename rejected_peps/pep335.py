@@ -27,6 +27,7 @@ class _singleton(type):
             cls._instances[cls] = super().__call__(*args, **kwargs)
         return cls._instances[cls]
 class NeedOtherOperandType(metaclass=_singleton):
+    """Returned by dunder methods when the other side is needed."""
     def __repr__(self) -> str:
         return 'NeedOtherOperand'
     __str__ = __repr__
@@ -37,6 +38,7 @@ _notimplemented_warning_message = ('NotImplemented should not be used '
                                    'in a boolean context. Did you mean to '
                                    'return NeedOtherOperand?')
 def NOT(a) -> bool:
+    """Equal to `not a`, but checks for `a.__not__()` first."""
     a_not = getattr(a, '__not__', None)
     if a_not is None:
         return not a
@@ -46,10 +48,18 @@ def NOT(a) -> bool:
     return bool(a_return)
 not_ = NOT
 class plain:
+    """Namespace where versions that do not do short circuiting,
+    i.e. don't call `__and1__`, exist.
+    """
     def __init__(self):
         raise Exception('plain cannot be initialized')
     @staticmethod
     def AND(a, b):
+        """`a and b`, but:
+        - a.__and2__(b) is first checked. If a value returned, return it.
+        - If a.__and2__(b) does not exist or returns NeedOtherOperand, check for b.__rand2__(a).
+        - If b.__rand2__(a) does not exist or returns NeedOtherOperand, return `a and b`.
+        """
         a_and = getattr(a, '__and2__', None)
         if a_and is not None:
             a_return = a_and(b)
@@ -61,6 +71,9 @@ class plain:
         b_rand = getattr(b, '__rand2__', None)
         if b_rand is not None:
             b_return = b_rand(a)
+            if b_return is NotImplemented:
+                _w.warn(_notimplemented_warning_message,
+                        PendingDeprecationWarning, 2)
             if b_return is not NeedOtherOperand:
                 return b_return
         with _w.catch_warnings():
@@ -68,6 +81,11 @@ class plain:
     and_ = AND
     @staticmethod
     def OR(a, b):
+        """`a or b`, but:
+        - a.__or2__(b) is first checked. If a value returned, return it.
+        - If a.__or2__(b) does not exist or returns NeedOtherOperand, check for b.__ror2__(a).
+        - If b.__ror2__(a) does not exist or returns NeedOtherOperand, return `a and b`.
+        """
         a_or = getattr(a, '__or2__', None)
         if a_or is not None:
             a_return = a_or(b)
@@ -90,6 +108,12 @@ class plain:
     or_ = OR
     NOT = not_ = staticmethod(NOT)
 def AND(a, b):
+    """`a and b`, but:
+    - a.__and1__() is first checked. If a value returned, return it.
+    - If a.__and1__() does not exist or returns NeedOtherOperand, check for a.__and2__(b).
+    - If a.__and2__(b) does not exist or returns NeedOtherOperand, check for b.__rand2__(a).
+    - If b.__rand2__(a) does not exist or returns NeedOtherOperand, return the classic `a and b`.
+    """
     a_and = getattr(a, '__and1__', None)
     if a_and is None:
         return plain.AND(a, b)
@@ -102,6 +126,12 @@ def AND(a, b):
     return a_return
 and_ = AND
 def OR(a, b):
+    """`a or b`, but:
+    - a.__or__() is first checked. If a value returned, return it.
+    - If a.__or1__() does not exist or returns NeedOtherOperand, check for a.__or2__(b).
+    - If a.__or2__(b) does not exist or returns NeedOtherOperand, check for b.__ror2__(a).
+    - If b.__ror2__(a) does not exist or returns NeedOtherOperand, return the classic `a or b`.
+    """
     a_or = getattr(a, '__or1__', None)
     if a_or is None:
         return plain.OR(a, b)
