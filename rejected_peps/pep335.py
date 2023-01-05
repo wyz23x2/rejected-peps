@@ -14,7 +14,7 @@ also implemented. These functions also have "plain" versions in the
 
 REFERENCES
 
-PEP 335: <https://pep.python.org/pep-0335/>
+PEP 335: <https://peps.python.org/pep-0335/>
 """
 PEP = 335
 

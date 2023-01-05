@@ -13,7 +13,7 @@ then it falls back onto and.
 
 REFERENCES
 
-PEP 535: <https://www.python.org/dev/peps/pep-0535/>
+PEP 535: <https://peps.python.org/pep-0535/>
 """
 PEP = 535
 from typing import Callable as _C, Optional as _O

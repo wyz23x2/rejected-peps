@@ -12,9 +12,9 @@ since dict is ordered in supported versions, frozendict is also ordered.
 
 REFERENCES
 
-PEP 416: <https://www.python.org/dev/peps/pep-0416/>
+PEP 416: <https://peps.python.org/pep-0416/>
 Related:
-PEP 351: <https://www.python.org/dev/peps/pep-0351/>
+PEP 351: <https://peps.python.org/pep-0351/>
 """
 PEP = 416
 

@@ -12,7 +12,7 @@ singletons specified in PEP 326.
 
 REFERENCES
 
-PEP 326: <https://pep.python.org/pep-0326/>
+PEP 326: <https://peps.python.org/pep-0326/>
 """
 PEP = 326
 

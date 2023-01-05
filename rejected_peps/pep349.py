@@ -14,7 +14,7 @@ still implemented as normal.
 
 REFERENCES
 
-PEP 349: <https://www.python.org/dev/peps/pep-0349/>
+PEP 349: <https://peps.python.org/pep-0349/>
 """
 PEP = 349
 import builtins as _b
