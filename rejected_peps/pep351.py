@@ -23,6 +23,17 @@ PEP = 351
 from types import MappingProxyType as _MPT
 from collections.abc import Mapping as _M, Sequence as _S
 def freeze(obj, *, allow_frozendict: bool = False):
+    """Freeze `obj`.
+    If `obj` is hashable, return it untouched.
+    If not, what's returned depends on its type:
+    - If it's a set, return frozenset(obj).
+    - If it's a sequence, return tuple(obj).
+    - If it's a mapping:
+        - If `allow_frozendict` is true and pep416 is available, return pep416.frozendict(obj);
+        - If not, return MappingProxyType(obj).
+    - If it has __freeze__, return obj.__freeze__.
+    - Else raise a TypeError.
+    """
     global _pep416
     try:
         hash(obj)
