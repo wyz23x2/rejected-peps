@@ -71,7 +71,7 @@ def search(*s, strict: bool = False) -> _Gen:
         return  # Empty
     if any((not isinstance(i, str)) for i in s):
         raise TypeError('Invalid argument(s)')
-    func = ((lambda n: n) if strict else str.lower)
+    func = ((lambda n: n) if strict else str.casefold)
     for pep in sorted(SUPPORTED):
         t = info(pep).title
         if all((func(x) in func(t)) for x in s):
@@ -96,7 +96,7 @@ def _search_one(*s, strict: bool = True) -> _O[int]:
     global SUPPORTED
     if not s:
         return None
-    func = ((lambda n: n) if strict else str.lower)
+    func = ((lambda n: n) if strict else str.casefold)
     xs = []
     for pep in sorted(SUPPORTED):
         t = info(pep).title

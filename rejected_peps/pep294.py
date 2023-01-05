@@ -50,7 +50,7 @@ def apply(module=None, *, rename=underscore,
     the module. If the new name is invalid (e.g. `lambda`), `rename(name)`
     is called. If strict is True, then the new return value of `rename(name)`
     and the type (should be str) will be checked. If `None`, true only if `rename` is `original`.
-    This is done in-place so `apply()` returns None.
+    Returns the modified module.
     """
     if strict is None:
         strict = rename is not original
@@ -69,3 +69,4 @@ def apply(module=None, *, rename=underscore,
                     raise TypeError(f'Invalid name {new_name!r} with type '
                                     f'{type(r).__name__!r}')
                 setattr(types, new_name, getattr(types, name))
+        return types
