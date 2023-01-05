@@ -39,6 +39,9 @@ class _str_meta(type):
         raise TypeError(f'Cannot combine {cls!r} and {cls2!r}')
     __rand__ = __and__
 class str(_b.str, metaclass=_str_meta):
+    """Same as `builtins.str`, but a `bytes` is returned if `__str__` returns bytes.
+    The str(bytes_or_buffer, encoding[, errors]) form is unchanged.
+    """
     def __new__(cls, arg, *args, **kwargs):
         if (not args) and (not kwargs):
             if not isinstance(arg, (_b.str, bytes)):
