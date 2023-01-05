@@ -1,5 +1,59 @@
 # Rejected-PEPs Changelog
 
+### <u>0.9.6</u>  _Final_
+
+_Release Date: 2023-01-05_
+
+#### Fixed
+
+- `pep3140.str` and `pep349.str & pep3140.str` now correctly return the result for any mapping.
+
+  For example:
+
+  ```python
+  >>> from collections import defaultdict as d
+  >>> pep3140.str(d(int, {'1': 2}))
+  {1: 2}  # v0.9.5
+  defaultdict(<class 'int'>, {1: 2})  # v0.9.6
+  ```
+
+### <u>0.9.5</u>  _Final_
+
+_Release Date: 2023-01-04_
+
+#### Announcement
+
+- Support for Python 3.8 is planned to be dropped on October 14, 2023; if you need extended support, please report it.
+
+#### Fixed
+
+- `pep351.freeze` now detects any sequence or mapping.
+- `pep351.freeze(…, allow_frozendict=True)` no longer crashes if the `pep416` import fails.
+
+### <u>0.9.4</u>  _Final_
+
+_Release Date: 2023-01-04_
+
+#### Improved
+
+- Functions in `pep313` are now cached.
+
+### <u>0.9.3</u>  _Final_
+
+_Release Date: 2023-01-03_
+
+#### Fixed
+
+- Fix `test.run()`: it no longer exits when finished and can correctly run the tests in the module. You can override the non-exiting by specifying `exit=True`.
+
+### <u>0.9.2</u>  _Final_
+
+_Release Date: 2023-01-03_
+
+#### Improved
+
+- Functions in `__init__.py` are now cached.
+
 ### <u>0.9.1</u>  _Final_
 
 _Release Date: 2023-01-03_
@@ -43,7 +97,7 @@ _Release Date: 2022-12-30_
 
 #### New
 
-- [#7](https://github.com/wyz23x2/rejected-peps/issues/7), [#9](https://github.com/wyz23x2/rejected-peps/issues/9): You can now combine PEPs 204 & 281 and 212 & 281; use `r = pep204 & pep281.range` and `indices = pep212.indices & pep281.range`, or `rp.pep(204, 212, 281)` to get a namespace with `rliteral` for PEP 204 and `indices` for PEP 281. You cannot directly combine PEPs 204 and 212.
+- [#7](https://github.com/wyz23x2/rejected-peps/issues/7), [#9](https://github.com/wyz23x2/rejected-peps/issues/9): You can now combine PEPs 204 & 281 and 212 & 281; use `r = pep204 & pep281.range` and `indices = pep212.indices & pep281.range`, or `rp.pep(204, 212, 281)` to get a namespace with `rliteral` for PEP 204 and `indices` for PEP 212. You cannot directly combine PEPs 204 and 212.
 
 ### <u>0.9.0</u>  _Alpha 1_
 
@@ -212,7 +266,7 @@ _Release Date: 2021-08-22_
 
 #### Fixed
 
-- The Python `DeprecationWarning` is now silenced in `pep335` since it's already issued manually. Note that `DeprecationWarning` in `NOT(NotImplementation)` is still the builtin one.
+- The Python `DeprecationWarning` is now silenced in `pep335` since it's already issued manually. Note that `DeprecationWarning` in `NOT(NotImplemented)` is still the builtin one.
 
 [^1]: There is a built-in `apply()` function in Python 2.x, but anyway we didn't support 2.x from the start, and `apply` is just a name, not a keyword.
 
