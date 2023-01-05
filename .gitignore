@@ -9,3 +9,4 @@ dist/
 **/linecounter.md
 !.mailmap
 !.upload.*
+**/_build
