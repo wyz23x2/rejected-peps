@@ -41,6 +41,7 @@ objects = (1,
            enumerate([555, 999, 777, -111]))
 iterables = objects[5:9]
 
+
 class TestInit(unittest.TestCase):
     def setUp(self):
         try:
@@ -85,6 +86,7 @@ class TestInit(unittest.TestCase):
     def test_get(self):
         self.assertModuleEqual(self.get('iterator'), 276)
         self.assertModuleEqual(self.get.any('iterator', 'integer'), 276)
+
 @PEP
 class TestPEP204(unittest.TestCase):
     def test_all_given(self):
@@ -133,6 +135,7 @@ class TestPEP204(unittest.TestCase):
             with self.subTest(p=p):
                 with self.assertRaises(TypeError):
                     self.pep204[p[0]:p[1]:p[2]]
+
 @PEP
 class TestPEP211(unittest.TestCase):
     def setUp(self):
@@ -157,6 +160,7 @@ class TestPEP211(unittest.TestCase):
         self.assertEq((3.14, 3.15) @ self.w((2.71, 2.72)),
                       self.itertools.product((3.14, 3.15),
                                              (2.71, 2.72)))
+
 @PEP
 class TestPEP212(unittest.TestCase):
     def test_indices(self):
@@ -170,6 +174,7 @@ class TestPEP212(unittest.TestCase):
                                 list(enumerate(i)))
                 self.assertEqual(list(self.pep212.irange(i)),
                                 list(zip(range(len(i)), i)))
+
 @PEP
 class TestPEP259(unittest.TestCase):
     def setUp(self):
@@ -203,6 +208,7 @@ class TestPEP259(unittest.TestCase):
         self.pep259.print(27575, '\n\n', sep='\t', file=s)
         self.assertEqual(s.getvalue(), '27575\t\n\n')
         del s
+
 @PEP
 class TestPEP265(unittest.TestCase):
     def test_sorted(self):
@@ -232,6 +238,7 @@ class TestPEP265(unittest.TestCase):
             sp.itemlist({None: 1, 3: 2, 4: None}, sp.KEYS)
     def test_alias(self):
         self.assertIs(self.pep265.items, self.pep265.itemlist)
+
 @PEP
 class TestPEP276(unittest.TestCase):
     def test_subclass(self):
@@ -243,6 +250,7 @@ class TestPEP276(unittest.TestCase):
                               tuple(range(0)))
         self.assertTupleEqual(tuple(self.pep276.int(-3.14)),
                               tuple(range(0)))
+
 @PEP
 class TestPEP281(unittest.TestCase):
     def test_regular(self):
@@ -271,6 +279,7 @@ class TestPEP281(unittest.TestCase):
                 self.assertEqual(r(a, b, c), range(len(a),
                                                    len(b),
                                                    len(c)))
+
 @PEP
 class TestPEP294(unittest.TestCase):
     def test_helpers(self):
@@ -295,7 +304,7 @@ class TestPEP294(unittest.TestCase):
         self.assertIn('Lambda', dir(types))
         self.pep294.apply(rename=self.pep294.original)
         self.assertIn('lambda', dir(types))
-        # TODO: Check strict
+
 @PEP
 class TestPEP303(unittest.TestCase):
     def test_divmod(self):
@@ -315,6 +324,7 @@ class TestPEP303(unittest.TestCase):
     def test_inverse(self):
         self.assertEqual(self.pep303.inverse_divmod([0, 1, 4, 3, 2],
                                                     9, 5, 7, 3), 200)
+
 @PEP
 class TestPEP313(unittest.TestCase):
     def test_to(self):
@@ -366,6 +376,7 @@ class TestPEP313(unittest.TestCase):
             self.pep313.from_roman('bar')
         with self.assertRaises(ValueError):
             self.pep313.from_roman('__')
+
 @PEP
 class TestPEP326(unittest.TestCase):
     def test_Min(self):
@@ -389,6 +400,7 @@ class TestPEP326(unittest.TestCase):
     def test_alias(self):
         self.assertIs(self.pep326.Min, self.pep326.UniversalMinimum)
         self.assertIs(self.pep326.Max, self.pep326.UniversalMaximum)
+
 @PEP
 class TestPEP335(unittest.TestCase):
     def setUp(self):
@@ -400,7 +412,23 @@ class TestPEP335(unittest.TestCase):
         self.assertIs(self.plain.and_, self.plain.AND)
         self.assertIs(self.plain.or_, self.plain.OR)
         self.assertIs(self.plain.not_, self.plain.NOT)
-    ...
+    def test_not(self):
+        self.assertFalse(self.pep335.not_(5))
+        self.assertTrue(self.pep335.not_(""))
+        class A:
+            def __init__(self, x): self.x = x
+            def __not__(self): return self.x < 3
+        self.assertTrue(self.pep335.not_(A(2)))
+        self.assertFalse(self.pep335.not_(A(4)))
+    def test_and(self):
+        self.assertEqual(self.pep335.and_(2, 6), 6)
+        self.assertEqual(self.pep335.and_(0, ""), 0)
+        self.assertEqual(self.pep335.and_(-5, []), [])
+    def test_or(self):
+        self.assertEqual(self.pep335.or_(2, 6), 2)
+        self.assertEqual(self.pep335.or_(0, ""), "")
+        self.assertEqual(self.pep335.or_(-5, []), -5)
+
 @PEP
 class TestPEP336(unittest.TestCase):
     def setUp(self):
@@ -417,6 +445,7 @@ class TestPEP336(unittest.TestCase):
         self.assertTrue(self.pep336.isNone(self.nt()))
         self.assertTrue(self.pep336.isNone(None))
         self.assertFalse(self.pep336.isNone(...))
+
 @PEP
 class TestPEP349(unittest.TestCase):
     def setUp(self):
@@ -451,6 +480,7 @@ class TestPEP349(unittest.TestCase):
         self.assertFalse(isinstance(-1, self.s))
         self.assertTrue(issubclass(str, self.s))
         self.assertTrue(issubclass(self.s, str))
+
 @PEP
 class TestPEP351(unittest.TestCase):
     def setUp(self):
@@ -491,6 +521,7 @@ class TestPEP351(unittest.TestCase):
             __hash__ = None
         with self.assertRaises(TypeError):
             self.freeze(A())
+
 @PEP
 class TestPEP416(unittest.TestCase):
     def setUp(self):
@@ -515,6 +546,7 @@ class TestPEP416(unittest.TestCase):
         self.assertEqual(d.get(23, 2), 2)
         self.assertTupleEqual(tuple(d.keys()), ('1', -3))
         self.assertEqual(d, d.copy())
+
 @PEP
 class TestPEP535(unittest.TestCase):
     def setUp(self):
@@ -561,6 +593,7 @@ class TestPEP535(unittest.TestCase):
             i = np.arange(5)
             self.assertEqual(repr(self.cmp(0, '<', i, '<', 4, and_func=np.logical_and)),
                              repr(np.array([False, True, True, True, False], dtype=bool)))
+
 @PEP
 class TestPEP559(unittest.TestCase):
     def test_noop(self):
@@ -571,6 +604,7 @@ class TestPEP559(unittest.TestCase):
         self.assertIsNone(noop(**iterables[-1]))
         for o in objects:
             self.assertIsNone(noop(o))
+
 @PEP
 class TestPEP754(unittest.TestCase):
     def test_values(self):
@@ -600,6 +634,7 @@ class TestPEP754(unittest.TestCase):
         self.assertTrue(p.isInf(p.NegInf))
         self.assertFalse(p.isInf(p.NaN))
         self.assertFalse(p.isInf(-0.0))
+
 @PEP
 class TestPEP3140(unittest.TestCase):
     def setUp(self):
@@ -622,6 +657,7 @@ class TestPEP3140(unittest.TestCase):
         self.assertFalse(isinstance(-1, self.s))
         self.assertTrue(issubclass(str, self.s))
         self.assertTrue(issubclass(self.s, str))
+
 class TestCombine(unittest.TestCase):
     def setUp(self):
         try:
@@ -642,7 +678,12 @@ class TestCombine(unittest.TestCase):
     def test204_212_raises(self):
         with self.assertRaises(TypeError):
             self.p204 & self.p212.indices
+
+
 def run(**kwargs):
+    """Run the test suite. Keyword arguments are the same as `unittest.main`.
+
+    `verbosity` is 2 by default."""
     if 'v' in kwargs and 'verbosity' not in kwargs:
         kwargs['verbosity'] = kwargs.pop('v')
     kwargs.setdefault('verbosity', 2)
