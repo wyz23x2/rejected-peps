@@ -29,11 +29,19 @@ def _str(x) -> _b.str:
                 return value
         return x.__repr__()
     if isinstance(x, (dict, _M)):
-        if isinstance(x, dict):
+        if type(x) is dict:  # no subclasses
+            # {}
             prefix = suffix = ''
         else:
-            prefix, suffix = f'{type(x).__name__}(', ')'
-        if not x:
+            # X({})
+            ss = _b.str(x)
+            try:
+                si, ei = ss.index('{'), len(ss)-1-ss[::-1].index('}')
+            except ValueError:
+                prefix, suffix = f'{type(x).__name__}(', ')'
+            else:
+                prefix, suffix = ss[:si], ss[ei+1:]
+        if not x:  # Empty
             return '%s{}%s' % (prefix, suffix)
         parts = [prefix, '{']
         for key, value in x.items():
@@ -61,6 +69,9 @@ class _str_meta(type):
     def __instancecheck__(cls, i) -> bool:
         return isinstance(i, _b.str)
 class str(_b.str, metaclass=_str_meta):
+    """Same as `builtins.str`, but `str` is called on sequence/mapping elements.
+    The str(bytes_or_buffer, encoding[, errors]) form is unchanged.
+    """
     def __new__(cls, arg, *args, **kwargs):
         if (not args) and (not kwargs):
             arg = _str(arg)
