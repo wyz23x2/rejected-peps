@@ -426,6 +426,7 @@ class TestPEP349(unittest.TestCase):
         self.assertEqual(self.s('16'), '16')
         self.assertEqual(self.s(['1', 2]), "['1', 2]")
         self.assertEqual(self.s(b'pep349', 'utf-8'), 'pep349')
+        self.assertEqual(self.s(str), "<class 'str'>")
         # Bytes
         class A:
             def __str__(self): return b'A'
@@ -611,6 +612,7 @@ class TestPEP3140(unittest.TestCase):
         from collections import defaultdict
         dd = defaultdict(int, {'1': 2})
         self.assertEqual(self.s(dd), "defaultdict(<class 'int'>, {1: 2})")
+        self.assertEqual(self.s(str), "<class 'str'>")
     def test_methods(self):
         self.assertEqual(self.s(['1', '2'])[0], '[')
         self.assertFalse(self.s({'1': '2', 3: '4'}).startswith('('))
