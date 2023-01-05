@@ -1,5 +1,22 @@
 # Rejected-PEPs Changelog
 
+### <u>0.9.6</u>  _Final_
+
+_Release Date: 2023-01-05_
+
+#### Fixed
+
+- `pep3140.str` and `pep349.str & pep3140.str` now correctly return the result for any mapping.
+
+  For example:
+
+  ```python
+  >>> from collections import defaultdict as d
+  >>> pep3140.str(d(int, {'1': 2}))
+  {1: 2}  # v0.9.5
+  defaultdict(<class 'int'>, {1: 2})  # v0.9.6
+  ```
+
 ### <u>0.9.5</u>  _Final_
 
 _Release Date: 2023-01-04_
