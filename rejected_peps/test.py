@@ -608,6 +608,9 @@ class TestPEP3140(unittest.TestCase):
         self.assertEqual(self.s(['1', '2']), '[1, 2]')
         self.assertEqual(self.s({'1': '2', 3: '4'}), '{1: 2, 3: 4}')
         self.assertEqual(self.s((16, 25, '43', 93)), '(16, 25, 43, 93)')
+        from collections import defaultdict
+        dd = defaultdict(int, {'1': 2})
+        self.assertEqual(self.s(dd), "defaultdict(<class 'int'>, {1: 2})")
     def test_methods(self):
         self.assertEqual(self.s(['1', '2'])[0], '[')
         self.assertFalse(self.s({'1': '2', 3: '4'}).startswith('('))
