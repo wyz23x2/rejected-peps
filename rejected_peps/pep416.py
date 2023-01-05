@@ -20,6 +20,10 @@ PEP = 416
 
 # Cannot subclass types.MappingProxyType
 class frozendict(dict):
+    """An immutable dictionary.
+
+    A frozendict is hashable only if all values are hashable.
+    """
     # Mostly copied from PEP 351 "Sample implementations"
     def __hash__(self) -> int:
         # PEP 416:
