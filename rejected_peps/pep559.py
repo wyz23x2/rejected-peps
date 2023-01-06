@@ -12,7 +12,7 @@ any arguments and directly returns None.
 
 REFERENCES
 
-PEP 559: <https://pep.python.org/pep-0559/>
+PEP 559: <https://peps.python.org/pep-0559/>
 """
 PEP = 559
 
