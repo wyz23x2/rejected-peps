@@ -24,9 +24,19 @@ def _str(x) -> _b.str:
     if (not isinstance(x, _C)) or isinstance(x, (_b.str, bytes)):
         xs = getattr(x, '__str__', None)
         if xs is not None:
-            value = xs()
-            if value is not NotImplemented:
-                return value
+            try:
+                value = xs()
+                if value is not NotImplemented:
+                    return value
+            except TypeError:
+                xs = getattr(x.__class__, '__str__', None)
+                if xs is not None:
+                    try:
+                        value = xs(x)
+                        if value is not NotImplemented:
+                            return value
+                    except TypeError:
+                        pass
         return x.__repr__()
     if isinstance(x, (dict, _M)):
         if type(x) is dict:  # no subclasses

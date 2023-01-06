@@ -23,6 +23,7 @@ PEP 294: <https://www.python.org/dev/peps/pep-0294/>
 """
 PEP = 294
 import keyword as _k
+import threading as _t
 from typing import Optional as _O
 
 def underscore(s: str) -> str:
@@ -41,21 +42,23 @@ def valid(name) -> bool:
     if not isinstance(name, str):
         return True
     return _k.iskeyword(name) + (not name.isidentifier()) == 0
+_apply_lock = _t.RLock()
 def apply(module=None, *, rename=underscore,
           strict: _O[bool] = None):
-    types = module or __import__('types')
     if strict is None:
         strict = rename is not original
-    for name in dir(types):
-        if name[-4:] == 'Type' and name[:-4]:
-            new_name = name[:-4].lower()
-            if not valid(new_name):
-                r = rename(new_name)
-                if strict and not valid(r):
-                    raise ValueError(f'Invalid name {r!r}')
-                new_name = r
-            if strict and type(new_name) is not str:
-                # str subclasses aren't allowed
-                raise TypeError(f'Invalid name {new_name!r} with type '
-                                f'{type(r).__name__!r}')
-            setattr(types, new_name, getattr(types, name))
+    with _apply_lock:
+        types = module or __import__('types')
+        for name in dir(types):
+            if name[-4:] == 'Type' and name[:-4]:
+                new_name = name[:-4].lower()
+                if not valid(new_name):
+                    r = rename(new_name)
+                    if strict and not valid(r):
+                        raise ValueError(f'Invalid name {r!r}')
+                    new_name = r
+                if strict and type(new_name) is not str:
+                    # str subclasses aren't allowed
+                    raise TypeError(f'Invalid name {new_name!r} with type '
+                                    f'{type(r).__name__!r}')
+                setattr(types, new_name, getattr(types, name))

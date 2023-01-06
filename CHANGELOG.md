@@ -1,5 +1,14 @@
 # Rejected-PEPs Changelog
 
+### <u>0.9.7</u>  _Final_
+
+_Release Date: 2023-01-05_
+
+#### Fixed
+
+- `pep249.apply` is now thread safe.
+- `pep349.str`, `pep3140.str` and `pep349.str & pep3140.str` no longer raise `TypeError` if the argument is a type.
+
 ### <u>0.9.6</u>  _Final_
 
 _Release Date: 2023-01-05_
