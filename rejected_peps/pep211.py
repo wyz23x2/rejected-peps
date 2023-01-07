@@ -29,9 +29,23 @@ class wrapper:
     """
     def __init__(self, obj):
         self._obj = obj
+    def __repr__(self):
+        return f'{self.__class__.__name__}({self._obj!r})'
     def __matmul__(self, other) -> product:
-        return product(self(), getattr(other, '_obj', other))
+        try:
+            return product(self(), getattr(other, '_obj', other))
+        except TypeError:
+            try:
+                return product(self(), repeat=other)
+            except TypeError:
+                return NotImplemented
     def __rmatmul__(self, other) -> product:
-        return product(getattr(other, '_obj', other), self())
+        try:
+            return product(getattr(other, '_obj', other), self())
+        except TypeError:
+            return NotImplemented
     def __call__(self):
+        return self._obj
+    @property
+    def __wrapped__(self):
         return self._obj
