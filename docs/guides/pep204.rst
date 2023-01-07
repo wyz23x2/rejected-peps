@@ -1,5 +1,5 @@
 ======================================
-:pep:`204`: Range Literals (Tutorial)
+:pep:`204`: Range Literals
 ======================================
 .. currentmodule:: pep204
 

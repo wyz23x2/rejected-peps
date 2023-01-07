@@ -1,6 +1,7 @@
 ===========================================================
-:pep:`211`: Adding A New Outer Product Operator (Tutorial)
+:pep:`211`: Adding A New Outer Product Operator
 ===========================================================
+.. currentmodule:: pep211
 
 First, let's see what :func:`itertools.product` does::
 

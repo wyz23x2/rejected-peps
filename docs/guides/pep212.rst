@@ -1,0 +1,20 @@
+===========================================================
+:pep:`212`: Loop Counter Iteration
+===========================================================
+.. currentmodule:: pep212
+
+:mod:`pep212` defines :func:`indices` that is the same as ``range(len(x))``::
+
+    >>> from rejected_peps import pep212 as p
+    >>> p.indices([1, 2, 3])
+    range(0, 3)
+    >>> p.indices([])
+    range(0, 0)
+
+:class:`irange` is an alias to :class:`enumerate`. It's just to address the PEP; use :class:`enumerate` instead.
+
+.. seealso:: 
+    Module :mod:`pep204`
+        Supports convenient :class:`range` object creating.
+    Module :mod:`pep281`
+        Converts ``x`` to ``len(x)`` if it is a sequence in :class:`range`.

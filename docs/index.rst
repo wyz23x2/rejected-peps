@@ -10,16 +10,9 @@ This package picks up some of these PEPs and implements them.
 .. toctree::
     :glob:
     :name: mtoc
-    :includehidden:
-    :maxdepth: 2
+    :maxdepth: 3
 
     quickstart
-    guides/init
-    guides/pep*
-
-.. toctree::
-    :hidden:
-
     guides/index
 
 .. _`rejected, withdrawn`: https://peps.python.org/pep-0000/#abandoned-withdrawn-and-rejected-peps
