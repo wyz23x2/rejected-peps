@@ -3,7 +3,7 @@
 ===========================================================
 .. currentmodule:: pep212
 
-:mod:`pep212` defines :func:`indices` that is the same as ``range(len(x))``::
+:mod:`pep212` defines :func:`.indices` that is the same as ``range(len(x))``::
 
     >>> from rejected_peps import pep212 as p
     >>> p.indices([1, 2, 3])
@@ -11,7 +11,7 @@
     >>> p.indices([])
     range(0, 0)
 
-:class:`irange` is an alias to :class:`enumerate`. It's just to address the PEP; use :class:`enumerate` instead.
+:class:`.irange` is an alias to :class:`enumerate`. It's just to address the PEP; use :class:`enumerate` instead.
 
 .. seealso:: 
     Module :mod:`pep204`

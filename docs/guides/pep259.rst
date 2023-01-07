@@ -1,0 +1,23 @@
+================================================
+:pep:`259`: Omit Printing Newline After Newline
+================================================
+.. currentmodule:: pep259
+
+:func:`builtins.print` prints two newlines accidently in this case::
+
+    >>> print('15\n')
+    15
+
+    >>>
+
+:func:`.print` omits the extra newline::
+
+    >>> from rejected_peps.pep259 import print
+    >>> print('15\n')
+    15
+    >>> print(42, 39, 'x\n')
+    42 39 x
+    >>> print(1, 2, 5, 'y\n', end='\nz')
+    1 2 5 y
+    z
+    >>>
