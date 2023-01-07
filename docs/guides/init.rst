@@ -50,4 +50,11 @@ Get the module directly::
     >>> rp.get.any('with', 'range').PEP
     281
 
-Now that you know several ways to get a PEP module, you can learn each module now.
+Now that you know several ways to get a PEP module, you can learn each module now:
+
+.. toctree::
+    :glob:
+    :name: itoc
+    :maxdepth: 2
+
+    pep*

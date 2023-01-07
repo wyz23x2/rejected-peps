@@ -1,6 +1,6 @@
-============================
-:pep:`204`: Range Literals
-============================
+======================================
+:pep:`204`: Range Literals (Tutorial)
+======================================
 .. currentmodule:: pep204
 
 You can create :class:`range` objects quickly with pep204::
