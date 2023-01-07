@@ -10,7 +10,7 @@ This package picks up some of these PEPs and implements them.
 .. toctree::
     :glob:
     :name: mtoc
-    :maxdepth: 3
+    :maxdepth: 2
 
     quickstart
     guides/index
