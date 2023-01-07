@@ -51,3 +51,5 @@ Access :attr:`SUPPORTED` to get a frozenset of PEPs supported::
 
     >> print(*sorted(rp.SUPPORTED), sep=', ')
     204, 211, 212, 259, 265, 276, 281, 294, 303, 313, 326, 335, 336, 349, 351, 416, 535, 559, 754, 3140
+
+Now continue on to exploring the root package `here <./guides/init.html>`_.

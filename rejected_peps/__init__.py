@@ -83,8 +83,11 @@ def _search_any(*s, strict: bool = False) -> _Gen:
 
     If `strict=True` (default False), the search is case sensitive.
     """
+    yielded = set()
     for i in _chain.from_iterable(search(x, strict=strict) for x in s):
-        yield i
+        if i not in yielded:
+            yield i
+            yielded.add(i)
 search.any = _search_any
 
 @_lc(maxsize=64, typed=True)
