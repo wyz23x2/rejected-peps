@@ -1,0 +1,17 @@
+================================================
+:pep:`281`: Loop Counter Iteration with range
+================================================
+.. currentmodule:: pep281
+
+:class:`.range` converts sequence arguments to their lengths and
+returns a :class:`builtins.range` object.
+
+    >>> from rejected_peps import pep281 as p
+    >>> p.range(1)
+    range(0, 1)
+    >>> p.range([1, 2, 3], ["a", "b", "c", "d", "e", "f", "g"], {-10.5, -12})
+    range(3, 7, 2)
+    >>> p.range(6, [7, 8, 9], -1)
+    range(6, 3, -1)
+    >>> type(_)  # It is the builtin one.
+    <class 'range'>
