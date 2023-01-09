@@ -1,5 +1,6 @@
 __version__ = '1.0.0dev2'
 import importlib as _imp
+import warnings as _w
 from collections import namedtuple as _nt
 from itertools import chain as _chain
 from functools import lru_cache as _lc
@@ -62,7 +63,7 @@ def pep(n: int, *ns, allow_empty: bool = False) -> _Module:
 
 @_lc(maxsize=64, typed=True)
 def search(*s, strict: bool = False) -> _Gen:
-    """Return the numbers of PEPs that have a title matching *all* the keywords.
+    """Return the numbers of PEPs that have a title or registered name matching *all* the keywords.
 
     If `strict=True` (default False), the search is case sensitive.
     """
@@ -71,15 +72,21 @@ def search(*s, strict: bool = False) -> _Gen:
         return  # Empty
     if any((not isinstance(i, str)) for i in s):
         raise TypeError('Invalid argument(s)')
+    yielded = set()
     func = ((lambda n: n) if strict else str.casefold)
     for pep in sorted(SUPPORTED):
         t = info(pep).title
         if all((func(x) in func(t)) for x in s):
             yield pep
+            yielded.add(pep)
+    for k in s:
+        if k in _reg and _reg[k] not in yielded:
+            yield _reg[k]
 
 @_lc(maxsize=64, typed=True)
 def _search_any(*s, strict: bool = False) -> _Gen:
-    """Return the numbers of PEPs that have a title matching *any* of the keywords.
+    """Return the numbers of PEPs that have a title or registered name matching
+    *any* of the keywords.
 
     If `strict=True` (default False), the search is case sensitive.
     """
@@ -92,7 +99,8 @@ search.any = _search_any
 
 @_lc(maxsize=64, typed=True)
 def _search_one(*s, strict: bool = True) -> _O[int]:
-    """Return the number of the PEP that has a title matching *all* the keywords.
+    """Return the number of the PEP that has a title or registered name matching
+    *all* the keywords.
     If zero or several PEPs are found, an error is raised.
     If `strict=True` (default False), the search is case sensitive.
     """
@@ -108,7 +116,8 @@ def _search_one(*s, strict: bool = True) -> _O[int]:
             try:
                 j += (func(x) in t.lower() or
                       func(x) in func(t) or
-                      func(x) in t.upper())
+                      func(x) in t.upper() or
+                      _reg.get(func(x), -1) == pep)
             except TypeError:
                 message = ["args must be type 'str', ",
                            f"not {type(x).__name__!r}"]
@@ -130,7 +139,8 @@ search.one = _search_one
 
 @_lc(maxsize=64, typed=True)
 def _search_one_any(*s, strict: bool = True) -> _O[int]:
-    """Return the number of the PEP that has a title matching *any* of the keywords.
+    """Return the number of the PEP that has a title or registered name matching
+    *any* of the keywords.
     If zero or several PEPs are found, an error is raised.
     If `strict=True` (default False), the search is case sensitive.
     """
@@ -145,7 +155,8 @@ def _search_one_any(*s, strict: bool = True) -> _O[int]:
             try:
                 cond = (func(x) in t.lower() or
                         func(x) in func(t) or
-                        func(x) in t.upper())
+                        func(x) in t.upper() or
+                        _reg.get(func(x), -1) == pep)
                 if cond:
                     break
             except TypeError:
@@ -189,6 +200,33 @@ del _search_one
 del _search_one_any
 del _get_any
 
+_reg = {}
+def register(n: int, name: str):
+    """Register a name for a PEP number.
+
+    After registering, you can use `rejected_peps.name` or specify it in `search` etc.
+    to get the module.
+    """
+    if __debug__:
+        # Specify -O or -OO to improve speed.
+        try:
+            info(n)
+        except (ValueError, UnavailableError):
+            raise ValueError(f'Invalid PEP num {n!r}') from None
+    if name in _reg and _reg[name] != n:
+        raise KeyError(f'Ambiguous keyword {name!r} => {_reg[name]!r} or {n!r}')
+    if ((name.startswith('pep') and name[3:].isdigit() and int(name[3:]) in SUPPORTED)
+        or name in {'combined', 'test'}):
+        _w.warn(f'Name {name!r} conflicts with module {name}; .{name} will return the latter',
+                RuntimeWarning, stacklevel=2)
+    _reg[name] = n
+def unregister(name: str):
+    """Unregister a name."""
+    del _reg[name]
+def clear_register():
+    """Clear all registered names."""
+    _reg.clear()
+
 class UnavailableError(LookupError, NotImplementedError):
     pass
 pepinfo = _nt('pepinfo', ('number', 'title', 'status', 'creation', 'url'))
@@ -215,6 +253,12 @@ def __getattr__(name: str):
             pass
         else:
             return p
+    try:
+        p = pep(_reg[name])
+    except Exception:
+        pass
+    else:
+        return p
     # Suggestions
     if name.upper() == 'SUPPORTED':
         raise AttributeError(f'module {__name__!r} has no attribute {name!r}. '
