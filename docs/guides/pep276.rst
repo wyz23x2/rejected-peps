@@ -6,7 +6,7 @@
 :class:`.int` makes an integer iterable, beijng equivalent to ``range(x)``::
 
     >>> from rejected_peps import pep276 as p
-    >>> range(p.int(10))
-    range(0, 10)
+    >>> list(p.int(4))
+    [0, 1, 2, 3]
     >>> range(p.int(-10))
     range(0, -10)
