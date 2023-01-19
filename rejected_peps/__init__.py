@@ -1,4 +1,4 @@
-__version__ = '0.9.7'
+__version__ = '0.9.8'
 import importlib as _imp
 import warnings as _w
 from collections import namedtuple as _nt
@@ -55,24 +55,13 @@ def pep(n: int, *ns, allow_empty: bool = False) -> _Module:
 
 @_lc(maxsize=64, typed=True)
 def search(*s, strict: bool = False) -> _Gen:
-<<<<<<< HEAD
-=======
-    """Return the numbers of PEPs that have a title or registered name matching *all* the keywords.
-
-    If `strict=True` (default False), the search is case sensitive.
-    """
->>>>>>> dd5e1cc (Add register)
     global SUPPORTED
     if not s:
         return
     if any((not isinstance(i, str)) for i in s):
         raise TypeError('Invalid argument(s)')
-<<<<<<< HEAD
-    func = ((lambda n: n) if strict else str.lower)
-=======
     yielded = set()
     func = ((lambda n: n) if strict else str.casefold)
->>>>>>> dd5e1cc (Add register)
     for pep in sorted(SUPPORTED):
         t = info(pep).title
         if all((func(x) in func(t)) for x in s):
@@ -84,33 +73,16 @@ def search(*s, strict: bool = False) -> _Gen:
 
 @_lc(maxsize=64, typed=True)
 def _search_any(*s, strict: bool = False) -> _Gen:
-<<<<<<< HEAD
-=======
-    """Return the numbers of PEPs that have a title or registered name matching
-    *any* of the keywords.
-
-    If `strict=True` (default False), the search is case sensitive.
-    """
-    yielded = set()
->>>>>>> dd5e1cc (Add register)
     for i in _chain.from_iterable(search(x, strict=strict) for x in s):
         yield i
 search.any = _search_any
 
 @_lc(maxsize=64, typed=True)
 def _search_one(*s, strict: bool = True) -> _O[int]:
-<<<<<<< HEAD
-=======
-    """Return the number of the PEP that has a title or registered name matching
-    *all* the keywords.
-    If zero or several PEPs are found, an error is raised.
-    If `strict=True` (default False), the search is case sensitive.
-    """
->>>>>>> dd5e1cc (Add register)
     global SUPPORTED
     if not s:
         return None
-    func = ((lambda n: n) if strict else str.lower)
+    func = ((lambda n: n) if strict else str.casefold)
     xs = []
     for pep in sorted(SUPPORTED):
         t = info(pep).title
@@ -142,14 +114,6 @@ search.one = _search_one
 
 @_lc(maxsize=64, typed=True)
 def _search_one_any(*s, strict: bool = True) -> _O[int]:
-<<<<<<< HEAD
-=======
-    """Return the number of the PEP that has a title or registered name matching
-    *any* of the keywords.
-    If zero or several PEPs are found, an error is raised.
-    If `strict=True` (default False), the search is case sensitive.
-    """
->>>>>>> dd5e1cc (Add register)
     global SUPPORTED
     if not s:
         return
@@ -199,11 +163,6 @@ del _get_any
 
 _reg = {}
 def register(n: int, name: str):
-    """Register a name for a PEP number.
-
-    After registering, you can use `rejected_peps.name` or specify it in `search` etc.
-    to get the module.
-    """
     if __debug__:
         # Specify -O or -OO to improve speed.
         try:
@@ -218,10 +177,8 @@ def register(n: int, name: str):
                 RuntimeWarning, stacklevel=2)
     _reg[name] = n
 def unregister(name: str):
-    """Unregister a name."""
     del _reg[name]
 def clear_register():
-    """Clear all registered names."""
     _reg.clear()
 
 class UnavailableError(LookupError, NotImplementedError):
@@ -246,16 +203,6 @@ def __getattr__(name: str):
             pass
         else:
             return p
-<<<<<<< HEAD
-=======
-    try:
-        p = pep(_reg[name])
-    except Exception:
-        pass
-    else:
-        return p
-    # Suggestions
->>>>>>> dd5e1cc (Add register)
     if name.upper() == 'SUPPORTED':
         raise AttributeError(f'module {__name__!r} has no attribute {name!r}. '
                              "Did you mean: 'SUPPORTED'?")
