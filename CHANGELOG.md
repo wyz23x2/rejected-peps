@@ -1,8 +1,38 @@
 # Rejected-PEPs Changelog
 
-### <u>0.9.7</u>  _Final_
+### <u>0.9.8 & 0.9.7</u>  _Final_
 
-_Release Date: 2023-01-05_
+_Release Date: 2023-01-19_
+
+#### New
+
+- The register functions are backported from v1.0 in development. Examples:
+
+  ```python
+  >>> import rejected_peps as rp
+  >>> rp.pep211.PEP
+  211
+  >>> rp.register(211, 'product')
+  >>> rp.product.PEP
+  211
+  >>> rp.register(211, 'pd')
+  >>> rp.pd.PEP
+  211
+  >>> rp.get('pd').PEP
+  211
+  >>> rp.unregister('pd')
+  >>> rp.pd
+  Traceback (most recent call last):
+    File "<stdin>", line 1, in <module>
+    ...
+  AttributeError: module 'rejected_peps' has no attribute 'pd'
+  >>> rp.clear_register()
+  >>> rp.product
+  Traceback (most recent call last):
+    File "<stdin>", line 1, in <module>
+    ...
+  AttributeError: module 'rejected_peps' has no attribute 'product'
+  ```
 
 #### Fixed
 

@@ -1,5 +1,6 @@
-__version__ = '0.9.7'
+__version__ = '0.9.8'
 import importlib as _imp
+import warnings as _w
 from collections import namedtuple as _nt
 from itertools import chain as _chain
 from functools import lru_cache as _lc
@@ -59,11 +60,16 @@ def search(*s, strict: bool = False) -> _Gen:
         return
     if any((not isinstance(i, str)) for i in s):
         raise TypeError('Invalid argument(s)')
-    func = ((lambda n: n) if strict else str.lower)
+    yielded = set()
+    func = ((lambda n: n) if strict else str.casefold)
     for pep in sorted(SUPPORTED):
         t = info(pep).title
         if all((func(x) in func(t)) for x in s):
             yield pep
+            yielded.add(pep)
+    for k in s:
+        if k in _reg and _reg[k] not in yielded:
+            yield _reg[k]
 
 @_lc(maxsize=64, typed=True)
 def _search_any(*s, strict: bool = False) -> _Gen:
@@ -76,7 +82,7 @@ def _search_one(*s, strict: bool = True) -> _O[int]:
     global SUPPORTED
     if not s:
         return None
-    func = ((lambda n: n) if strict else str.lower)
+    func = ((lambda n: n) if strict else str.casefold)
     xs = []
     for pep in sorted(SUPPORTED):
         t = info(pep).title
@@ -85,7 +91,8 @@ def _search_one(*s, strict: bool = True) -> _O[int]:
             try:
                 j += (func(x) in t.lower() or
                       func(x) in func(t) or
-                      func(x) in t.upper())
+                      func(x) in t.upper() or
+                      _reg.get(func(x), -1) == pep)
             except TypeError:
                 message = ["args must be type 'str', ",
                            f"not {type(x).__name__!r}"]
@@ -118,7 +125,8 @@ def _search_one_any(*s, strict: bool = True) -> _O[int]:
             try:
                 cond = (func(x) in t.lower() or
                         func(x) in func(t) or
-                        func(x) in t.upper())
+                        func(x) in t.upper() or
+                        _reg.get(func(x), -1) == pep)
                 if cond:
                     break
             except TypeError:
@@ -152,6 +160,26 @@ del _search_any
 del _search_one
 del _search_one_any
 del _get_any
+
+_reg = {}
+def register(n: int, name: str):
+    if __debug__:
+        # Specify -O or -OO to improve speed.
+        try:
+            info(n)
+        except (ValueError, UnavailableError):
+            raise ValueError(f'Invalid PEP num {n!r}') from None
+    if name in _reg and _reg[name] != n:
+        raise KeyError(f'Ambiguous keyword {name!r} => {_reg[name]!r} or {n!r}')
+    if ((name.startswith('pep') and name[3:].isdigit() and int(name[3:]) in SUPPORTED)
+        or name in {'combined', 'test'}):
+        _w.warn(f'Name {name!r} conflicts with module {name}; .{name} will return the latter',
+                RuntimeWarning, stacklevel=2)
+    _reg[name] = n
+def unregister(name: str):
+    del _reg[name]
+def clear_register():
+    _reg.clear()
 
 class UnavailableError(LookupError, NotImplementedError):
     pass
