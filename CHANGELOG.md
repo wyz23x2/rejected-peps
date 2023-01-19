@@ -1,6 +1,6 @@
 # Rejected-PEPs Changelog
 
-### <u>0.9.8</u>  _Final_
+### <u>0.9.8 & 0.9.7</u>  _Final_
 
 _Release Date: 2023-01-19_
 
@@ -33,10 +33,6 @@ _Release Date: 2023-01-19_
     ...
   AttributeError: module 'rejected_peps' has no attribute 'product'
   ```
-
-### <u>0.9.7</u>  _Final_
-
-_Release Date: 2023-01-05_
 
 #### Fixed
 
