@@ -25,7 +25,7 @@ PEP = 294
 import keyword as _k
 import threading as _t
 from importlib import import_module as _im
-from typing import Optional as _O
+from typing import Optional as _O, Callable as _C
 
 def underscore(s: str) -> str:
     """Appends an underscore (_) to s."""
@@ -45,21 +45,25 @@ def valid(name) -> bool:
     return _k.iskeyword(name) + (not name.isidentifier()) == 0
 
 _apply_lock = _t.RLock()
-def apply(module=None, *, rename=underscore,
+def apply(module=None, *, mapfunc: _O[_C] = None, rename: _O[_C] = None,
           strict: _O[bool] = None):
     """Add the lowercase regular version as in PEP 294 to
-    the module. If the new name is invalid (e.g. `lambda`), `rename(name)`
-    is called. If strict is True, then the new return value of `rename(name)`
+    the module after processed by `mapfunc` (default `original`).
+    If the new name is invalid (e.g. `lambda`), `rename(name)`
+    is called.
+    If strict is True, then the new return value of `rename(name)`
     and the type (should be str) will be checked. If `None`, true only if `rename` is `original`.
     Returns the modified module.
     """
+    mapfunc = mapfunc or original
+    rename = rename or underscore
     if strict is None:
         strict = rename is not original
     with _apply_lock:
         types = module or _im('types')
         for name in dir(types):
+            new_name = mapfunc(name[:-4].lower())
             if name[-4:] == 'Type' and name[:-4]:
-                new_name = name[:-4].lower()
                 if not valid(new_name):
                     r = rename(new_name)
                     if strict and not valid(r):

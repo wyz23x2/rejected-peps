@@ -1,0 +1,30 @@
+================================================
+:pep:`294`: Type Names in the types Module
+================================================
+.. currentmodule:: pep294
+
+This module provides an :func:`.apply` function that adds the plain names specified in :pep:`294`::
+
+    >>> from rejected_peps import pep294 as p
+    >>> types = p.apply()
+    >>> types.module
+    <class 'module'>
+
+If the name is invalid, an underscore is appended by default. You can also let it title-case it or leave it as it is::
+
+    >>> types.lambda_
+    <class 'function'>
+    >>> types = p.apply(rename=p.title)
+    >>> types.Lambda
+    <class 'function'>
+    >>> types = p.apply(rename=p.original)
+    >>> getattr(types, 'lambda')
+    <class 'function'>
+
+Or, you can title-case all of them::
+
+    >>> types = p.apply(mapfunc=p.title)
+    >>> types.Module
+    <class 'module'>
+    >>> types.Lambda
+    <class 'lambda'>
