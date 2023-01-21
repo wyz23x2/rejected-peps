@@ -1,4 +1,4 @@
-__version__ = '1.0.0dev2'
+__version__ = '1.0.0dev3'
 import importlib as _imp
 import warnings as _w
 from collections import namedtuple as _nt
@@ -255,7 +255,7 @@ def __getattr__(name: str):
             return p
     try:
         p = pep(_reg[name])
-    except Exception:
+    except Exception:  # nosec B110
         pass
     else:
         return p

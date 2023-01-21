@@ -10,4 +10,5 @@ dist/
 !.mailmap
 !.upload.*
 **/_build
+**/build
 docs/do.*
