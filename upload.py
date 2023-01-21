@@ -8,6 +8,8 @@ a.add_argument('-v', '--verbose', action='count', default=0,
 a.add_argument('-s', '--skip-check', action='store_true', help='skip test check', dest='skip')
 a.add_argument('-b', '--build-only', '--no-upload', action='store_true',
                help='only build, do not upload to PyPI', dest='b')
+a.add_argument('-p', '--pause', '--stop', action='store_true',
+               help='pause before uploading; Ctrl-C will exit program', dest='p')
 a.add_argument('-k', '--keep-build', action='store_true',
                help='keep the build directory', dest='k')
 a.add_argument('-w', '--force-wheels', action='store_true',
@@ -20,6 +22,8 @@ a.add_argument('--force-old', action='store_true',
 r = a.parse_args()
 if r.nw and (r.f or r.w):
     a.error('argument --no-wheels: not allowed with argument -w or --force-old')
+if r.b and r.p:
+    a.error('argument -b: not allowed with argument -p')
 if not r.skip:
     c = subprocess.run('py check.py').returncode
     if c != 0:
@@ -61,5 +65,10 @@ if c != 0:
     sys.exit(c)
 if r.b:
     sys.exit()
+if r.p:
+    try:
+        input('Pause, press enter to continue.')
+    except KeyboardInterrupt:
+        sys.exit()
 c = subprocess.run('twine upload dist/*', shell=True).returncode
 sys.exit(c)

@@ -5,6 +5,8 @@ if __name__ == '__main__':
     os.chdir(os.getcwd())
     parser = argparse.ArgumentParser('check')
     # See `help` argument
+    parser.add_argument('-c', '-t', '--tokei', '--count', action='store_true', dest='tokei',
+                        help='Enable tokei analysis.')
     parser.add_argument('--nt', '--no-tests', action='store_true', dest='nt',
                         help='Disable unit tests.')
     parser.add_argument('-g', '--green-only', action='store_true', dest='g',
@@ -26,6 +28,13 @@ if __name__ == '__main__':
         parser.error('Cannot specify both -g and -u')
     os.system('')
     ecode = 0  # Exit 1 if green returns 1 (test failed)
+    # tokei
+    if args.tokei:
+        print('\033[1m==== Tokei Analysis ====\033[m')
+        x = os.system('tokei . --sort lines')
+        if args.f and x != 0:
+            print('\033[1;31mtokei error, program exit\033[m', file=sys.stderr)
+            sys.exit(x)
     # Test suite
     if not args.nt:
         print('\033[1m==== Test Suite ====\033[m')
