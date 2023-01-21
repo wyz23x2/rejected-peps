@@ -1,5 +1,5 @@
 import argparse as ap
-import os, sys
+import os, shutil, sys
 import subprocess
 os.system('')
 a = ap.ArgumentParser()
@@ -26,7 +26,7 @@ if not r.skip:
         print(f'\033[31mTest failed, process abort\033[m', file=sys.stderr)
         sys.exit(c)
 try:
-    os.rmdir('dist')
+    shutil.rmtree('dist')
 except OSError:
     pass
 if not r.nw:

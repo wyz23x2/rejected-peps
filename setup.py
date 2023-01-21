@@ -17,6 +17,7 @@ setuptools.setup(
         "Bug Tracker": "https://github.com/wyz23x2/rejected-peps/issues",
         "Changelog": "https://github.com/wyz23x2/rejected-peps/blob/1.0/CHANGELOG.md"
     },
+    license='MIT',
     classifiers=[
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",

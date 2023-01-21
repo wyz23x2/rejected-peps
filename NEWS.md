@@ -25,3 +25,4 @@
 
 - `pep211.wrapper` now supports `w @ n` where `w` is a `wrapper` and `n` is an `int`. In this case `w @ n` is the same as `itertools.product(w(), repeat=n)`.
 
+- pip wheels for Windows are now supported.
