@@ -2,8 +2,8 @@
 https://pypi.org/project/rejected-peps/1.0.0.dev1/)
 [![Python: >=3.7](https://img.shields.io/static/v1?label=Python&message=>%3D%203.7&color=informational&logo=python&logoColor=gold)](
 https://github.com/wyz23x2/rejected-peps/)
-[![Activity](https://img.shields.io/github/last-commit/wyz23x2/rejected-peps.svg?logo=github&color=mediumturquoise&label=Latest%20commit)](
-https://github.com/wyz23x2/rejected-peps/)
+[![Maintained](https://img.shields.io/maintenance/yes/2023)](https://github.com/wyz23x2/rejected-peps)
+[![Lines](https://img.shields.io/tokei/lines/github/wyz23x2/rejected-peps?logoColor=blue&logo=code%20review&label=Total%20lines)](https://github.com/wyz23x2/rejected-peps/)
 [![PyPI Downloads](https://img.shields.io/pypi/dm/rejected-peps.svg?logo=pypi&logoColor=skyblue&label=PyPI%20downloads)](
 https://pypi.org/project/rejected-peps/)
 [![License: MIT](https://img.shields.io/pypi/l/rejected-peps.svg?color=success&label=License)](
