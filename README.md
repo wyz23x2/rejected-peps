@@ -2,12 +2,12 @@
 https://pypi.org/project/rejected-peps/1.0.0.dev1/)
 [![Python: >=3.7](https://img.shields.io/static/v1?label=Python&message=3.7%21%20%28~Jan%2027%29%20|%20>%3D3.8&color=informational&logo=python&logoColor=gold)](
 https://github.com/wyz23x2/rejected-peps/)
-[![Maintained](https://img.shields.io/maintenance/yes/2023)](https://github.com/wyz23x2/rejected-peps)
 [![Lines](https://img.shields.io/tokei/lines/github/wyz23x2/rejected-peps?logoColor=blue&logo=code%20review&label=Total%20lines)](https://github.com/wyz23x2/rejected-peps/)
 [![PyPI Downloads](https://img.shields.io/pypi/dm/rejected-peps.svg?logo=pypi&logoColor=skyblue&label=PyPI%20downloads)](
 https://pypi.org/project/rejected-peps/)
 [![License: MIT](https://img.shields.io/pypi/l/rejected-peps.svg?color=success&label=License)](
 https://pypi.org/project/rejected-peps/)
+[![Security: bandit](https://img.shields.io/badge/security-bandit-yellow.svg)](https://github.com/PyCQA/bandit)
 <!-- [![Python versions: >=3.7](https://img.shields.io/pypi/pyversions/rejected-peps.svg?logo=python&logoColor=gold&label=Python)](
 https://pypi.org/project/rejected-peps/) -->
 ### What is this?
