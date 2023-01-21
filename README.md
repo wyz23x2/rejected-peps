@@ -1,3 +1,15 @@
+[![Version](https://img.shields.io/pypi/v/rejected-peps.svg?logo=semver&color=success&label=stable)](
+https://pypi.org/project/rejected-peps/)
+[![Python: >=3.7](https://img.shields.io/static/v1?label=Python&message=>%3D%203.7&color=informational&logo=python&logoColor=gold)](
+https://github.com/wyz23x2/rejected-peps/)
+[![Activity](https://img.shields.io/github/last-commit/wyz23x2/rejected-peps.svg?logo=github&color=mediumturquoise&label=Latest%20commit)](
+https://github.com/wyz23x2/rejected-peps/)
+[![PyPI Downloads](https://img.shields.io/pypi/dm/rejected-peps.svg?logo=pypi&logoColor=skyblue&label=PyPI%20downloads)](
+https://pypi.org/project/rejected-peps/)
+[![License: MIT](https://img.shields.io/pypi/l/rejected-peps.svg?color=success&label=License)](
+https://pypi.org/project/rejected-peps/)
+<!-- [![Python versions: >=3.7](https://img.shields.io/pypi/pyversions/rejected-peps.svg?logo=python&logoColor=gold&label=Python)](
+https://pypi.org/project/rejected-peps/) -->
 ### What is this?
 
 [PEPs](https://peps.python.org/) (Python Enhancement Proposals) are a special part of the Python programming language. Some were accepted, and some were not. This package implements some PEPs that were rejected, deferred or withdrawn.
