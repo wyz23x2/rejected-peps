@@ -1,0 +1,31 @@
+[project]
+name = "rejected-peps"
+authors = [
+    { name="wyz23x2", email="wyz23x2@163.com" }
+]
+description = "A Python package that implements some rejected, deferred or withdrawn PEPs."
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.7",  # To Jan 27, 2023
+    "Programming Language :: Python :: 3.8",  # To Oct 14, 2023 +
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+    "Development Status :: 2 - Pre-Alpha",
+    "License :: OSI Approved :: MIT License",
+    "Typing :: Typed",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/wyz23x2/rejected-peps/"
+"Bug Tracker" = "https://github.com/wyz23x2/rejected-peps/issues"
+"Changelog" = "https://github.com/wyz23x2/rejected-peps/blob/1.0/CHANGELOG.md"
+
+[tool.setuptools.dynamic]
+version = {attr = "rejected_peps.__version__"}

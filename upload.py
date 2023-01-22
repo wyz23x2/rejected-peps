@@ -20,9 +20,15 @@ a.add_argument('--no-wheels', action='store_true',
 a.add_argument('--force-old', action='store_true',
                help='force build wheels for Python 3.7 (support will end on Jan 27, 2023)',
                dest='f')
+a.add_argument('--ft', '--force-toml', action='store_true',
+               help='force usage of pyproject.toml instead of setup.py; applies --no-wheels',
+               dest='ft')
 r = a.parse_args()
+if r.fs and (r.f or r.w):
+    a.error('argument --ft: not allowed with argument -w or --force-old')
 if r.nw and (r.f or r.w):
     a.error('argument --no-wheels: not allowed with argument -w or --force-old')
+r.nw = r.nw or r.fs
 if not r.skip:
     c = subprocess.run('py check.py').returncode
     if c != 0:
@@ -57,8 +63,11 @@ if not r.k:
         os.rmdir('build')
     except OSError:
         pass
-c = subprocess.run('py -Wignore setup.py -q sdist',
-                   capture_output=(r.v < 1), shell=True).returncode
+if r.ft:
+    c = subprocess.run('py -m build', capture_output=(r.v < 1), shell=True).returncode
+else:
+    c = subprocess.run('py -Wignore setup.py -q sdist',
+                       capture_output=(r.v < 1), shell=True).returncode
 if c != 0:
     print(f'\033[31mPackage build failed, process abort\033[m', file=sys.stderr)
     sys.exit(c)
