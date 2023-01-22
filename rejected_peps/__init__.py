@@ -1,4 +1,4 @@
-__version__ = '1.0.0dev3'
+__version__ = '1.0.0dev7'
 import importlib as _imp
 import warnings as _w
 from collections import namedtuple as _nt
