@@ -28,12 +28,8 @@ classifiers = [
 "Bug Tracker" = "https://github.com/wyz23x2/rejected-peps/issues"
 "Changelog" = "https://github.com/wyz23x2/rejected-peps/blob/1.0/CHANGELOG.md"
 
-# [tool.setuptools.dynamic]
-# version = {attr = "rejected_peps.__version__"}
-
 [build-system]
 requires = [
     "setuptools>=42",
     "wheel"
 ]
-build-backend = "setuptools.build_meta"
