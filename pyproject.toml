@@ -1,6 +1,6 @@
 [project]
 name = "rejected-peps"
-version = "1.0.0.dev4"
+version = "1.0.0.dev5"
 authors = [
     { name="wyz23x2", email="wyz23x2@163.com" }
 ]
@@ -22,6 +22,7 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Typing :: Typed",
 ]
+license = "MIT"
 
 [project.urls]
 "Homepage" = "https://github.com/wyz23x2/rejected-peps/"

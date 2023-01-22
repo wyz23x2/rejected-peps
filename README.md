@@ -1,5 +1,5 @@
-[![Version](https://img.shields.io/static/v1?label=develop&message=v1.0.0dev3&color=important&logo=semver)](
-https://pypi.org/project/rejected-peps/1.0.0.dev3/)
+[![Version](https://img.shields.io/static/v1?label=develop&message=v1.0.0dev6&color=important&logo=semver)](
+https://pypi.org/project/rejected-peps/1.0.0.dev6/)
 [![Python: >=3.7](https://img.shields.io/static/v1?label=Python&message=3.7%21%20%28~Jan%2027%29%20|%20>%3D3.8&color=informational&logo=python&logoColor=gold)](
 https://github.com/wyz23x2/rejected-peps/)
 [![Lines](https://img.shields.io/tokei/lines/github/wyz23x2/rejected-peps?logoColor=blue&logo=code%20review&label=Total%20lines)](https://github.com/wyz23x2/rejected-peps/)
