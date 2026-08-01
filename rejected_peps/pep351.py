@@ -14,15 +14,15 @@ if possible.
 
 REFERENCES
 
-PEP 351: <https://www.python.org/dev/peps/pep-0351/>
+PEP 351: <https://peps.python.org/pep-0351/>
 Related:
-PEP 416: <https://www.python.org/dev/peps/pep-0416/>
+PEP 416: <https://peps.python.org/pep-0416/>
 """
 PEP = 351
 
 from types import MappingProxyType as _MPT
 from collections.abc import Mapping as _M, Sequence as _S
-def freeze(obj, *, allow_frozendict: bool = False):
+def freeze(obj, /, *, allow_frozendict: bool = False):
     global _pep416
     try:
         hash(obj)

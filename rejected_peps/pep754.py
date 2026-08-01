@@ -12,7 +12,7 @@ in PEP 754.
 
 REFERENCES
 
-PEP 754: <https://www.python.org/dev/peps/pep-0754/>
+PEP 754: <https://peps.python.org/pep-0754/>
 """
 PEP = 754
 import math as _math
@@ -20,13 +20,13 @@ import math as _math
 NaN = float('nan')
 PosInf = float('inf')
 NegInf = -PosInf
-def isNaN(value) -> bool:
+def isNaN(value, /) -> bool:
     return _math.isnan(value)
-def isPosInf(value) -> bool:
+def isPosInf(value, /) -> bool:
     return _math.isinf(value) and value > 0
-def isNegInf(value) -> bool:
+def isNegInf(value, /) -> bool:
     return _math.isinf(value) and value < 0
-def isFinite(value) -> bool:
+def isFinite(value, /) -> bool:
     return _math.isfinite(value)
-def isInf(value) -> bool:
+def isInf(value, /) -> bool:
     return _math.isinf(value)

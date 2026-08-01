@@ -21,12 +21,19 @@ the default_zero attribute.
 
 REFERENCES
 
-PEP 313: <https://www.python.org/dev/peps/pep-0313/>
+PEP 313: <https://peps.python.org/pep-0313/>
 """
 PEP = 313
 from numbers import Rational as _R, Integral as _I
 from fractions import Fraction as _F
 from functools import lru_cache as _lc
+from sys import version_info as _vi
+if _vi >= (3, 15):
+    DEFAULT = sentinel('DEFAULT')
+else:
+    from unittest.mock import sentinel as _snt
+    DEFAULT = _snt.DEFAULT
+
 try:
     from . import pep336 as _p
 except ImportError:
@@ -86,6 +93,7 @@ large_dict.update(modern_dict)
 DIGITS = set(classic_dict.values())
 default_zero = None
 
+
 @_lc(maxsize=256, typed=True)
 def _tr(x, mode, zero):
     if mode not in (MODERN, CLASSIC, LARGE):
@@ -118,10 +126,13 @@ def _tr(x, mode, zero):
         if x <= 0:
             break
     return ''.join(lis)
-def to_roman(x: _R, mode: str = MODERN, *, zero=...) -> str:
-    if zero is ...:
+
+def to_roman(x: _R, /, mode: str = MODERN, *, zero=DEFAULT) -> str:
+    if zero is DEFAULT:
         zero = default_zero
     return _tr(x, mode, zero)
+
+
 @_lc(maxsize=256, typed=True)
 def _fr(s, zero):
     if (not isNone(zero)) and s == zero:
@@ -149,7 +160,8 @@ def _fr(s, zero):
     if result == 0:
         raise ValueError(f'Invalid roman numeral: {s!r}')
     return result
-def from_roman(s: str, *, zero=...) -> _R:
-    if zero is ...:
+
+def from_roman(s: str, /, *, zero=DEFAULT) -> _R:
+    if zero is DEFAULT:
         zero = default_zero
     return _fr(s, zero)

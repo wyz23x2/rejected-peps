@@ -9,5 +9,6 @@ dist/
 **/linecounter.md
 !.mailmap
 !.upload.*
-# For dev branch
-**/docs/
+**/_build
+**/build
+docs/do.*

@@ -53,6 +53,6 @@ select =
     E901,
     W1, W2, W505,
     F, C901
-ignore = F541, F703, F811, F821
+ignore = F541, F703, F811, F821, F824
 max-line-length = 99
 max-doc-length  = 99

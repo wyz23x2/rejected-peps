@@ -11,13 +11,13 @@ This module implements the iterable IntType in PEP 276.
 
 REFERENCES
 
-PEP 276: <https://www.python.org/dev/peps/pep-0276/>
+PEP 276: <https://peps.python.org/pep-0276/>
 """
 PEP = 276
 import builtins as _b
 
 class IntType(_b.int):
-    def __iter__(self):
+    def __iter__(self, /):
         if self < 0:
             return iter(())
         return iter(range(_b.int(self)))

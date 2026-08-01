@@ -1,6 +1,6 @@
 [![Version](https://img.shields.io/pypi/v/rejected-peps.svg?logo=semver&color=success&label=stable)](
 https://pypi.org/project/rejected-peps/)
-[![Python: >=3.7](https://img.shields.io/static/v1?label=Python&message=>%3D%203.7&color=informational&logo=python&logoColor=gold)](
+[![Python: >=3.10](https://img.shields.io/static/v1?label=Python&message=>%3D%203.10&color=informational&logo=python&logoColor=gold)](
 https://github.com/wyz23x2/rejected-peps/)
 [![Activity](https://img.shields.io/github/last-commit/wyz23x2/rejected-peps.svg?logo=github&color=mediumturquoise&label=Latest%20commit)](
 https://github.com/wyz23x2/rejected-peps/)
@@ -54,10 +54,6 @@ PEPs with an \* are slightly modified.
 - [PEP 754](https://peps.python.org/pep-0754/) — IEEE 754 Floating Point Special Values
 - [PEP 3140](https://peps.python.org/pep-3140/) – `str(container)` should call `str(item)`, not `repr(item)`
 
-<!--#### Developing (1)
-
-- [PEP 601](https://peps.python.org/pep-0601/) — Forbid `return`/`break`/`continue` breaking out of `finally`-->
-
 ### How do I use it?
 Wiki is coming soon!
 
@@ -75,5 +71,5 @@ True
 pepinfo(number=416, title='Add a frozendict builtin type', status='Rejected', creation='2012-02-29', url='https://peps.python.org/pep-0416/')
 >>> rp.SUPPORTED
 frozenset({259, 265, ..., 351, 754})
->>> 
+>>>
 ```

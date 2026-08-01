@@ -17,9 +17,9 @@ except ImportError:
     from . import pep3140 as _p
     _str = _p._str
 class _str_meta(type):
-    def __subclasscheck__(cls, c: type) -> bool:
+    def __subclasscheck__(cls, c: type, /) -> bool:
         return issubclass(c, _b.str)
-    def __instancecheck__(cls, i) -> bool:
+    def __instancecheck__(cls, i, /) -> bool:
         return isinstance(i, _b.str)
 @_cb(349, 3140)
 class str(_b.str, metaclass=_str_meta):
@@ -43,7 +43,7 @@ except ImportError:
     from . import pep281 as _p
     _r = _p.range
 class _rliteral:
-    def __getitem__(self, x) -> range:
+    def __getitem__(self, x, /) -> range:
         if isinstance(x, slice):
             start, stop, step = x.start, x.stop, x.step
             if stop is None:
@@ -54,7 +54,7 @@ class _rliteral:
                 step = 1
             return _r(start, stop, step)
         return _r(x)
-    def __repr__(self):
+    def __repr__(self, /):
         return "<class 'combined.rliteral'>"
 rliteral = _cb(204, 281)(_rliteral())
 

@@ -1,11 +1,11 @@
-__version__ = '0.9.8'
+__version__ = '0.9.9c1'
 import importlib as _imp
 import warnings as _w
 from collections import namedtuple as _nt
 from itertools import chain as _chain
 from functools import lru_cache as _lc
 # Typing
-from typing import Generator as _Gen, Optional as _O
+from collections.abc import Generator as _Gen
 from types import ModuleType as _Module
 
 SUPPORTED = frozenset((204, 211, 212, 259,
@@ -13,7 +13,7 @@ SUPPORTED = frozenset((204, 211, 212, 259,
                        303, 313, 326, 335,
                        336, 349, 351, 416,
                        535, 559, 754, 3140))
-# ↑ Not automatic because it's too slow
+# ^ Not automatic because it's too slow
 
 _pep_imported = {}
 def pep(n: int, *ns, allow_empty: bool = False) -> _Module:
@@ -38,8 +38,7 @@ def pep(n: int, *ns, allow_empty: bool = False) -> _Module:
             import combined
         combined = _imp.reload(combined)
         ns = frozenset((n, *ns))
-        mp = map(str, sorted(ns))
-        m = _Module(f'pep' + '_'.join(mp))  # Use := after 3.7 dropped
+        m = _Module(f'pep' + '_'.join(mp:=list(map(str, sorted(ns)))))
         v, f = vars(combined), False
         for i in v:
             try:
@@ -78,7 +77,7 @@ def _search_any(*s, strict: bool = False) -> _Gen:
 search.any = _search_any
 
 @_lc(maxsize=64, typed=True)
-def _search_one(*s, strict: bool = True) -> _O[int]:
+def _search_one(*s, strict: bool = True) -> int|None:
     global SUPPORTED
     if not s:
         return None
@@ -113,7 +112,7 @@ def _search_one(*s, strict: bool = True) -> _O[int]:
 search.one = _search_one
 
 @_lc(maxsize=64, typed=True)
-def _search_one_any(*s, strict: bool = True) -> _O[int]:
+def _search_one_any(*s, strict: bool = True) -> int|None:
     global SUPPORTED
     if not s:
         return

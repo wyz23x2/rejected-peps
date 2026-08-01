@@ -14,7 +14,7 @@ from PEP 303 is also added.
 
 REFERENCES
 
-PEP 303: <https://www.python.org/dev/peps/pep-0303/>
+PEP 303: <https://peps.python.org/pep-0303/>
 """
 PEP = 303
 

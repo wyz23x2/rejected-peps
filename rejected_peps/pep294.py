@@ -19,20 +19,20 @@ See the docstrings for more information.
 
 REFERENCES
 
-PEP 294: <https://www.python.org/dev/peps/pep-0294/>
+PEP 294: <https://peps.python.org/pep-0294/>
 """
 PEP = 294
 import keyword as _k
 import threading as _t
-from typing import Optional as _O
+from importlib import import_module as _im
 
-def underscore(s: str) -> str:
+def underscore(s: str, /) -> str:
     """Appends an underscore (_) to s."""
     if not isinstance(s, str):
         raise TypeError(f's must be str, not {type(s).__name__}')
     return f'{s}_'
 title = str.title
-def original(s: str) -> str:
+def original(s: str, /) -> str:
     """Returns s."""
     if not isinstance(s, str):
         raise TypeError(f's must be str, not {type(s).__name__}')
@@ -44,11 +44,11 @@ def valid(name) -> bool:
     return _k.iskeyword(name) + (not name.isidentifier()) == 0
 _apply_lock = _t.RLock()
 def apply(module=None, *, rename=underscore,
-          strict: _O[bool] = None):
+          strict: bool|None = None):
     if strict is None:
         strict = rename is not original
     with _apply_lock:
-        types = module or __import__('types')
+        types = module or _im('types')
         for name in dir(types):
             if name[-4:] == 'Type' and name[:-4]:
                 new_name = name[:-4].lower()

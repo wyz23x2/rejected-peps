@@ -1,5 +1,5 @@
 @echo off
-py check.py
+py -V:3.14 check.py
 if %ERRORLEVEL% NEQ 0 echo, && echo Tests failed! && exit /B %ERRORLEVEL%
 del /s /f /q dist
 py setup.py sdist
