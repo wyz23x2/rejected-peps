@@ -16,7 +16,7 @@ REFERENCES
 PEP 535: <https://www.python.org/dev/peps/pep-0535/>
 """
 PEP = 535
-from typing import Callable as _C, Optional as _O
+from collections.abc import Callable as _C
 
 # Constants
 LT = '<'
@@ -32,14 +32,15 @@ def _cmp(a, op: str, b):
     # Use match/case in 3.10+
     if not isinstance(op, str):
         raise TypeError(f'Invalid op {op!r}')
-    if op == '<': return a < b
-    if op == '<=': return a <= b
-    if op == '==': return a == b
-    if op == '!=': return a != b
-    if op == '>=': return a >= b
-    if op == '>': return a > b
-    raise ValueError(f'Invalid op {op!r}')
-def cmp(*args, and_func: _O[_C] = None):
+    match op:
+        case '<': return a < b
+        case '<=': return a <= b
+        case '==': return a == b
+        case '!=': return a != b
+        case '>=': return a >= b
+        case '>': return a > b
+        case _: raise ValueError(f'Invalid op {op!r}')
+def cmp(*args, and_func: _C|None = None):
     if len(args) % 2 == 0:
         raise ValueError(f'Invalid arguments ({len(args)}; should be odd)')
     obj = args[::2]

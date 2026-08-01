@@ -17,13 +17,13 @@ PEP = 281
 import builtins as _b
 
 class _range_meta(type):
-    def __subclasscheck__(cls, c: type) -> bool:
+    def __subclasscheck__(cls, c: type, /) -> bool:
         return issubclass(c, _b.range)
-    def __instancecheck__(cls, i) -> bool:
+    def __instancecheck__(cls, i, /) -> bool:
         return isinstance(i, _b.range)
-    def __getattr__(cls, attr: str):
+    def __getattr__(cls, attr: str, /):
         return getattr(_b.range, attr)
-    def __and__(cls: type, cls1) -> type:
+    def __and__(cls: type, cls1, /) -> type:
         try:
             from . import pep212, pep204
         except ImportError:

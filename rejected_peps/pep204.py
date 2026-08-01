@@ -33,7 +33,7 @@ PEP 204: <https://www.python.org/dev/peps/pep-204/>
 """
     PEP = 204
     __name__ = 'pep204'
-    def __getitem__(self, x) -> range:
+    def __getitem__(self, x, /) -> range:
         if isinstance(x, slice):
             start, stop, step = x.start, x.stop, x.step
             if stop is None:
@@ -44,11 +44,11 @@ PEP 204: <https://www.python.org/dev/peps/pep-204/>
                 step = 1
             return range(start, stop, step)
         return range(x)
-    def __repr__(self) -> str:
+    def __repr__(self, /) -> str:
         if _p is None:
             raise ValueError('repr unavailable') from _imp_e
         return repr(_p).replace('pep211', 'pep204')
-    def __and__(self, cls2: type) -> type:
+    def __and__(self, cls2: type, /) -> type:
         try:
             from . import pep281
         except ImportError:

@@ -36,7 +36,7 @@ NeedOtherOperand = NeedOtherOperandType()
 _notimplemented_warning_message = ('NotImplemented should not be used '
                                    'in a boolean context. Did you mean to '
                                    'return NeedOtherOperand?')
-def NOT(a) -> bool:
+def NOT(a, /) -> bool:
     a_not = getattr(a, '__not__', None)
     if a_not is None:
         return not a
@@ -46,10 +46,10 @@ def NOT(a) -> bool:
     return bool(a_return)
 not_ = NOT
 class plain:
-    def __init__(self):
+    def __init__(self, /):
         raise Exception('plain cannot be initialized')
     @staticmethod
-    def AND(a, b):
+    def AND(a, b, /):
         a_and = getattr(a, '__and2__', None)
         if a_and is not None:
             a_return = a_and(b)
@@ -67,7 +67,7 @@ class plain:
             return a and b
     and_ = AND
     @staticmethod
-    def OR(a, b):
+    def OR(a, b, /):
         a_or = getattr(a, '__or2__', None)
         if a_or is not None:
             a_return = a_or(b)
@@ -89,7 +89,7 @@ class plain:
             return a or b
     or_ = OR
     NOT = not_ = staticmethod(NOT)
-def AND(a, b):
+def AND(a, b, /):
     a_and = getattr(a, '__and1__', None)
     if a_and is None:
         return plain.AND(a, b)
@@ -101,7 +101,7 @@ def AND(a, b):
                 PendingDeprecationWarning, 2)
     return a_return
 and_ = AND
-def OR(a, b):
+def OR(a, b, /):
     a_or = getattr(a, '__or1__', None)
     if a_or is None:
         return plain.OR(a, b)

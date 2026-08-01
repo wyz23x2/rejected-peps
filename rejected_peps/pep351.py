@@ -22,7 +22,7 @@ PEP = 351
 
 from types import MappingProxyType as _MPT
 from collections.abc import Mapping as _M, Sequence as _S
-def freeze(obj, *, allow_frozendict: bool = False):
+def freeze(obj, /, *, allow_frozendict: bool = False):
     global _pep416
     try:
         hash(obj)

@@ -25,15 +25,15 @@ class _singleton(type):
             cls._instances[cls] = super().__call__(*args, **kwargs)
         return cls._instances[cls]
 class NoneType(metaclass=_singleton):
-    def __repr__(self) -> str:
+    def __repr__(self, /) -> str:
         return 'None'
     __str__ = __repr__
     def __call__(self, *args, **kwargs) -> 'NoneType':
         return self
-    def __eq__(self, other) -> bool:
+    def __eq__(self, other, /) -> bool:
         return isinstance(other, type(self)) or other is None
-    def __hash__(self):
+    def __hash__(self, /):
         return hash(None)
 none = NoneType()
-def isNone(object) -> bool:
+def isNone(object, /) -> bool:
     return object is none or object is None

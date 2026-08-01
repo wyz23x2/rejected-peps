@@ -17,7 +17,7 @@ PEP = 276
 import builtins as _b
 
 class IntType(_b.int):
-    def __iter__(self):
+    def __iter__(self, /):
         if self < 0:
             return iter(())
         return iter(range(_b.int(self)))

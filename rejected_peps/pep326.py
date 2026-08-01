@@ -27,34 +27,34 @@ class _singleton(type):
 # 1) __cmp__ is removed
 # 2) It's not a singleton in the reference implementation
 class MinType(metaclass=_singleton):
-    def __lt__(self, other) -> bool:
+    def __lt__(self, other, /) -> bool:
         return self is not other
     __le__ = __lt__
-    def __gt__(self, other) -> bool:
+    def __gt__(self, other, /) -> bool:
         return False
-    def __eq__(self, other) -> bool:
+    def __eq__(self, other, /) -> bool:
         # Min is only equal to itself
         return isinstance(other, type(self))
     __ge__ = __eq__
-    def __repr__(self) -> str:
+    def __repr__(self, /) -> str:
         return 'Min'
     __str__ = __repr__
-    def __hash__(self):
+    def __hash__(self, /):
         return hash(id(self))
 class MaxType(metaclass=_singleton):
-    def __gt__(self, other) -> bool:
+    def __gt__(self, other, /) -> bool:
         return self is not other
     __ge__ = __gt__
-    def __lt__(self, other) -> bool:
+    def __lt__(self, other, /) -> bool:
         return False
-    def __eq__(self, other) -> bool:
+    def __eq__(self, other, /) -> bool:
         # Max is only equal to itself
         return isinstance(other, type(self))
     __le__ = __eq__
-    def __repr__(self) -> str:
+    def __repr__(self, /) -> str:
         return 'Max'
     __str__ = __repr__
-    def __hash__(self):
+    def __hash__(self, /):
         return hash(id(self))
 # 4 names appeared in PEP 326
 Min = UniversalMinimum = MinType()

@@ -21,11 +21,11 @@ import builtins as _b
 
 bytes = _b.bytes
 class _str_meta(type):
-    def __subclasscheck__(cls, c: type) -> bool:
+    def __subclasscheck__(cls, c: type, /) -> bool:
         return issubclass(c, _b.str)
-    def __instancecheck__(cls, i) -> bool:
+    def __instancecheck__(cls, i, /) -> bool:
         return isinstance(i, _b.str)
-    def __and__(cls: type, cls2: type) -> type:
+    def __and__(cls: type, cls2: type, /) -> type:
         try:
             from . import pep3140
         except ImportError:
