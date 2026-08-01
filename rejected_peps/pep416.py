@@ -27,10 +27,12 @@ from warnings import warn
 
 # See issue #13
 if version_info >= (3, 15):
-    warn('frozendict will become an alias of the builtin type in v1.0. Use the builtin type instead.',
+    warn('frozendict will become an alias of the builtin type in v1.0. '
+         'Use the builtin type instead.',
          DeprecationWarning, stacklevel=2)
 else:
-    warn('frozendict will be replaced by the new builtin type in Python 3.15, which is not a subclass of dict. '
+    warn('frozendict will be replaced by the new builtin type in Python 3.15, '
+         'which is not a subclass of dict. '
          'Avoid instance/subclass checks on dict.',
          PendingDeprecationWarning, stacklevel=2)
 
