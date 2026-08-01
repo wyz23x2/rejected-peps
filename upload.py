@@ -21,7 +21,11 @@ r = a.parse_args()
 if r.nw and (r.f or r.w):
     a.error('argument --no-wheels: not allowed with argument -w or --force-old')
 if not r.skip:
-    c = subprocess.run('py check.py').returncode
+    c = subprocess.run('py -V:3.14 check.py').returncode
+    if c != 0:
+        print(f'\033[31mTest failed, process abort\033[m', file=sys.stderr)
+        sys.exit(c)
+    c = subprocess.run('py -V:3.13 check.py').returncode
     if c != 0:
         print(f'\033[31mTest failed, process abort\033[m', file=sys.stderr)
         sys.exit(c)
