@@ -24,6 +24,7 @@ PEP 294: <https://peps.python.org/pep-0294/>
 PEP = 294
 import keyword as _k
 import threading as _t
+from importlib import import_module as _im
 
 def underscore(s: str, /) -> str:
     """Appends an underscore (_) to s."""
@@ -47,7 +48,7 @@ def apply(module=None, *, rename=underscore,
     if strict is None:
         strict = rename is not original
     with _apply_lock:
-        types = module or __import__('types')
+        types = module or _im('types')
         for name in dir(types):
             if name[-4:] == 'Type' and name[:-4]:
                 new_name = name[:-4].lower()

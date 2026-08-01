@@ -1,5 +1,19 @@
 # Rejected-PEPs Changelog
 
+### <u>0.9.9</u>  _Candidate 1_
+
+_Release Date: 2026-08-01_
+
+#### Breaking
+
+- [#14](https://github.com/wyz23x2/rejected-peps/issues/14): Support for Python 3.7, 3.8 & 3.9 are dropped; the minimum version is now 3.10. Tests pass on Python 3.14.
+- Multiple arguments are now positional-only. This may cause breakage of code; however, these arguments have unmeaningful names such as `a`, `b` or `s`, or are positional-only in the original implementations.
+- [#13](https://github.com/wyz23x2/rejected-peps/issues/13): Following the acceptance of [PEP 814](https://peps.python.org/pep-0814/), the implementation of [PEP 416](https://peps.python.org/pep-0416/) is now superseded. For Python <3.15, the implementation provided is still available, but importing `pep416` now issues a `PendingDeprecationWarning` warning about the PEP 814 class no longer subclassing `dict`; for Python >=3.15 (actually not supported yet), a `DeprecationWarning` is issued, and `pep416.frozendict` will become an alias for `builtins.frozendict` in v1.0.
+
+#### Fixed
+
+- `pep()` no longer crashes with a `TypeError`.
+
 ### <u>0.9.8 & 0.9.7</u>  _Final_
 
 _Release Date: 2023-01-19_
@@ -284,15 +298,15 @@ _Release Date: 2021-08-22_
 
 - The [PEP 294](https://www.python.org/dev/peps/pep-0294/) implementation is rewritten.
 	- Importing `pep294` no longer directly sets attributes of the `types` module. The original behavior is fragile, surprising and requires `importlib.reload(pep294)` to rerun the code.
-	- Instead, the `apply(module=None, *, rename=pep294.underscore, strict=None)` function is added. [^1]  
-		- `module` defaults to `types` when it's `None`, otherwise attributes of it are set. 
+	- Instead, the `apply(module=None, *, rename=pep294.underscore, strict=None)` function is added. [^1]
+		- `module` defaults to `types` when it's `None`, otherwise attributes of it are set.
 		- `rename` is a function that handles invalid names (i.e. a keyword or not an identifier). For example, `LambdaType` is converted to `lambda`, which is invalid. `rename(name)` returns the new variant.
 		- `strict` is a `bool` or `None`. If `strict` is `None`, it is `False` if `rename` is `pep294.original`, else `True`. If it's true and the new name is not a `str` or invalid, `TypeError` or `ValueError` is raised depending on the error. `rename` is _always_ called before checking.
 		- This function returns `None` since it is an in-place operation on `module`.
 	- The `underscore(s)`, `title(s)` and `original(s)` functions are for the `rename` parameter.
 		- `underscore` appends an underscore (`_`) to the name. For example, `lambda` → `lambda_`. This is the default value.
 		- `title` is an alias of `str.title`. For example, `lambda` → `Lambda`.
-		- `original` just returns the name unchanged. This is usually used when attributes aren't meant to be accessed by the `types.x` syntax, but `getattr(types, 'x')` etc. 
+		- `original` just returns the name unchanged. This is usually used when attributes aren't meant to be accessed by the `types.x` syntax, but `getattr(types, 'x')` etc.
 
 #### Improved
 
