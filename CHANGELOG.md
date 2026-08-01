@@ -1,5 +1,20 @@
 # Rejected-PEPs Changelog
 
+### <u>0.9.9</u>  _Final_
+
+_Release Date: 2026-08-01_
+
+#### Breaking
+
+- Previously, `register()` errored if the PEP number was invalid, but through a slow method and only did so if `__debug__` is `True`. Now `register()` always errors fast for an invalid PEP number.
+
+#### New
+
+- `clear_register()` is renamed to `clear_registered()`; the former will be kept as an alias (no plans to deprecate it).
+- `pep211.wrapper` now gains a proper `__repr__`.
+- `pep211.wrapper` now gains a `__wrapped__` property storing the object, same as `__call__()`.
+- `pep211.wrapper` now supports `w @ n` where `w` is a `wrapper` and `n` is an `int`. In this case `w @ n` is the same as `itertools.product(w(), repeat=n)`.
+
 ### <u>0.9.9</u>  _Candidate 1_
 
 _Release Date: 2026-08-01_

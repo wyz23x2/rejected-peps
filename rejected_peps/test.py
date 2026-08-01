@@ -148,6 +148,13 @@ class TestPEP211(unittest.TestCase):
         for obj in objects:
             with self.subTest(obj=obj):
                 self.assertEqual(self.w(obj)(), obj)
+    def test_wrapped(self):
+        for obj in objects:
+            with self.subTest(obj=obj):
+                self.assertEqual(self.w(obj).__wrapped__, obj)
+    def test_repeat(self):
+        self.assertEq(self.w((1, 2, 3, 4, 5, 6)) @ 2,
+                      self.itertools.product((1, 2, 3, 4, 5, 6), repeat=2))
     def test_success(self):
         self.assertEq(self.w((6, 6, 6)) @ (7, 7, 7),
                       self.itertools.product((6, 6, 6), (7, 7, 7)))
