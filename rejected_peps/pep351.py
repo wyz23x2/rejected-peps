@@ -14,9 +14,9 @@ if possible.
 
 REFERENCES
 
-PEP 351: <https://www.python.org/dev/peps/pep-0351/>
+PEP 351: <https://peps.python.org/pep-0351/>
 Related:
-PEP 416: <https://www.python.org/dev/peps/pep-0416/>
+PEP 416: <https://peps.python.org/pep-0416/>
 """
 PEP = 351
 

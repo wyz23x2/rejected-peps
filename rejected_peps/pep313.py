@@ -21,7 +21,7 @@ the default_zero attribute.
 
 REFERENCES
 
-PEP 313: <https://www.python.org/dev/peps/pep-0313/>
+PEP 313: <https://peps.python.org/pep-0313/>
 """
 PEP = 313
 from numbers import Rational as _R, Integral as _I
@@ -126,10 +126,13 @@ def _tr(x, mode, zero):
         if x <= 0:
             break
     return ''.join(lis)
+
 def to_roman(x: _R, /, mode: str = MODERN, *, zero=DEFAULT) -> str:
     if zero is DEFAULT:
         zero = default_zero
     return _tr(x, mode, zero)
+
+
 @_lc(maxsize=256, typed=True)
 def _fr(s, zero):
     if (not isNone(zero)) and s == zero:
@@ -157,6 +160,7 @@ def _fr(s, zero):
     if result == 0:
         raise ValueError(f'Invalid roman numeral: {s!r}')
     return result
+
 def from_roman(s: str, /, *, zero=DEFAULT) -> _R:
     if zero is DEFAULT:
         zero = default_zero

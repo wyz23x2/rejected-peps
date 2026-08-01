@@ -12,7 +12,7 @@ described in the PEP.
 
 REFERENCES
 
-PEP 3140: <https://www.python.org/dev/peps/pep-3140/>
+PEP 3140: <https://peps.python.org/pep-3140/>
 """
 PEP = 3140
 import builtins as _b

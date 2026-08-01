@@ -12,7 +12,7 @@ in PEP 754.
 
 REFERENCES
 
-PEP 754: <https://www.python.org/dev/peps/pep-0754/>
+PEP 754: <https://peps.python.org/pep-0754/>
 """
 PEP = 754
 import math as _math

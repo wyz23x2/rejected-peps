@@ -12,12 +12,12 @@ since dict is ordered in supported versions, frozendict is also ordered.
 
 REFERENCES
 
-PEP 416: <https://www.python.org/dev/peps/pep-0416/>
+PEP 416: <https://peps.python.org/pep-0416/>
 Related:
-PEP 351: <https://www.python.org/dev/peps/pep-0351/>
+PEP 351: <https://peps.python.org/pep-0351/>
 
 Note for Python >=3.15: PEP 814 is accepted replacing this implementation.
-PEP 814: <https://www.python.org/dev/peps/pep-0814/>
+PEP 814: <https://peps.python.org/pep-0814/>
 """
 PEP = 416
 __all__ = ['frozendict']

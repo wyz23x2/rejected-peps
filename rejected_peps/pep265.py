@@ -19,7 +19,7 @@ function is more flexable, thus we recommend it instead of itemlist().
 
 REFERENCES
 
-PEP 265: <https://www.python.org/dev/peps/pep-0265/>
+PEP 265: <https://peps.python.org/pep-0265/>
 Related:""" +
 f'\nsorted: <https://docs.python.org/'
 f'{".".join(map(str, _vi[:2]))}/library/functions.html#sorted>')

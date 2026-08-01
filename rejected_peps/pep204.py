@@ -29,7 +29,7 @@ range(60, 40, -2)
 
 REFERENCES
 
-PEP 204: <https://www.python.org/dev/peps/pep-204/>
+PEP 204: <https://peps.python.org/pep-204/>
 """
     PEP = 204
     __name__ = 'pep204'

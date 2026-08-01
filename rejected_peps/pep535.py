@@ -13,7 +13,7 @@ then it falls back onto and.
 
 REFERENCES
 
-PEP 535: <https://www.python.org/dev/peps/pep-0535/>
+PEP 535: <https://peps.python.org/pep-0535/>
 """
 PEP = 535
 from collections.abc import Callable as _C
@@ -29,7 +29,6 @@ VALID = frozenset((LT, LE, EQ, NE, GE, GT))
 
 # Functions
 def _cmp(a, op: str, b):
-    # Use match/case in 3.10+
     if not isinstance(op, str):
         raise TypeError(f'Invalid op {op!r}')
     match op:

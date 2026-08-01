@@ -12,7 +12,7 @@ newline of the last argument if `end` starts with '\\n'.
 
 REFERENCES
 
-PEP 259: <https://www.python.org/dev/peps/pep-0259/>
+PEP 259: <https://peps.python.org/pep-0259/>
 """
 PEP = 259
 import builtins as _b
