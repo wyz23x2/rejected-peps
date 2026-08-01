@@ -15,13 +15,30 @@ REFERENCES
 PEP 416: <https://www.python.org/dev/peps/pep-0416/>
 Related:
 PEP 351: <https://www.python.org/dev/peps/pep-0351/>
+
+Note for Python >=3.15: PEP 814 is accepted replacing this implementation.
+PEP 814: <https://www.python.org/dev/peps/pep-0814/>
 """
 PEP = 416
+__all__ = ['frozendict']
+
+from sys import version_info
+from warnings import warn
+
+# See issue #13
+if version_info >= (3, 15):
+    warn('frozendict will become an alias of the builtin type in v1.0. Use the builtin type instead.',
+         DeprecationWarning, stacklevel=2)
+else:
+    warn('frozendict will be replaced by the new builtin type in Python 3.15, which is not a subclass of dict. '
+         'Avoid instance/subclass checks on dict.',
+         PendingDeprecationWarning, stacklevel=2)
 
 # Cannot subclass types.MappingProxyType
+# Note: builtins.frozendict in 3.15 is *not* a subclass of dict.
 class frozendict(dict):
     # Mostly copied from PEP 351 "Sample implementations"
-    def __hash__(self) -> int:
+    def __hash__(self, /) -> int:
         # PEP 416:
         # > However, frozendict values can be not hashable.
         # > A frozendict is hashable if and only if all values are hashable.
@@ -36,7 +53,7 @@ class frozendict(dict):
         hashes[0].sort()
         hashes[1].sort()
         return hash((tuple(hashes[0]), tuple(hashes[1])))
-    def __repr__(self) -> str:
+    def __repr__(self, /) -> str:
         return f'{type(self).__name__}({super().__repr__()})'
     def __immutable(self, *args, **kwargs):
         raise TypeError(f'{type(self).__name__!r} object is immutable')
@@ -47,7 +64,7 @@ class frozendict(dict):
     setdefault  = __immutable
     pop         = __immutable
     popitem     = __immutable
-    def __dir__(self):
+    def __dir__(self, /):
         return (set(object.__dir__(self))
                 -{'__setitem__', '__delitem__',
                   'clear', 'update', 'setdefault', 'pop',
