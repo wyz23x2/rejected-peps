@@ -161,13 +161,9 @@ del _search_one_any
 del _get_any
 
 _reg = {}
-def register(n: int, name: str):
-    if __debug__:
-        # Specify -O or -OO to improve speed.
-        try:
-            info(n)
-        except (ValueError, UnavailableError):
-            raise ValueError(f'Invalid PEP num {n!r}') from None
+def register(n: int, /, name: str):
+    if n not in SUPPORTED:
+        raise ValueError(f'Invalid PEP num {n!r}')
     if name in _reg and _reg[name] != n:
         raise KeyError(f'Ambiguous keyword {name!r} => {_reg[name]!r} or {n!r}')
     if ((name.startswith('pep') and name[3:].isdigit() and int(name[3:]) in SUPPORTED)
@@ -177,14 +173,15 @@ def register(n: int, name: str):
     _reg[name] = n
 def unregister(name: str):
     del _reg[name]
-def clear_register():
+def clear_registered():
     _reg.clear()
+clear_register = clear_registered
 
 class UnavailableError(LookupError, NotImplementedError):
     pass
 pepinfo = _nt('pepinfo', ('number', 'title', 'status', 'creation', 'url'))
 @_lc(maxsize=32, typed=True)
-def info(n: int) -> pepinfo:
+def info(n: int, /) -> pepinfo:
     doc = getattr(pep(n), '__doc__', '').splitlines()
     if not doc[3:]:
         raise UnavailableError(f'Info of PEP {n!r} unavailable')
