@@ -32,10 +32,11 @@ def pep(n: int, *ns, allow_empty: bool = False) -> _Module:
         except ImportError:
             raise ValueError(f'PEP {n!r} not supported') from None
     else:
-        try:
-            from . import combined
-        except ImportError:
-            import combined
+        with _w.catch_warnings(category=ImportWarning, action='ignore'):
+            try:
+                from . import combined
+            except ImportError:
+                import combined
         combined = _imp.reload(combined)
         ns = frozenset((n, *ns))
         m = _Module(f'pep' + '_'.join(mp:=list(map(str, sorted(ns)))))

@@ -1,13 +1,15 @@
 import sys
-try:
-    from . import pep211 as _p
-except ImportError:
+from warnings import catch_warnings as _cw
+with _cw(category=ImportWarning, action='ignore'):
     try:
-        import pep211 as _p
-    except ImportError as e:
-        _imp_e = e
-        _imp_e.__suppress_context__ = True
-        _p = None
+        from . import pep211 as _p
+    except ImportError:
+        try:
+            import pep211 as _p
+        except ImportError as e:
+            _imp_e = e
+            _imp_e.__suppress_context__ = True
+            _p = None
 class pep204:
     """\
 PEP INFO
@@ -49,15 +51,16 @@ PEP 204: <https://peps.python.org/pep-204/>
             raise ValueError('repr unavailable') from _imp_e
         return repr(_p).replace('pep211', 'pep204')
     def __and__(self, cls2: type, /) -> type:
-        try:
-            from . import pep281
-        except ImportError:
-            import pep281
-        if cls2 == pep281.range:
+        with _cw(category=ImportWarning, action='ignore'):
             try:
-                from . import combined
+                from . import pep281
             except ImportError:
-                import combined
-            return combined.rliteral
+                import pep281
+            if cls2 == pep281.range:
+                try:
+                    from . import combined
+                except ImportError:
+                    import combined
+                return combined.rliteral
         raise TypeError(f'Cannot combine {self!r} and {cls2!r}')
 sys.modules[__name__] = pep204()

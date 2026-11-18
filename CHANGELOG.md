@@ -1,5 +1,20 @@
 # Rejected-PEPs Changelog
 
+### <u>0.9.10</u>  _Candidate 1_
+
+_Release Date: 2026-11-xx_
+
+#### Breaking
+
+- [#13](https://github.com/wyz23x2/rejected-peps/issues/13): The `PendingDeprecationWarning` for `pep416` in Python <=3.14 is reverted. Instead, `pep416` serves as a backport of the builtin `frozendict` to versions prior to 3.15.
+- [#13](https://github.com/wyz23x2/rejected-peps/issues/13): Add `pep416.is_frozendict`, `pep416.is_dict`, `pep416.is_mutabledict` and `pep416.is_dictsubclass` for type checking covering both `pep416.frozendict` and `builtins.frozendict`. _(TBD)_
+- `pep351.freeze` gains keyword-only argument `frozendict_type` determining method of freezing `dict`s: `416` for `pep416.frozendict`; None for `builtins.frozendict`; False for `MappingProxyType` (default); or any other callable. `allow_frozendict` is deprecated and will be removed in v1.0.
+- Since support for Python <3.9 has been dropped, `PendingDeprecationWarning` is upgraded to `DeprecationWarning` when `NotImplemented` is returned in functions of `pep335`. It will be further upgraded to `TypeError` when support for Python <3.14 is dropped.
+
+#### Fixed
+
+- Unwanted `ImportWarning`s are now suppressed.
+
 ### <u>0.9.9</u>  _Final_
 
 _Release Date: 2026-08-01_

@@ -3,6 +3,7 @@ This is where combined versions are stored.
 """
 import builtins as _b
 from functools import wraps as _w
+from warnings import catch_warnings as _cw
 def _cb(*combines):
     @_w(_cb)
     def _i(func):
@@ -11,11 +12,12 @@ def _cb(*combines):
     return _i
 
 # PEPs 349 & 3140
-try:
-    from pep3140 import _str
-except ImportError:
-    from . import pep3140 as _p
-    _str = _p._str
+with _cw(category=ImportWarning, action='ignore'):
+    try:
+        from pep3140 import _str
+    except ImportError:
+        from . import pep3140 as _p
+        _str = _p._str
 class _str_meta(type):
     def __subclasscheck__(cls, c: type, /) -> bool:
         return issubclass(c, _b.str)
@@ -37,11 +39,12 @@ class str(_b.str, metaclass=_str_meta):
     __init__ = None
 
 # PEPs 204 & 281
-try:
-    from pep281 import range as _r
-except ImportError:
-    from . import pep281 as _p
-    _r = _p.range
+with _cw(category=ImportWarning, action='ignore'):
+    try:
+        from pep281 import range as _r
+    except ImportError:
+        from . import pep281 as _p
+        _r = _p.range
 class _rliteral:
     def __getitem__(self, x, /) -> range:
         if isinstance(x, slice):
@@ -59,9 +62,10 @@ class _rliteral:
 rliteral = _cb(204, 281)(_rliteral())
 
 # PEPs 212 & 281
-try:
-    from pep212 import indices
-except ImportError:
-    from . import pep212 as _p
-    indices =  _p.indices
+with _cw(category=ImportWarning, action='ignore'):
+    try:
+        from pep212 import indices
+    except ImportError:
+        from . import pep212 as _p
+        indices =  _p.indices
 indices = _cb(212, 281)(indices)

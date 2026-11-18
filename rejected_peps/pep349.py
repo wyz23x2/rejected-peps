@@ -18,6 +18,7 @@ PEP 349: <https://peps.python.org/pep-0349/>
 """
 PEP = 349
 import builtins as _b
+from warnings import catch_warnings as _cw
 
 bytes = _b.bytes
 class _str_meta(type):
@@ -26,16 +27,17 @@ class _str_meta(type):
     def __instancecheck__(cls, i, /) -> bool:
         return isinstance(i, _b.str)
     def __and__(cls: type, cls2: type, /) -> type:
-        try:
-            from . import pep3140
-        except ImportError:
-            import pep3140
-        if cls2 == pep3140.str:
+        with _cw(category=ImportWarning, action='ignore'):
             try:
-                from . import combined
+                from . import pep3140
             except ImportError:
-                import combined
-            return combined.str
+                import pep3140
+            if cls2 == pep3140.str:
+                try:
+                    from . import combined
+                except ImportError:
+                    import combined
+                return combined.str
         raise TypeError(f'Cannot combine {cls!r} and {cls2!r}')
     __rand__ = __and__
 class str(_b.str, metaclass=_str_meta):
