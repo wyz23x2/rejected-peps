@@ -22,7 +22,10 @@ PEP 814: <https://peps.python.org/pep-0814/>
 PEP = 416
 __all__ = ['frozendict']
 
-from sys import version_info
+try:
+    from builtins import frozendict as _frozendict
+except Exception:
+    _frozendict = None
 # from warnings import warn
 
 # Cannot subclass types.MappingProxyType
@@ -52,3 +55,19 @@ class frozendict(dict):
                 -{'__setitem__', '__delitem__',
                   'clear', 'update', 'setdefault', 'pop',
                   'popitem', f'_{type(self).__name__}__immutable'})
+
+def is_frozendict(obj, /) -> bool:
+    if _frozendict:
+        return isinstance(obj, (frozendict, _frozendict))
+    return isinstance(obj, frozendict)
+
+def is_any_dict(obj, /) -> bool:
+    if _frozendict:
+        return isinstance(obj, (dict, _frozendict))
+    return isinstance(obj, dict)
+
+def is_dict(obj, /) -> bool:
+    return isinstance(obj, dict) and not isinstance(obj, frozendict)
+
+def is_dictsubclass(cls, /) -> bool:
+    return issubclass(cls, dict) and not issubclass(cls, frozendict)
