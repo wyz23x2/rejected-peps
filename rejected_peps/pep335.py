@@ -55,7 +55,7 @@ class plain:
             a_return = a_and(b)
             if a_return is NotImplemented:
                 _w.warn(_notimplemented_warning_message,
-                        PendingDeprecationWarning, 2)
+                        DeprecationWarning, 2)
             if a_return is not NeedOtherOperand:
                 return a_return
         b_rand = getattr(b, '__rand2__', None)
@@ -63,7 +63,7 @@ class plain:
             b_return = b_rand(a)
             if b_return is not NeedOtherOperand:
                 return b_return
-        with _w.catch_warnings():
+        with _w.catch_warnings(category=ImportWarning, action='ignore'):
             return a and b
     and_ = AND
     @staticmethod
@@ -74,7 +74,7 @@ class plain:
             if a_return is NotImplemented:
                 #
                 _w.warn(_notimplemented_warning_message,
-                        PendingDeprecationWarning, 2)
+                        DeprecationWarning, 2)
             if a_return is not NeedOtherOperand:
                 return a_return
         b_ror = getattr(b, '__ror2__', None)
@@ -82,10 +82,10 @@ class plain:
             b_return = b_ror(a)
             if b_return is NotImplemented:
                 _w.warn(_notimplemented_warning_message,
-                        PendingDeprecationWarning, 2)
+                        DeprecationWarning, 2)
             if b_return is not NeedOtherOperand:
                 return a_return
-        with _w.catch_warnings():
+        with _w.catch_warnings(category=ImportWarning, action='ignore'):
             return a or b
     or_ = OR
     NOT = not_ = staticmethod(NOT)
@@ -98,7 +98,7 @@ def AND(a, b, /):
         return plain.AND(a, b)
     if a_return is NotImplemented:
         _w.warn(_notimplemented_warning_message,
-                PendingDeprecationWarning, 2)
+                DeprecationWarning, 2)
     return a_return
 and_ = AND
 def OR(a, b, /):
@@ -110,6 +110,6 @@ def OR(a, b, /):
         return plain.OR(a, b)
     if a_return is NotImplemented:
         _w.warn(_notimplemented_warning_message,
-                PendingDeprecationWarning, 2)
+                DeprecationWarning, 2)
     return a_return
 or_ = OR

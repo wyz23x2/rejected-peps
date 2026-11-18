@@ -14,6 +14,8 @@ https://pypi.org/project/rejected-peps/) -->
 
 [PEPs](https://peps.python.org/) (Python Enhancement Proposals) are a special part of the Python programming language. Some were accepted, and some were not. This package implements some PEPs that were rejected, deferred or withdrawn.
 
+This module does not contain AI-generated code.
+
 ### What PEPs are included?
 
 A PEP included needs to match these points:

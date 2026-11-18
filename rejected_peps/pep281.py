@@ -15,6 +15,7 @@ PEP 281: <https://peps.python.org/pep-0281/>
 """
 PEP = 281
 import builtins as _b
+from warnings import catch_warnings as _cw
 
 class _range_meta(type):
     def __subclasscheck__(cls, c: type, /) -> bool:
@@ -24,10 +25,11 @@ class _range_meta(type):
     def __getattr__(cls, attr: str, /):
         return getattr(_b.range, attr)
     def __and__(cls: type, cls1, /) -> type:
-        try:
-            from . import pep212, pep204
-        except ImportError:
-            import pep212, pep204
+        with _cw(category=ImportWarning, action='ignore'):
+            try:
+                from . import pep212, pep204
+            except ImportError:
+                import pep212, pep204
         if cls1 == pep204:
             return NotImplemented
         if cls1 != pep212.indices:

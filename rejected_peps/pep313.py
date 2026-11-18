@@ -28,26 +28,28 @@ from numbers import Rational as _R, Integral as _I
 from fractions import Fraction as _F
 from functools import lru_cache as _lc
 from sys import version_info as _vi
+from warnings import catch_warnings as _cw
 if _vi >= (3, 15):
-    DEFAULT = sentinel('DEFAULT')
+    DEFAULT = sentinel('DEFAULT')  # type: ignore
 else:
     from unittest.mock import sentinel as _snt
     DEFAULT = _snt.DEFAULT
 
-try:
-    from . import pep336 as _p
-except ImportError:
+with _cw(category=ImportWarning, action='ignore'):
     try:
-        import pep336 as _p
+        from . import pep336 as _p
     except ImportError:
-        def isNone(x):
-            return x is None
+        try:
+            import pep336 as _p
+        except ImportError:
+            def isNone(x):
+                return x is None
+        else:
+            isNone = _p.isNone
+            del _p
     else:
         isNone = _p.isNone
         del _p
-else:
-    isNone = _p.isNone
-    del _p
 
 MODERN, CLASSIC, LARGE = 'modern', 'classic', 'large'
 classic_dict = {1000: 'M',

@@ -22,19 +22,11 @@ PEP 814: <https://peps.python.org/pep-0814/>
 PEP = 416
 __all__ = ['frozendict']
 
-from sys import version_info
-from warnings import warn
-
-# See issue #13
-if version_info >= (3, 15):
-    warn('frozendict will become an alias of the builtin type in v1.0. '
-         'Use the builtin type instead.',
-         DeprecationWarning, stacklevel=2)
-else:
-    warn('frozendict will be replaced by the new builtin type in Python 3.15, '
-         'which is not a subclass of dict. '
-         'Avoid instance/subclass checks on dict.',
-         PendingDeprecationWarning, stacklevel=2)
+try:
+    from builtins import frozendict as _frozendict
+except Exception:
+    _frozendict = None
+# from warnings import warn
 
 # Cannot subclass types.MappingProxyType
 # Note: builtins.frozendict in 3.15 is *not* a subclass of dict.
@@ -44,17 +36,9 @@ class frozendict(dict):
         # PEP 416:
         # > However, frozendict values can be not hashable.
         # > A frozendict is hashable if and only if all values are hashable.
-        hashes = [], []
-        # Needs two to avoid mixing keys and values, e.g.
-        # hash(frozendict({1: 2, 3: 4})) & hash(frozendict({1: 3, 2: 4}))
-        for k, v in self.items():
-            hashes[0].append(hash(k))
-            hashes[1].append(hash(v))
-        # PEP 416:
         # > · frozendict hash does not depend on the items creation order
-        hashes[0].sort()
-        hashes[1].sort()
-        return hash((tuple(hashes[0]), tuple(hashes[1])))
+        # Implementation borrowed from PEP 814 (v0.9.10)
+        return hash(frozenset(self.items()))
     def __repr__(self, /) -> str:
         return f'{type(self).__name__}({super().__repr__()})'
     def __immutable(self, *args, **kwargs):
@@ -71,3 +55,19 @@ class frozendict(dict):
                 -{'__setitem__', '__delitem__',
                   'clear', 'update', 'setdefault', 'pop',
                   'popitem', f'_{type(self).__name__}__immutable'})
+
+def is_frozendict(obj, /) -> bool:
+    if _frozendict:
+        return isinstance(obj, (frozendict, _frozendict))
+    return isinstance(obj, frozendict)
+
+def is_any_dict(obj, /) -> bool:
+    if _frozendict:
+        return isinstance(obj, (dict, _frozendict))
+    return isinstance(obj, dict)
+
+def is_dict(obj, /) -> bool:
+    return isinstance(obj, dict) and not isinstance(obj, frozendict)
+
+def is_dictsubclass(cls, /) -> bool:
+    return issubclass(cls, dict) and not issubclass(cls, frozendict)
