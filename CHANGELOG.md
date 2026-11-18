@@ -7,7 +7,7 @@ _Release Date: 2026-11-18_
 #### Breaking
 
 - [#13](https://github.com/wyz23x2/rejected-peps/issues/13): The `PendingDeprecationWarning` for `pep416` in Python <=3.14 is reverted. Instead, `pep416` serves as a backport of the builtin `frozendict` to versions prior to 3.15.
-- [#13](https://github.com/wyz23x2/rejected-peps/issues/13): Add `pep416.is_frozendict`, `pep416.is_any_dict`, `pep416.is_dict` and `pep416.is_dictsubclass` for type checking covering `builtins.dict`, `pep416.frozendict` and `builtins.frozendict`. _(TBD)_
+- [#13](https://github.com/wyz23x2/rejected-peps/issues/13): Add `pep416.is_frozendict`, `pep416.is_any_dict`, `pep416.is_dict` and `pep416.is_dictsubclass` for type checking covering `builtins.dict`, `pep416.frozendict` and `builtins.frozendict`.
 - `pep351.freeze` gains keyword-only argument `frozendict_type` determining method of freezing `dict`s: `416` for `pep416.frozendict`; `None` for `builtins.frozendict`; `False` for `MappingProxyType` (default); or any other callable. `allow_frozendict` is deprecated and will be removed in v1.0.
 - Since support for Python <3.9 has been dropped, `PendingDeprecationWarning` is upgraded to `DeprecationWarning` when `NotImplemented` is returned in functions of `pep335`. It will be further upgraded to `TypeError` when support for Python <3.14 is dropped.
 
@@ -38,7 +38,7 @@ _Release Date: 2026-08-01_
 
 - [#14](https://github.com/wyz23x2/rejected-peps/issues/14): Support for Python 3.7, 3.8 & 3.9 are dropped; the minimum version is now 3.10. Tests pass on Python 3.14.
 - Multiple arguments are now positional-only. This may cause breakage of code; however, these arguments have unmeaningful names such as `a`, `b` or `s`, or are positional-only in the original implementations.
-- [#13](https://github.com/wyz23x2/rejected-peps/issues/13): Following the acceptance of [PEP 814](https://peps.python.org/pep-0814/), the implementation of [PEP 416](https://peps.python.org/pep-0416/) is now superseded. For Python <3.15, the implementation provided is still available, but importing `pep416` now issues a `PendingDeprecationWarning` warning about the PEP 814 class no longer subclassing `dict`; for Python >=3.15 (actually not supported yet), a `DeprecationWarning` is issued, and `pep416.frozendict` will become an alias for `builtins.frozendict` in v1.0.
+- [#13](https://github.com/wyz23x2/rejected-peps/issues/13): Following the acceptance of [PEP 814](https://peps.python.org/pep-0814/), the implementation of [PEP 416](https://peps.python.org/pep-0416/) is now superseded. ~~For Python <3.15, the implementation provided is still available, but importing `pep416` now issues a `PendingDeprecationWarning` warning about the PEP 814 class no longer subclassing `dict`; for Python >=3.15 (actually not supported yet), a `DeprecationWarning` is issued, and `pep416.frozendict` will become an alias for `builtins.frozendict` in v1.0.~~ (Reverted in 0.9.10)
 
 #### Fixed
 
