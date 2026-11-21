@@ -34,7 +34,7 @@ def freeze(obj, /, *, allow_frozendict: bool = False):
 def freeze(obj, /, *,
            allow_frozendict: bool|None = None,  # Deprecated
            frozendict_type: _L[416]|_C[[dict], _A]|bool = False):
-    """frozendict_type: 416 for pep416.frozendict; None for builtins.frozendict, False for MappingProxyType (default); or any other callable."""
+    """frozendict_type: 416 for pep416.frozendict; True for builtins.frozendict, False for MappingProxyType (default); or any other callable."""
     # Temporary docstring for migration; formal ones are to be added in v1.0
     global _pep416
     if allow_frozendict is not None:

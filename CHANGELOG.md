@@ -1,5 +1,11 @@
 # Rejected-PEPs Changelog
 
+### <u>0.9.10</u>  _Final_
+
+_Release Date: 2026-11-21_
+
+Tests updated, no new changes.
+
 ### <u>0.9.10</u>  _Candidate 1_
 
 _Release Date: 2026-11-18_
@@ -10,6 +16,7 @@ _Release Date: 2026-11-18_
 - [#13](https://github.com/wyz23x2/rejected-peps/issues/13): Add `pep416.is_frozendict`, `pep416.is_any_dict`, `pep416.is_dict` and `pep416.is_dictsubclass` for type checking covering `builtins.dict`, `pep416.frozendict` and `builtins.frozendict`.
 - `pep351.freeze` gains keyword-only argument `frozendict_type` determining method of freezing `dict`s: `416` for `pep416.frozendict`; `None` for `builtins.frozendict`; `False` for `MappingProxyType` (default); or any other callable. `allow_frozendict` is deprecated and will be removed in v1.0.
 - Since support for Python <3.9 has been dropped, `PendingDeprecationWarning` is upgraded to `DeprecationWarning` when `NotImplemented` is returned in functions of `pep335`. It will be further upgraded to `TypeError` when support for Python <3.14 is dropped.
+- The `__hash__` implementation of `pep416.frozendict` has been changed to the implementation in [PEP 814](https://peps.python.org/pep-0814/). Hash values may change.
 
 #### Fixed
 
