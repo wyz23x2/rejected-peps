@@ -1,5 +1,6 @@
 import unittest
 import random  # NOQA
+from sys import version_info
 import importlib
 def PEP(cls=None, *, testnum=True, module=True):
     def pep(cls):
@@ -46,7 +47,10 @@ class TestInit(unittest.TestCase):
         try:
             from . import pep, search, get, pepinfo, info, SUPPORTED
         except ImportError:
-            self.skipTest(f'Import failure')
+            try:
+                from __init__ import pep, search, get, pepinfo, info, SUPPORTED
+            except ImportError:
+                self.skipTest(f'Import failure')
         self.pep, self.search, self.get = pep, search, get
         self.pepinfo, self.info = pepinfo, info
         self.sp = SUPPORTED
@@ -485,9 +489,17 @@ class TestPEP351(unittest.TestCase):
         # MappingProxyType
         self.assertEqual(self.freeze({'a': 20, 10: -5}),
                          MPT({'a': 20, 10: -5}))
-        # frozendict
-        self.assertEqual(self.freeze({'a': 5, 'b': -20}, allow_frozendict=True),
-                         fd(a=5, b=-20))
+        # pep416.frozendict
+        self.assertEqual(self.freeze({'a': 5, 'b': -20}, frozendict_type=416), fd(a=5, b=-20))
+        # builtins.frozendict
+        if version_info >= (3, 15):
+            self.assertEqual(self.freeze({'a': 5, 'b': -20}, frozendict_type=True), frozendict(a=5, b=-20))
+        # custom callable
+            self.assertEqual(self.freeze({'a': 5, 'b': -20}, frozendict_type=sorted), ['a', 'b'])
+        # frozendict (deprecated path)
+        with self.assertWarns(DeprecationWarning):
+            self.assertEqual(self.freeze({'a': 5, 'b': -20}, allow_frozendict=True),
+                             fd(a=5, b=-20))
         self.assertIsNotNone(self.pep351._pep416)  # Lazy import
     def test_manual(self):
         class A:
@@ -523,6 +535,25 @@ class TestPEP416(unittest.TestCase):
         self.assertEqual(d.get(23, 2), 2)
         self.assertTupleEqual(tuple(d.keys()), ('1', -3))
         self.assertEqual(d, d.copy())
+    def test_functions_no_builtin(self):
+        d1 = {1: 2}
+        d2 = self.d({1: 2})
+        self.assertTrue(self.pep416.is_frozendict(d2))
+        self.assertFalse(self.pep416.is_frozendict(d1))
+        self.assertTrue(self.pep416.is_any_dict(d2))
+        self.assertTrue(self.pep416.is_any_dict(d1))
+        self.assertFalse(self.pep416.is_dict(d2))
+        self.assertTrue(self.pep416.is_frozendict(d2))
+        self.assertTrue(self.pep416.is_dictsubclass(dict))
+        self.assertFalse(self.pep416.is_dictsubclass(self.d))
+    def test_functions_with_builtin(self):
+        if version_info < (3, 15):
+            self.skipTest('builtins.frozendict not available')
+        d3 = frozendict({1: 2})
+        self.assertTrue(self.pep416.is_frozendict(d3))
+        self.assertTrue(self.pep416.is_any_dict(d3))
+        self.assertFalse(self.pep416.is_dict(d3))
+        self.assertFalse(self.pep416.is_dictsubclass(frozendict))
 @PEP
 class TestPEP535(unittest.TestCase):
     def setUp(self):
@@ -545,8 +576,7 @@ class TestPEP535(unittest.TestCase):
         self.assertTrue(self.cmp(5, '>', 7, '>', 9, and_func=(lambda x, y: True)))
         with self.assertRaisesRegex(ValueError, '^Invalid arguments'):
             self.cmp(5, '>', 3, '>')
-        import sys as _sys
-        if _sys.version_info >= (3, 11):
+        if version_info >= (3, 11):
             class A:
                 def __bool__(self):
                     raise ValueError('Value Invalid')
